@@ -25,9 +25,15 @@ class MainViewController: UIViewController {
 
 
 extension MainViewController: ActivityModelProtocol {
-    func setAnswer(withString string: String) {
+    
+    func setAnswer(withAnswer answer: String, forType type: Type) {
         DispatchQueue.main.async {
-            self.answerLabel.text = string
+            self.answerLabel.text = answer
+            switch type {
+            case .Affirmative: self.answerLabel.backgroundColor = UIColor.green
+            case .Neutral: self.answerLabel.backgroundColor = UIColor.cyan
+            case .Contrary: self.answerLabel.backgroundColor = UIColor.red
+            }
         }
     }
 }

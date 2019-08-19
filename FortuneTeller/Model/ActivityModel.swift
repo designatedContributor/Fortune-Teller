@@ -9,23 +9,35 @@
 import Foundation
 
 protocol ActivityModelProtocol {
-    func setAnswer(withString string: String)
+    func setAnswer(withAnswer answer: String, forType type: Type)
 }
 
 class ActivityModel {
     
     var networkService: NetwotkingServiceProtocol
+    var answerBank: AnswerBank
     var delegate: ActivityModelProtocol!
     
     func giveAnswer() {
         networkService.getData() { networkAnswer in
             if let networkAnswer = networkAnswer {
-                self.delegate.setAnswer(withString: networkAnswer.magic.answer)
+                self.delegate.setAnswer(withAnswer: networkAnswer.magic.answer, forType: networkAnswer.magic.type)
+            } else {
+                let answerFromBank = self.answerBank.getRandomAnswer()
+                self.delegate.setAnswer(withAnswer: answerFromBank.0, forType: answerFromBank.1)
             }
         }
     }
     
-    init(networkService: NetwotkingService) {
+    func saveAnswer(answer: String, type: Type) {
+        answerBank.saveUserAnswer(answer: answer, type: type)
+    }
+    
+    func loadAnswers() {
+        answerBank.loadAnswers()
+    }
+    init(networkService: NetwotkingService, answerBank: AnswerBank) {
         self.networkService = networkService
+        self.answerBank = answerBank
     }
 }

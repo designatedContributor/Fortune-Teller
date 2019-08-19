@@ -18,12 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let networkService = NetwotkingService()
-        let activityModel = ActivityModel(networkService: networkService)
+        let answerBank = AnswerBank()
+        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank)
         
         let tabBarController = window!.rootViewController as! UITabBarController
         let mainViewController = tabBarController.viewControllers?[0] as? MainViewController
         mainViewController?.activityModel = activityModel
         
+        let settingsViewController = tabBarController.viewControllers?[1] as? SettingsViewController
+        settingsViewController?.activityModel = activityModel
+        settingsViewController?.activityModel.loadAnswers()
         return true
     }
 

@@ -9,7 +9,22 @@
 import Foundation
 
 struct ResponseBody: Codable {
-    var answer: String
-    var question: String
-    var type: String
+    var answer: String = ""
+    var question: String = ""
+    var type: Type = .Affirmative
+    
+    init(answer: String, type: Type) {
+        self.answer = answer
+        self.type = type
+    }
+}
+
+enum Type: String, Codable {
+    case Affirmative
+    case Neutral
+    case Contrary
+    
+    func toString() -> String {
+        return self.rawValue
+    }
 }

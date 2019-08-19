@@ -18,6 +18,7 @@
 		AA68B78A2309BA5200226290 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B7892309BA5200226290 /* NetworkingService.swift */; };
 		AA68B78C2309C49800226290 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B78B2309C49800226290 /* ActivityModel.swift */; };
 		AA68B78E230A0F0E00226290 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AA68B78D230A0F0E00226290 /* .gitignore */; };
+		AA93A59B230B1128004CACD2 /* AnswerBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA93A58A230B1128004CACD2 /* AnswerBank.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		AA68B7892309BA5200226290 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		AA68B78B2309C49800226290 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		AA68B78D230A0F0E00226290 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		AA93A58A230B1128004CACD2 /* AnswerBank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerBank.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +81,9 @@
 		AA68B77E23098A5E00226290 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AA68B7842309956200226290 /* ResponseBody.swift */,
 				AA68B7862309B9C600226290 /* ResponseHeader.swift */,
+				AA68B7842309956200226290 /* ResponseBody.swift */,
+				AA93A58A230B1128004CACD2 /* AnswerBank.swift */,
 				AA68B7892309BA5200226290 /* NetworkingService.swift */,
 				AA68B78B2309C49800226290 /* ActivityModel.swift */,
 			);
@@ -187,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA68B76F23098A3400226290 /* SettingsViewController.swift in Sources */,
+				AA93A59B230B1128004CACD2 /* AnswerBank.swift in Sources */,
 				AA68B7872309B9C600226290 /* ResponseHeader.swift in Sources */,
 				AA68B76B23098A3400226290 /* AppDelegate.swift in Sources */,
 				AA68B76D23098A3400226290 /* MainViewController.swift in Sources */,
