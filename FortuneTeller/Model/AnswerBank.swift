@@ -8,9 +8,15 @@
 
 import Foundation
 
+protocol AnswerBankProtocol: class {
+    var currentAnswers: [ResponseBody] { get set }
+}
+
 class AnswerBank {
     
-     var userAnswers = [ResponseBody(answer: "I believe in you", type: .Affirmative), ResponseBody(answer: "Don't mind", type: .Neutral), ResponseBody(answer: "Bad idea", type: .Contrary)]
+    var delegate: AnswerBankProtocol!
+    
+    var userAnswers = [ResponseBody(answer: "I believe in you", type: .Affirmative), ResponseBody(answer: "Don't mind", type: .Neutral), ResponseBody(answer: "Bad idea", type: .Contrary)]
     
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -26,6 +32,7 @@ class AnswerBank {
         
         let savingItem = ResponseBody(answer: answer, type: type)
         userAnswers.append(savingItem)
+        delegate.currentAnswers = userAnswers
         
         let encoder = PropertyListEncoder()
         do {
@@ -37,12 +44,12 @@ class AnswerBank {
     }
     
     func loadAnswers() {
-        
         let path = dataFilePath()
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()
             do {
                 userAnswers = try decoder.decode([ResponseBody].self, from: data)
+                delegate.currentAnswers = userAnswers
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }

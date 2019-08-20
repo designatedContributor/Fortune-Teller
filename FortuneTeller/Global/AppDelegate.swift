@@ -19,7 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let networkService = NetwotkingService()
         let answerBank = AnswerBank()
-        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank)
+        let currentAnswers = answerBank.userAnswers
+        
+        
+        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank, currentAnswers: currentAnswers)
+        answerBank.delegate = activityModel
+        answerBank.loadAnswers()
         
         let tabBarController = window!.rootViewController as! UITabBarController
         let mainViewController = tabBarController.viewControllers?[0] as? MainViewController
@@ -27,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let settingsViewController = tabBarController.viewControllers?[1] as? SettingsViewController
         settingsViewController?.activityModel = activityModel
-        settingsViewController?.activityModel.loadAnswers()
+        
+        
         return true
     }
 

@@ -12,7 +12,9 @@ protocol ActivityModelProtocol {
     func setAnswer(withAnswer answer: String, forType type: Type)
 }
 
-class ActivityModel {
+class ActivityModel: AnswerBankProtocol {
+    
+    var currentAnswers: [ResponseBody]
     
     var networkService: NetwotkingServiceProtocol
     var answerBank: AnswerBank
@@ -33,11 +35,9 @@ class ActivityModel {
         answerBank.saveUserAnswer(answer: answer, type: type)
     }
     
-    func loadAnswers() {
-        answerBank.loadAnswers()
-    }
-    init(networkService: NetwotkingService, answerBank: AnswerBank) {
+    init(networkService: NetwotkingService, answerBank: AnswerBank, currentAnswers: [ResponseBody]) {
         self.networkService = networkService
         self.answerBank = answerBank
+        self.currentAnswers = currentAnswers
     }
 }
