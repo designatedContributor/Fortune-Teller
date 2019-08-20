@@ -19,6 +19,9 @@
 		AA68B78C2309C49800226290 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B78B2309C49800226290 /* ActivityModel.swift */; };
 		AA68B78E230A0F0E00226290 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AA68B78D230A0F0E00226290 /* .gitignore */; };
 		AA93A59B230B1128004CACD2 /* AnswerBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA93A58A230B1128004CACD2 /* AnswerBank.swift */; };
+		AA93A5A9230C6EED004CACD2 /* DigitalStripBB_Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */; };
+		AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */; };
+		AA93A5AF230C7158004CACD2 /* DigitalStripBB_Ital.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		AA68B78B2309C49800226290 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		AA68B78D230A0F0E00226290 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		AA93A58A230B1128004CACD2 /* AnswerBank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerBank.swift; sourceTree = "<group>"; };
+		AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Reg.otf; sourceTree = "<group>"; };
+		AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_BoldItal.otf; sourceTree = "<group>"; };
+		AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Ital.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				AA68B76923098A3400226290 /* FortuneTeller */,
-				AA68B76823098A3400226290 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +68,7 @@
 				AA68B76723098A3400226290 /* FortuneTeller.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		AA68B76923098A3400226290 /* FortuneTeller */ = {
@@ -72,6 +78,8 @@
 				AA68B77E23098A5E00226290 /* Model */,
 				AA68B77F23098A8800226290 /* Views */,
 				AA68B78023098AB400226290 /* Controllers */,
+				AA93A5A7230C6E64004CACD2 /* Fonts */,
+				AA68B76823098A3400226290 /* Products */,
 				AA68B77823098A3600226290 /* Info.plist */,
 				AA68B78D230A0F0E00226290 /* .gitignore */,
 			);
@@ -115,6 +123,16 @@
 				AA68B77523098A3600226290 /* LaunchScreen.storyboard */,
 			);
 			path = Global;
+			sourceTree = "<group>";
+		};
+		AA93A5A7230C6E64004CACD2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */,
+				AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */,
+				AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,8 +193,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */,
+				AA93A5AF230C7158004CACD2 /* DigitalStripBB_Ital.otf in Resources */,
 				AA68B78E230A0F0E00226290 /* .gitignore in Resources */,
 				AA68B77723098A3600226290 /* LaunchScreen.storyboard in Resources */,
+				AA93A5A9230C6EED004CACD2 /* DigitalStripBB_Reg.otf in Resources */,
 				AA68B77423098A3600226290 /* Assets.xcassets in Resources */,
 				AA68B77223098A3400226290 /* Main.storyboard in Resources */,
 			);
