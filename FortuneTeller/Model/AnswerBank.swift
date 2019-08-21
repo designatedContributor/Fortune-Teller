@@ -18,6 +18,12 @@ class AnswerBank {
     
     var userAnswers = [ResponseBody(answer: "I believe in you", type: .Affirmative), ResponseBody(answer: "Don't mind", type: .Neutral), ResponseBody(answer: "Bad idea", type: .Contrary)]
     
+    func getRandomAnswer() -> (String, Type) {
+        let answer = userAnswers.randomElement()
+        let element = (answer!.answer, answer!.type)
+        return element
+    }
+    
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -54,11 +60,5 @@ class AnswerBank {
                 print("Error decoding item array: \(error.localizedDescription)")
             }
         }
-    }
-    
-    func getRandomAnswer() -> (String, Type) {
-       let answer = userAnswers.randomElement()
-       let element = (answer!.answer, answer!.type)
-       return element
     }
 }

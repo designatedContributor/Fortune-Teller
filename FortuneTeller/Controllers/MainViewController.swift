@@ -16,8 +16,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var answerView: UIView!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
     
     var isFlipped = false
+    
     var spectator = "" {
         didSet {
             flip()
@@ -26,15 +28,19 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityModel.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
         configureViews()
     }
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if isFlipped == false {
+            activityModel.giveAnswer()
+        }
+    }
     
-    @IBAction func getAnswerTapped(_ sender: Any) {
-        activityModel.giveAnswer()
+    @IBAction func closeButtonTapped(_ sender: Any) {
+        flip()
     }
     
     func flip() {
@@ -46,11 +52,10 @@ class MainViewController: UIViewController {
     
     func configureViews() {
         questionView.layer.cornerRadius = 20
-        questionView.clipsToBounds = true
         answerView.layer.cornerRadius = 20
-        answerView.clipsToBounds = true
         containerView.layer.cornerRadius = 20
-        containerView.clipsToBounds = true
+        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
+        answerView.clipsToBounds = true
     }
 }
 
@@ -62,10 +67,18 @@ extension MainViewController: ActivityModelProtocol {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
             self.spectator = answer
+            
             switch type {
-            case .Affirmative: self.answerView.backgroundColor = UIColor.green
-            case .Neutral: self.answerView.backgroundColor = UIColor.cyan
-            case .Contrary: self.answerView.backgroundColor = UIColor.red
+            
+            case .Affirmative:
+                self.answerView.backgroundColor = UIColor.MyColorTheme.Affirmative;
+                self.answerLabel.textColor = UIColor.MyColorTheme.AffirmativeText
+            case .Neutral:
+                self.answerView.backgroundColor = UIColor.MyColorTheme.Neutral;
+                self.answerLabel.textColor = UIColor.MyColorTheme.NeutralText
+            case .Contrary:
+                self.answerView.backgroundColor = UIColor.MyColorTheme.Contrary;
+                self.answerLabel.textColor = UIColor.red
             }
         }
     }

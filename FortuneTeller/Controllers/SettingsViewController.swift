@@ -12,6 +12,7 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var answerInputTextField: UITextField!
     @IBOutlet weak var typeTextField: UITextField!
+    @IBOutlet weak var saveAnswerButton: UIButton!
     @IBOutlet weak var warningLabel: UILabel!
     
     var activityModel: ActivityModel!
@@ -21,6 +22,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         warningLabel.isHidden = true
+        saveAnswerButton.layer.cornerRadius = 15
         createPickerView()
         createToolBar()
     }
@@ -56,7 +58,7 @@ class SettingsViewController: UIViewController {
             if let type = Type(rawValue: typeTextField.text!) {
                 activityModel.saveAnswer(answer: text, type: type)
                 didSaveAlert()
-                typeTextField.resignFirstResponder()
+                answerInputTextField.text = ""
             }
         } else {
           warningLabel.isHidden = false
@@ -64,6 +66,9 @@ class SettingsViewController: UIViewController {
     }
     
     func didSaveAlert() {
+        answerInputTextField.resignFirstResponder()
+        typeTextField.resignFirstResponder()
+        
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
         let ac = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)

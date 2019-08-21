@@ -15,25 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        let networkService = NetwotkingService()
-        let answerBank = AnswerBank()
-        let currentAnswers = answerBank.userAnswers
-        
-        
-        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank, currentAnswers: currentAnswers)
-        answerBank.delegate = activityModel
-        answerBank.loadAnswers()
-        
-        let tabBarController = window!.rootViewController as! UITabBarController
-        let mainViewController = tabBarController.viewControllers?[0] as? MainViewController
-        mainViewController?.activityModel = activityModel
-        
-        let settingsViewController = tabBarController.viewControllers?[1] as? SettingsViewController
-        settingsViewController?.activityModel = activityModel
-        
-        
+        // Override point for customization after application launch
         return true
     }
 
