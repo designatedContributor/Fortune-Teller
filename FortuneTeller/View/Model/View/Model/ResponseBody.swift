@@ -11,15 +11,15 @@ import Foundation
 struct ResponseBody: Codable {
     var answer: String = ""
     var question: String = ""
-    var type: Type = .Affirmative
+    var type: AnswerType = .Affirmative
     
-    init(answer: String, type: Type) {
+    init(answer: String, type: AnswerType) {
         self.answer = answer
         self.type = type
     }
 }
 
-enum Type: String, Codable {
+enum AnswerType: String, Codable {
     case Affirmative
     case Neutral
     case Contrary

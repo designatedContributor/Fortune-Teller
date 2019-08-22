@@ -10,16 +10,16 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    var activityModel: ActivityModel!
-    
+    //MARK: - Outlets
     @IBOutlet weak var questionView: UIView!
     @IBOutlet weak var answerView: UIView!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     
-    var isFlipped = false
+    var activityModel: ActivityModel!
     
+    var isFlipped = false
     var spectator = "" {
         didSet {
             flip()
@@ -28,14 +28,13 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewDidLayoutSubviews() {
         configureViews()
     }
+    
+    //MARK: - Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if isFlipped == false {
-            activityModel.giveAnswer()
+            activityModel?.giveAnswer()
         }
     }
     
@@ -60,10 +59,10 @@ class MainViewController: UIViewController {
 }
 
 
-
+//MARK: - Implementing ActivityModelProtocol
 extension MainViewController: ActivityModelProtocol {
     
-    func setAnswer(withAnswer answer: String, forType type: Type) {
+    func setAnswer(withAnswer answer: String, forType type: AnswerType) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
             self.spectator = answer

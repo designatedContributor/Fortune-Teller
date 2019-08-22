@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NetwotkingServiceProtocol {
+protocol NetwotkingServiceProtocol: class {
     func getData(withCompletion completion: @escaping (ResponseHeader?) -> Void)
 }
 
@@ -19,7 +19,13 @@ class NetwotkingService: NetwotkingServiceProtocol {
         let urlString = "https://8ball.delegator.com/magic/JSON/tell_me_smth"
         guard let url = URL(string: urlString) else { return }
         
-        let session = URLSession.shared.dataTask(with: url) { (data, respose, error) in
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 14.0
+        sessionConfig.timeoutIntervalForResource = 14.0
+        
+        let session = URLSession(configuration: sessionConfig)
+        
+        let request = session.dataTask(with: url) { (data, respose, error) in
             guard let data = data else { return completion(nil) }
             do {
                 let response = try JSONDecoder().decode(ResponseHeader.self, from: data)
@@ -28,6 +34,6 @@ class NetwotkingService: NetwotkingServiceProtocol {
                 print(error.localizedDescription)
             }
         }
-        session.resume()
+        request.resume()
+        }
     }
-}

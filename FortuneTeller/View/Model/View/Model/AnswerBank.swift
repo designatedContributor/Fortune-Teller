@@ -8,22 +8,22 @@
 
 import Foundation
 
-protocol AnswerBankProtocol: class {
-    var currentAnswers: [ResponseBody] { get set }
-}
-
 class AnswerBank {
-    
-    var delegate: AnswerBankProtocol!
     
     var userAnswers = [ResponseBody(answer: "I believe in you", type: .Affirmative), ResponseBody(answer: "Don't mind", type: .Neutral), ResponseBody(answer: "Bad idea", type: .Contrary)]
     
-    func getRandomAnswer() -> (String, Type) {
+    func getRandomAnswer() -> (String, AnswerType) {
         let answer = userAnswers.randomElement()
         let element = (answer!.answer, answer!.type)
         return element
     }
     
+    func isAnswerSaved(answer: String) -> Bool {
+        let isAnswerSaved = userAnswers.contains() { $0.answer == answer}
+        return isAnswerSaved
+    }
+    
+    //MARK: - Helper functions to get FilePath
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -33,12 +33,11 @@ class AnswerBank {
         return documentsDirectory().appendingPathComponent("Fortune-Teller.plist")
     }
     
-    
-    func saveUserAnswer(answer: String, type: Type) {
+    //MARK: - Saving data
+    func saveUserAnswer(answer: String, type: AnswerType) {
         
         let savingItem = ResponseBody(answer: answer, type: type)
         userAnswers.append(savingItem)
-        delegate.currentAnswers = userAnswers
         
         let encoder = PropertyListEncoder()
         do {
@@ -48,14 +47,13 @@ class AnswerBank {
             print(error.localizedDescription)
         }
     }
-    
+    //MARK: - Loading data
     func loadAnswers() {
         let path = dataFilePath()
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()
             do {
                 userAnswers = try decoder.decode([ResponseBody].self, from: data)
-                delegate.currentAnswers = userAnswers
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }

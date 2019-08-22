@@ -18,10 +18,8 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let currentAnswers = answerBank.userAnswers
         
-        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank, currentAnswers: currentAnswers)
-        answerBank.delegate = activityModel
+        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank)
         answerBank.loadAnswers()
         
         let mainViewController = self.viewControllers?[0] as? MainViewController
