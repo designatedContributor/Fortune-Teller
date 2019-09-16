@@ -10,17 +10,11 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    //Prepare active models
-    let networkService = NetwotkingService()
-    let answerBank = AnswerBank()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        let activityModel = ActivityModel(networkService: networkService, answerBank: answerBank)
-        answerBank.loadAnswers()
+        let activityModel = ActivityModel(networkService: NetwotkingService(), answerBank: AnswerBank())
+        activityModel.answerBank?.loadAnswers()
         
         let mainViewController = self.viewControllers?[0] as? MainViewController
         mainViewController?.activityModel = activityModel

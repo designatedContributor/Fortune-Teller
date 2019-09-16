@@ -11,10 +11,10 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     //MARK: - Outlets
-    @IBOutlet weak var answerInputTextField: UITextField!
-    @IBOutlet weak var typeTextField: UITextField!
-    @IBOutlet weak var saveAnswerButton: UIButton!
-    @IBOutlet weak var warningLabel: UILabel!
+    @IBOutlet private weak var answerInputTextField: UITextField!
+    @IBOutlet private weak var typeTextField: UITextField!
+    @IBOutlet private weak var saveAnswerButton: UIButton!
+    @IBOutlet private weak var warningLabel: UILabel!
     
     var activityModel: ActivityModel!
     
@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     
     
     //MARK: - Helper functions for UI
-    func createPickerView() {
+    private func createPickerView() {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
         typePicker.delegate = self
@@ -38,7 +38,7 @@ class SettingsViewController: UIViewController {
         typeTextField.inputView = typePicker
     }
     
-    func createToolBar() {
+    private func createToolBar() {
         let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 50)
         let toolBar = UIToolbar(frame: frame)
         let toolBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(toolBarButtonTapped))
@@ -49,7 +49,7 @@ class SettingsViewController: UIViewController {
     
     
     //MARK: - ACTIONS
-    @IBAction func saveAnswerTapped(_ sender: Any) {
+    @IBAction private func saveAnswerTapped(_ sender: Any) {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
         
@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController {
     }
     
     //MARK: - ALERTS
-    func didSaveAlert() {
+    private func didSaveAlert() {
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
         let ac = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
@@ -82,7 +82,7 @@ class SettingsViewController: UIViewController {
         present(ac, animated: true, completion: updateTextFields)
     }
     
-    func errorAlert() {
+    private func errorAlert() {
         let message = "The answer already exists"
         let ac = UIAlertController(title: "Sorry", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -90,7 +90,7 @@ class SettingsViewController: UIViewController {
         present(ac, animated: true, completion: updateTextFields)
     }
     
-    func updateTextFields() {
+    private func updateTextFields() {
         answerInputTextField.text = ""
     }
 }

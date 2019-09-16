@@ -86,8 +86,8 @@
 				AA93A5B6230C7B98004CACD2 /* Extensions */,
 				AA93A5A7230C6E64004CACD2 /* Fonts */,
 				AA68B76823098A3400226290 /* Products */,
+				AA79D019232F657600DEC678 /* Git */,
 				AA68B77823098A3600226290 /* Info.plist */,
-				AA68B78D230A0F0E00226290 /* .gitignore */,
 			);
 			path = FortuneTeller;
 			sourceTree = "<group>";
@@ -124,6 +124,14 @@
 				AA68B77323098A3600226290 /* Assets.xcassets */,
 			);
 			path = Global;
+			sourceTree = "<group>";
+		};
+		AA79D019232F657600DEC678 /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				AA68B78D230A0F0E00226290 /* .gitignore */,
+			);
+			path = Git;
 			sourceTree = "<group>";
 		};
 		AA93A5A7230C6E64004CACD2 /* Fonts */ = {

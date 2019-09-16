@@ -11,16 +11,16 @@ import UIKit
 class MainViewController: UIViewController {
 
     //MARK: - Outlets
-    @IBOutlet weak var questionView: UIView!
-    @IBOutlet weak var answerView: UIView!
-    @IBOutlet weak var answerLabel: UILabel!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet private weak var questionView: UIView!
+    @IBOutlet private weak var answerView: UIView!
+    @IBOutlet private weak var answerLabel: UILabel!
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var closeButton: UIButton!
     
     var activityModel: ActivityModel!
     
-    var isFlipped = false
-    var spectator = "" {
+    private var isFlipped = false
+    private var spectator = "" {
         didSet {
             flip()
         }
@@ -33,23 +33,23 @@ class MainViewController: UIViewController {
     
     //MARK: - Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if isFlipped == false {
+        if isFlipped == false && motion == .motionShake {
             activityModel?.giveAnswer()
         }
     }
     
-    @IBAction func closeButtonTapped(_ sender: Any) {
+    @IBAction private func closeButtonTapped(_ sender: Any) {
         flip()
     }
     
-    func flip() {
+    private func flip() {
         isFlipped = !isFlipped
         let fromView = isFlipped ? questionView : answerView
         let toView = isFlipped ? answerView : questionView
         UIView.transition(from: fromView!, to: toView!, duration: 1, options: [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews])
     }
     
-    func configureViews() {
+    private func configureViews() {
         questionView.layer.cornerRadius = 20
         answerView.layer.cornerRadius = 20
         containerView.layer.cornerRadius = 20

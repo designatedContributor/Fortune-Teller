@@ -14,8 +14,8 @@ protocol ActivityModelProtocol: class {
 
 class ActivityModel {
     
-    weak var networkService: NetwotkingServiceProtocol?
-    weak var answerBank: AnswerBank?
+    let networkService: NetwotkingService?
+    let answerBank: AnswerBank?
     weak var delegate: ActivityModelProtocol?
     
     func giveAnswer() {
