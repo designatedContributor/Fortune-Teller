@@ -19,7 +19,6 @@
 		AA68B77223098A3400226290 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA68B77023098A3400226290 /* Main.storyboard */; };
 		AA68B77423098A3600226290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA68B77323098A3600226290 /* Assets.xcassets */; };
 		AA68B77723098A3600226290 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA68B77523098A3600226290 /* LaunchScreen.storyboard */; };
-		AA68B78E230A0F0E00226290 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AA68B78D230A0F0E00226290 /* .gitignore */; };
 		AA69DB17230D42790072805E /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69DB16230D42790072805E /* MyButton.swift */; };
 		AA93A5A9230C6EED004CACD2 /* DigitalStripBB_Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */; };
 		AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */; };
@@ -42,7 +41,6 @@
 		AA68B77323098A3600226290 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA68B77623098A3600226290 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA68B77823098A3600226290 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA68B78D230A0F0E00226290 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		AA69DB16230D42790072805E /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Reg.otf; sourceTree = "<group>"; };
 		AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_BoldItal.otf; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 				AA93A5B6230C7B98004CACD2 /* Extensions */,
 				AA93A5A7230C6E64004CACD2 /* Fonts */,
 				AA68B76823098A3400226290 /* Products */,
-				AA79D019232F657600DEC678 /* Git */,
 				AA68B77823098A3600226290 /* Info.plist */,
 			);
 			path = FortuneTeller;
@@ -124,14 +121,6 @@
 				AA68B77323098A3600226290 /* Assets.xcassets */,
 			);
 			path = Global;
-			sourceTree = "<group>";
-		};
-		AA79D019232F657600DEC678 /* Git */ = {
-			isa = PBXGroup;
-			children = (
-				AA68B78D230A0F0E00226290 /* .gitignore */,
-			);
-			path = Git;
 			sourceTree = "<group>";
 		};
 		AA93A5A7230C6E64004CACD2 /* Fonts */ = {
@@ -213,7 +202,6 @@
 			files = (
 				AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */,
 				AA93A5AF230C7158004CACD2 /* DigitalStripBB_Ital.otf in Resources */,
-				AA68B78E230A0F0E00226290 /* .gitignore in Resources */,
 				AA68B77723098A3600226290 /* LaunchScreen.storyboard in Resources */,
 				AA93A5A9230C6EED004CACD2 /* DigitalStripBB_Reg.otf in Resources */,
 				AA68B77423098A3600226290 /* Assets.xcassets in Resources */,
