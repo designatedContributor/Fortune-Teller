@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    //MARK: - Outlets
+    // MARK: Outlets
     @IBOutlet private weak var questionView: UIView!
     @IBOutlet private weak var answerView: UIView!
     @IBOutlet private weak var answerLabel: UILabel!
@@ -31,8 +31,14 @@ class MainViewController: UIViewController {
         configureViews()
     }
     
-    //MARK: - Shake gesture
-    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    // MARK: Shake gesture
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if isFlipped == false && motion == .motionShake {
+            activityModel?.giveAnswer()
+        }
+    }
+    
+    override func motionCancelled(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if isFlipped == false && motion == .motionShake {
             activityModel?.giveAnswer()
         }
@@ -58,8 +64,7 @@ class MainViewController: UIViewController {
     }
 }
 
-
-//MARK: - Implementing ActivityModelProtocol
+// MARK: Implementing ActivityModelProtocol
 extension MainViewController: ActivityModelProtocol {
     
     func setAnswer(withAnswer answer: String, forType type: AnswerType) {
@@ -70,13 +75,13 @@ extension MainViewController: ActivityModelProtocol {
             switch type {
             
             case .Affirmative:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Affirmative;
-                self.answerLabel.textColor = UIColor.MyColorTheme.AffirmativeText
+                self.answerView.backgroundColor = UIColor(named: ColorName.affirmative)
+                self.answerLabel.textColor = UIColor(named: ColorName.affirmativeText)
             case .Neutral:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Neutral;
-                self.answerLabel.textColor = UIColor.MyColorTheme.NeutralText
+                self.answerView.backgroundColor = UIColor(named: ColorName.neutral)
+                self.answerLabel.textColor = UIColor(named: ColorName.neutralText)
             case .Contrary:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Contrary;
+                self.answerView.backgroundColor = UIColor(named: ColorName.contrary)
                 self.answerLabel.textColor = UIColor.red
             }
         }

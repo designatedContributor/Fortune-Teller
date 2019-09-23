@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    //MARK: - Outlets
+    // MARK: Outlets
     @IBOutlet private weak var answerInputTextField: UITextField!
     @IBOutlet private weak var typeTextField: UITextField!
     @IBOutlet private weak var saveAnswerButton: UIButton!
@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController {
     
     var activityModel: ActivityModel!
     
-    let typeArray : [AnswerType] = [.Affirmative, .Neutral, .Contrary]
+    let typeArray: [AnswerType] = [.Affirmative, .Neutral, .Contrary]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +28,7 @@ class SettingsViewController: UIViewController {
         createToolBar()
     }
     
-    
-    //MARK: - Helper functions for UI
+    // MARK: Helper functions for UI
     private func createPickerView() {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
@@ -47,8 +46,7 @@ class SettingsViewController: UIViewController {
         typeTextField.inputAccessoryView = toolBar
     }
     
-    
-    //MARK: - ACTIONS
+    // MARK: ACTIONS
     @IBAction private func saveAnswerTapped(_ sender: Any) {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
@@ -73,21 +71,21 @@ class SettingsViewController: UIViewController {
         typeTextField.resignFirstResponder()
     }
     
-    //MARK: - ALERTS
+    // MARK: ALERTS
     private func didSaveAlert() {
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
-        let ac = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-        ac.addAction(action)
-        present(ac, animated: true, completion: updateTextFields)
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: updateTextFields)
     }
     
     private func errorAlert() {
         let message = "The answer already exists"
-        let ac = UIAlertController(title: "Sorry", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Sorry", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        ac.addAction(action)
-        present(ac, animated: true, completion: updateTextFields)
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: updateTextFields)
     }
     
     private func updateTextFields() {
@@ -95,7 +93,7 @@ class SettingsViewController: UIViewController {
     }
 }
 
-//MARK: - UITextFieldDelegate
+// MARK: UITextFieldDelegate
 extension SettingsViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -126,7 +124,7 @@ extension SettingsViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: - UIPickerViewDelegate & DataSource
+// MARK: UIPickerViewDelegate & DataSource
 extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -147,4 +145,3 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         return typeArray.count
     }
 }
-

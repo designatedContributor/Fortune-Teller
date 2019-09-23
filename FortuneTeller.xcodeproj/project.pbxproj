@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0498632378BDADAB01271077 /* libPods-FortuneTeller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40B2BF791BB6A65821C21E5E /* libPods-FortuneTeller.a */; };
 		AA18C63F230DCC6A00DED0FA /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA18C63E230DCC6A00DED0FA /* TabBarViewController.swift */; };
-		AA3664D1230E763F00784E9F /* AnswerBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CC230E763F00784E9F /* AnswerBank.swift */; };
-		AA3664D2230E763F00784E9F /* ResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CD230E763F00784E9F /* ResponseBody.swift */; };
+		AA3664D1230E763F00784E9F /* UserDefaultAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CC230E763F00784E9F /* UserDefaultAnswer.swift */; };
+		AA3664D2230E763F00784E9F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CD230E763F00784E9F /* Response.swift */; };
 		AA3664D3230E763F00784E9F /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CE230E763F00784E9F /* ActivityModel.swift */; };
 		AA3664D4230E763F00784E9F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CF230E763F00784E9F /* NetworkingService.swift */; };
-		AA3664D5230E763F00784E9F /* ResponseHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664D0230E763F00784E9F /* ResponseHeader.swift */; };
+		AA3664D5230E763F00784E9F /* ResponsePackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664D0230E763F00784E9F /* ResponsePackage.swift */; };
 		AA68B76B23098A3400226290 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B76A23098A3400226290 /* AppDelegate.swift */; };
 		AA68B76D23098A3400226290 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B76C23098A3400226290 /* MainViewController.swift */; };
 		AA68B76F23098A3400226290 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA68B76E23098A3400226290 /* SettingsViewController.swift */; };
@@ -23,16 +24,18 @@
 		AA93A5A9230C6EED004CACD2 /* DigitalStripBB_Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */; };
 		AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */; };
 		AA93A5AF230C7158004CACD2 /* DigitalStripBB_Ital.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */; };
-		AA93A5B8230C7BB7004CACD2 /* MyColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA93A5B7230C7BB7004CACD2 /* MyColorTheme.swift */; };
+		AAA856132338ADC80044434B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA856122338ADC80044434B /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2671921815CFDBCADF757EB4 /* Pods-FortuneTeller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FortuneTeller.release.xcconfig"; path = "Target Support Files/Pods-FortuneTeller/Pods-FortuneTeller.release.xcconfig"; sourceTree = "<group>"; };
+		40B2BF791BB6A65821C21E5E /* libPods-FortuneTeller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FortuneTeller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA18C63E230DCC6A00DED0FA /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		AA3664CC230E763F00784E9F /* AnswerBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerBank.swift; sourceTree = "<group>"; };
-		AA3664CD230E763F00784E9F /* ResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseBody.swift; sourceTree = "<group>"; };
+		AA3664CC230E763F00784E9F /* UserDefaultAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultAnswer.swift; sourceTree = "<group>"; };
+		AA3664CD230E763F00784E9F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		AA3664CE230E763F00784E9F /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		AA3664CF230E763F00784E9F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
-		AA3664D0230E763F00784E9F /* ResponseHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHeader.swift; sourceTree = "<group>"; };
+		AA3664D0230E763F00784E9F /* ResponsePackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePackage.swift; sourceTree = "<group>"; };
 		AA68B76723098A3400226290 /* FortuneTeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FortuneTeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA68B76A23098A3400226290 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA68B76C23098A3400226290 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -45,7 +48,8 @@
 		AA93A5A8230C6EE8004CACD2 /* DigitalStripBB_Reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Reg.otf; sourceTree = "<group>"; };
 		AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_BoldItal.otf; sourceTree = "<group>"; };
 		AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Ital.otf; sourceTree = "<group>"; };
-		AA93A5B7230C7BB7004CACD2 /* MyColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColorTheme.swift; sourceTree = "<group>"; };
+		AAA856122338ADC80044434B /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		CAFC13C6B76309D51D0E210A /* Pods-FortuneTeller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FortuneTeller.debug.xcconfig"; path = "Target Support Files/Pods-FortuneTeller/Pods-FortuneTeller.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,16 +57,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0498632378BDADAB01271077 /* libPods-FortuneTeller.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DA429CDFE454755B8646E2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40B2BF791BB6A65821C21E5E /* libPods-FortuneTeller.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A37F4AAB59EB9F1CDF585A35 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CAFC13C6B76309D51D0E210A /* Pods-FortuneTeller.debug.xcconfig */,
+				2671921815CFDBCADF757EB4 /* Pods-FortuneTeller.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		AA68B75E23098A3400226290 = {
 			isa = PBXGroup;
 			children = (
 				AA68B76923098A3400226290 /* FortuneTeller */,
+				A37F4AAB59EB9F1CDF585A35 /* Pods */,
+				2DA429CDFE454755B8646E2E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +107,7 @@
 				AA68B78023098AB400226290 /* Controllers */,
 				AA93A5B6230C7B98004CACD2 /* Extensions */,
 				AA93A5A7230C6E64004CACD2 /* Fonts */,
+				AAA8560823381D440044434B /* Swiftgen */,
 				AA68B76823098A3400226290 /* Products */,
 				AA68B77823098A3600226290 /* Info.plist */,
 			);
@@ -93,10 +118,10 @@
 			isa = PBXGroup;
 			children = (
 				AA3664CE230E763F00784E9F /* ActivityModel.swift */,
-				AA3664CC230E763F00784E9F /* AnswerBank.swift */,
 				AA3664CF230E763F00784E9F /* NetworkingService.swift */,
-				AA3664D0230E763F00784E9F /* ResponseHeader.swift */,
-				AA3664CD230E763F00784E9F /* ResponseBody.swift */,
+				AA3664CC230E763F00784E9F /* UserDefaultAnswer.swift */,
+				AA3664D0230E763F00784E9F /* ResponsePackage.swift */,
+				AA3664CD230E763F00784E9F /* Response.swift */,
 			);
 			name = Model;
 			path = View/Model/View/Model;
@@ -136,10 +161,17 @@
 		AA93A5B6230C7B98004CACD2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AA93A5B7230C7BB7004CACD2 /* MyColorTheme.swift */,
 				AA69DB16230D42790072805E /* MyButton.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AAA8560823381D440044434B /* Swiftgen */ = {
+			isa = PBXGroup;
+			children = (
+				AAA856122338ADC80044434B /* Colors.swift */,
+			);
+			path = Swiftgen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +181,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA68B77B23098A3600226290 /* Build configuration list for PBXNativeTarget "FortuneTeller" */;
 			buildPhases = (
+				E701112DFAFC28D5B9F53979 /* [CP] Check Pods Manifest.lock */,
+				AAA8560F2338315D0044434B /* ShellScript */,
+				AA04D0BE2334C8F5003E84FA /* Run Script */,
 				AA68B76323098A3400226290 /* Sources */,
 				AA68B76423098A3400226290 /* Frameworks */,
 				AA68B76523098A3400226290 /* Resources */,
@@ -211,22 +246,82 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		AA04D0BE2334C8F5003E84FA /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		AAA8560F2338315D0044434B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen\n";
+		};
+		E701112DFAFC28D5B9F53979 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FortuneTeller-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AA68B76323098A3400226290 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA3664D1230E763F00784E9F /* AnswerBank.swift in Sources */,
-				AA3664D2230E763F00784E9F /* ResponseBody.swift in Sources */,
+				AA3664D1230E763F00784E9F /* UserDefaultAnswer.swift in Sources */,
+				AAA856132338ADC80044434B /* Colors.swift in Sources */,
+				AA3664D2230E763F00784E9F /* Response.swift in Sources */,
 				AA3664D3230E763F00784E9F /* ActivityModel.swift in Sources */,
 				AA3664D4230E763F00784E9F /* NetworkingService.swift in Sources */,
-				AA3664D5230E763F00784E9F /* ResponseHeader.swift in Sources */,
+				AA3664D5230E763F00784E9F /* ResponsePackage.swift in Sources */,
 				AA68B76F23098A3400226290 /* SettingsViewController.swift in Sources */,
 				AA68B76B23098A3400226290 /* AppDelegate.swift in Sources */,
 				AA68B76D23098A3400226290 /* MainViewController.swift in Sources */,
 				AA18C63F230DCC6A00DED0FA /* TabBarViewController.swift in Sources */,
 				AA69DB17230D42790072805E /* MyButton.swift in Sources */,
-				AA93A5B8230C7BB7004CACD2 /* MyColorTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,11 +465,13 @@
 		};
 		AA68B77C23098A3600226290 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CAFC13C6B76309D51D0E210A /* Pods-FortuneTeller.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 537J3SL25R;
 				INFOPLIST_FILE = FortuneTeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -388,11 +485,13 @@
 		};
 		AA68B77D23098A3600226290 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2671921815CFDBCADF757EB4 /* Pods-FortuneTeller.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 537J3SL25R;
 				INFOPLIST_FILE = FortuneTeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

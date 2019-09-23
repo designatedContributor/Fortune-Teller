@@ -1,0 +1,5 @@
+colors:
+  inputs: FortuneTeller/colors.txt
+  outputs:
+    templateName: swift4
+    output: FortuneTeller/Swiftgen/Colors.swift
