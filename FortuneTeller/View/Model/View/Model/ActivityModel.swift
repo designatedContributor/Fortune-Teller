@@ -13,14 +13,14 @@ protocol ActivityModelProtocol: class {
 }
 
 class ActivityModel {
-    
+
     let networkService: NetwotkingService?
     let userDefaultAnswer: UserDefaultAnswer?
     weak var delegate: ActivityModelProtocol?
-    
+
     func giveAnswer() {
-        networkService?.getDataFromServer { networkAnswer in
-            if let networkAnswer = networkAnswer {
+        networkService?.getAnswer { answer in
+            if let networkAnswer = answer {
                 self.delegate?.setAnswer(withAnswer: networkAnswer.singleResponse.answer, forType: networkAnswer.singleResponse.type)
             } else {
                 guard let defaultAnswer = self.userDefaultAnswer?.getRandomAnswer() else { return }
@@ -28,16 +28,16 @@ class ActivityModel {
             }
         }
     }
-    
+
     func saveAnswer(answer: String, type: AnswerType) {
-        userDefaultAnswer?.saveUserAnswer(answer: answer, type: type)
+        userDefaultAnswer?.save(answer: answer, type: type)
     }
-    
+
     func isSaved(answer: String) -> Bool? {
         let result = userDefaultAnswer?.isAnswerSaved(answer: answer)
         return result
     }
-    
+
     init(networkService: NetwotkingService, userDefaultAnswer: UserDefaultAnswer) {
         self.networkService = networkService
         self.userDefaultAnswer = userDefaultAnswer

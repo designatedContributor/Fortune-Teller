@@ -11,8 +11,8 @@ import Foundation
 struct Response: Codable {
     var answer: String = ""
     var question: String = ""
-    var type: AnswerType = .Affirmative
-    
+    var type: AnswerType = .affirmative
+
     init(answer: String, type: AnswerType) {
         self.answer = answer
         self.type = type
@@ -20,10 +20,10 @@ struct Response: Codable {
 }
 
 enum AnswerType: String, Codable {
-    case Affirmative
-    case Neutral
-    case Contrary
-    
+    case affirmative = "Affirmative"
+    case neutral = "Neutral"
+    case contrary = "Contrary"
+
     func toString() -> String {
         return self.rawValue
     }

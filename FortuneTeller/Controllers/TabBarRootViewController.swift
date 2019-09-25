@@ -9,10 +9,10 @@
 import UIKit
 
 class TabBarRootVC: UITabBarController {
-    
+
     let networkService = NetwotkingService()
     let answerBank = AnswerBank()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

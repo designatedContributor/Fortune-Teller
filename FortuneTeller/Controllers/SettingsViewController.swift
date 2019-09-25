@@ -9,17 +9,17 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-    
+
     // MARK: Outlets
     @IBOutlet private weak var answerInputTextField: UITextField!
     @IBOutlet private weak var typeTextField: UITextField!
     @IBOutlet private weak var saveAnswerButton: UIButton!
     @IBOutlet private weak var warningLabel: UILabel!
-    
+
     var activityModel: ActivityModel!
-    
-    let typeArray: [AnswerType] = [.Affirmative, .Neutral, .Contrary]
-    
+
+    let types: [AnswerType] = [.affirmative, .neutral, .contrary]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         warningLabel.isHidden = true
@@ -27,16 +27,16 @@ class SettingsViewController: UIViewController {
         createPickerView()
         createToolBar()
     }
-    
+
     // MARK: Helper functions for UI
     private func createPickerView() {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
         typePicker.delegate = self
-        typeTextField.text = typeArray[0].toString()
+        typeTextField.text = types[0].toString()
         typeTextField.inputView = typePicker
     }
-    
+
     private func createToolBar() {
         let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 50)
         let toolBar = UIToolbar(frame: frame)
@@ -45,16 +45,16 @@ class SettingsViewController: UIViewController {
         toolBar.setItems([flexButton, toolBarButton], animated: true)
         typeTextField.inputAccessoryView = toolBar
     }
-    
+
     // MARK: ACTIONS
     @IBAction private func saveAnswerTapped(_ sender: Any) {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
-        
+
         guard let text = answerInputTextField.text else { return }
         let isAnswerSaved = activityModel.isSaved(answer: text)
         guard let isSaved = isAnswerSaved else { return }
-        
+
         if isSaved {
             errorAlert()
         } else if text.count != 0 {
@@ -66,11 +66,11 @@ class SettingsViewController: UIViewController {
           warningLabel.isHidden = false
         }
     }
-    
+
     @objc func toolBarButtonTapped() {
         typeTextField.resignFirstResponder()
     }
-    
+
     // MARK: ALERTS
     private func didSaveAlert() {
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
@@ -79,15 +79,14 @@ class SettingsViewController: UIViewController {
         alertController.addAction(action)
         present(alertController, animated: true, completion: updateTextFields)
     }
-    
+
     private func errorAlert() {
-        let message = "The answer already exists"
-        let alertController = UIAlertController(title: "Sorry", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Sorry", message: L10n.theAnswerAlreadyExists, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(action)
         present(alertController, animated: true, completion: updateTextFields)
     }
-    
+
     private func updateTextFields() {
         answerInputTextField.text = ""
     }
@@ -95,15 +94,15 @@ class SettingsViewController: UIViewController {
 
 // MARK: UITextFieldDelegate
 extension SettingsViewController: UITextFieldDelegate {
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
+
         if textField == answerInputTextField {
-            
+
             let currentText = textField.text ?? ""
             guard let stringRange = Range(range, in: currentText) else { return false }
             let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-            
+
             if updatedText.count == 0 {
                 warningLabel.isHidden = false
             } else {
@@ -112,9 +111,9 @@ extension SettingsViewController: UITextFieldDelegate {
             }
             return true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
+
         if textField == answerInputTextField {
             typeTextField.becomeFirstResponder()
         } else {
@@ -126,22 +125,22 @@ extension SettingsViewController: UITextFieldDelegate {
 
 // MARK: UIPickerViewDelegate & DataSource
 extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let item = typeArray[row]
+        let item = types[row]
         return item.toString()
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let item = typeArray[row]
+        let item = types[row]
         typeTextField.text = item.toString()
     }
-    
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return typeArray.count
+        return types.count
     }
 }
