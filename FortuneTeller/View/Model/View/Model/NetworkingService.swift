@@ -7,33 +7,25 @@
 //
 
 import Foundation
+import Alamofire
 
-protocol NetwotkingServiceProtocol: class {
-    func getData(withCompletion completion: @escaping (ResponseHeader?) -> Void)
-}
+final class NetwotkingService {
 
-class NetwotkingService: NetwotkingServiceProtocol {
-    
-    func getData(withCompletion completion: @escaping (ResponseHeader?) -> Void) {
-        
-        let urlString = "https://8ball.delegator.com/magic/JSON/tell_me_smth"
-        guard let url = URL(string: urlString) else { return }
-        
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 14.0
-        sessionConfig.timeoutIntervalForResource = 14.0
-        
-        let session = URLSession(configuration: sessionConfig)
-        
-        let request = session.dataTask(with: url) { (data, respose, error) in
-            guard let data = data else { return completion(nil) }
+    func getAnswer(withCompletion completion: @escaping (ResponsePackage?) -> Void) {
+
+        guard let url = URL(string: "https://8ball.delegator.com/magic/JSON/tell_me_smth") else { return }
+        var requestSetup = URLRequest(url: url)
+        requestSetup.timeoutInterval = 4.0
+
+        AF.request(requestSetup).responseJSON { response in
+            guard let json = response.data else { return completion(nil) }
             do {
-                let response = try JSONDecoder().decode(ResponseHeader.self, from: data)
+                let response = try JSONDecoder().decode(ResponsePackage.self, from: json)
+                print(response)
                 completion(response)
             } catch {
-                print(error.localizedDescription)
+                print("Error here\(error)")
             }
         }
-        request.resume()
-        }
     }
+}

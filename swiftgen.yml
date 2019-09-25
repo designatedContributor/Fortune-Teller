@@ -1,0 +1,16 @@
+strings:
+    inputs: FortuneTeller/Global/Base.lproj
+    filter: .+\.strings$
+    outputs:
+    - templateName: structured-swift4
+      output: FortuneTeller/Swiftgen/strings.swift
+colors:
+  inputs: FortuneTeller/colors.txt
+  outputs:
+    - templateName: swift4
+      output: FortuneTeller/Swiftgen/colors.swift
+xcassets:
+  inputs: FortuneTeller/Global/Assets.xcassets
+  outputs:
+    - templateName: swift4
+      output: FortuneTeller/Swiftgen/assets-images.swift

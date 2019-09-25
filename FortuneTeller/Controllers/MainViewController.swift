@@ -10,45 +10,45 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    //MARK: - Outlets
+    // MARK: Outlets
     @IBOutlet private weak var questionView: UIView!
     @IBOutlet private weak var answerView: UIView!
     @IBOutlet private weak var answerLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var closeButton: UIButton!
-    
+
     var activityModel: ActivityModel!
-    
+    private var timer = Timer()
     private var isFlipped = false
     private var spectator = "" {
         didSet {
             flip()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
     }
-    
-    //MARK: - Shake gesture
+
+    // MARK: Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if isFlipped == false && motion == .motionShake {
             activityModel?.giveAnswer()
         }
     }
-    
+
     @IBAction private func closeButtonTapped(_ sender: Any) {
         flip()
     }
-    
+
     private func flip() {
         isFlipped = !isFlipped
         let fromView = isFlipped ? questionView : answerView
         let toView = isFlipped ? answerView : questionView
         UIView.transition(from: fromView!, to: toView!, duration: 1, options: [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews])
     }
-    
+
     private func configureViews() {
         questionView.layer.cornerRadius = 20
         answerView.layer.cornerRadius = 20
@@ -58,25 +58,23 @@ class MainViewController: UIViewController {
     }
 }
 
-
-//MARK: - Implementing ActivityModelProtocol
+// MARK: Implementing ActivityModelProtocol
 extension MainViewController: ActivityModelProtocol {
-    
+
     func setAnswer(withAnswer answer: String, forType type: AnswerType) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
             self.spectator = answer
-            
+
             switch type {
-            
-            case .Affirmative:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Affirmative;
-                self.answerLabel.textColor = UIColor.MyColorTheme.AffirmativeText
-            case .Neutral:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Neutral;
-                self.answerLabel.textColor = UIColor.MyColorTheme.NeutralText
-            case .Contrary:
-                self.answerView.backgroundColor = UIColor.MyColorTheme.Contrary;
+            case .affirmative:
+                self.answerView.backgroundColor = UIColor(named: ColorName.affirmative)
+                self.answerLabel.textColor = UIColor(named: ColorName.affirmativeText)
+            case .neutral:
+                self.answerView.backgroundColor = UIColor(named: ColorName.neutral)
+                self.answerLabel.textColor = UIColor(named: ColorName.neutralText)
+            case .contrary:
+                self.answerView.backgroundColor = UIColor(named: ColorName.contrary)
                 self.answerLabel.textColor = UIColor.red
             }
         }

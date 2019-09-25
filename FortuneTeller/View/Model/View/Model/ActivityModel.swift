@@ -13,33 +13,33 @@ protocol ActivityModelProtocol: class {
 }
 
 class ActivityModel {
-    
+
     let networkService: NetwotkingService?
-    let answerBank: AnswerBank?
+    let userDefaultAnswer: UserDefaultAnswer?
     weak var delegate: ActivityModelProtocol?
-    
+
     func giveAnswer() {
-        networkService?.getData() { networkAnswer in
-            if let networkAnswer = networkAnswer {
-                self.delegate?.setAnswer(withAnswer: networkAnswer.magic.answer, forType: networkAnswer.magic.type)
+        networkService?.getAnswer { answer in
+            if let networkAnswer = answer {
+                self.delegate?.setAnswer(withAnswer: networkAnswer.singleResponse.answer, forType: networkAnswer.singleResponse.type)
             } else {
-                let answerFromBank = self.answerBank?.getRandomAnswer()
-                self.delegate?.setAnswer(withAnswer: answerFromBank!.0, forType: answerFromBank!.1)
+                guard let defaultAnswer = self.userDefaultAnswer?.getRandomAnswer() else { return }
+                self.delegate?.setAnswer(withAnswer: defaultAnswer.answer, forType: defaultAnswer.type)
             }
         }
     }
-    
+
     func saveAnswer(answer: String, type: AnswerType) {
-        answerBank?.saveUserAnswer(answer: answer, type: type)
+        userDefaultAnswer?.save(answer: answer, type: type)
     }
-    
+
     func isSaved(answer: String) -> Bool? {
-        let result = answerBank?.isAnswerSaved(answer: answer)
+        let result = userDefaultAnswer?.isAnswerSaved(answer: answer)
         return result
     }
-    
-    init(networkService: NetwotkingService, answerBank: AnswerBank) {
+
+    init(networkService: NetwotkingService, userDefaultAnswer: UserDefaultAnswer) {
         self.networkService = networkService
-        self.answerBank = answerBank
+        self.userDefaultAnswer = userDefaultAnswer
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIButton {
-    
+
     func roundCorners(corners: UIRectCorner, radius: Int = 20) {
         let maskPath = UIBezierPath(roundedRect: bounds,
                                     byRoundingCorners: corners,

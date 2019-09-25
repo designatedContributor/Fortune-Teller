@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct ResponseHeader: Codable {
-    var magic: ResponseBody
+struct ResponsePackage: Codable {
+    var singleResponse: Response
+
+    enum CodingKeys: String, CodingKey {
+        case singleResponse = "magic"
+    }
 }

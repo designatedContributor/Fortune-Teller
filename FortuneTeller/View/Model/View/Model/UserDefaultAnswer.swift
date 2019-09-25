@@ -8,37 +8,39 @@
 
 import Foundation
 
-class AnswerBank {
-    
-    var userAnswers = [ResponseBody(answer: "I believe in you", type: .Affirmative), ResponseBody(answer: "Don't mind", type: .Neutral), ResponseBody(answer: "Bad idea", type: .Contrary)]
-    
-    func getRandomAnswer() -> (String, AnswerType) {
+final class UserDefaultAnswer {
+
+    var userAnswers = [Response(answer: "I believe in you", type: .affirmative),
+                       Response(answer: "Don't mind", type: .neutral),
+                       Response(answer: "Bad idea", type: .contrary)]
+
+    func getRandomAnswer() -> (answer: String, type: AnswerType) {
         let answer = userAnswers.randomElement()
         let element = (answer!.answer, answer!.type)
         return element
     }
-    
+
     func isAnswerSaved(answer: String) -> Bool {
-        let isAnswerSaved = userAnswers.contains() { $0.answer == answer}
+        let isAnswerSaved = userAnswers.contains { $0.answer == answer }
         return isAnswerSaved
     }
-    
-    //MARK: - Helper functions to get FilePath
-    func documentsDirectory() -> URL {
+
+    // MARK: Helper functions to get FilePath
+    private func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
-    func dataFilePath() -> URL {
+
+    private func dataFilePath() -> URL {
         return documentsDirectory().appendingPathComponent("Fortune-Teller.plist")
     }
-    
-    //MARK: - Saving data
-    func saveUserAnswer(answer: String, type: AnswerType) {
-        
-        let savingItem = ResponseBody(answer: answer, type: type)
+
+    // MARK: Saving data
+    func save(answer: String, type: AnswerType) {
+
+        let savingItem = Response(answer: answer, type: type)
         userAnswers.append(savingItem)
-        
+
         let encoder = PropertyListEncoder()
         do {
             let data = try encoder.encode(userAnswers)
@@ -47,13 +49,14 @@ class AnswerBank {
             print(error.localizedDescription)
         }
     }
-    //MARK: - Loading data
+
+    // MARK: Loading data
     func loadAnswers() {
         let path = dataFilePath()
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()
             do {
-                userAnswers = try decoder.decode([ResponseBody].self, from: data)
+                userAnswers = try decoder.decode([Response].self, from: data)
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }
