@@ -105,7 +105,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Main" image="8-ball-inside-a-circle-2" id="acW-dT-cKf">
+                    <tabBarItem key="tabBarItem" title="Main" id="acW-dT-cKf">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
@@ -181,7 +181,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="gear" selectedImage="gear" id="cPa-gy-q4n">
+                    <tabBarItem key="tabBarItem" title="Settings" id="cPa-gy-q4n">
                         <color key="badgeColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     </tabBarItem>
                     <connections>
@@ -215,8 +215,4 @@
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="8-ball-inside-a-circle-2" width="35" height="35"/>
-        <image name="gear" width="32" height="32"/>
-    </resources>
 </document>

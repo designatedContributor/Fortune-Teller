@@ -18,9 +18,11 @@ class TabBarViewController: UITabBarController {
 
         let mainViewController = self.viewControllers?[0] as? MainViewController
         mainViewController?.activityModel = activityModel
+        mainViewController?.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
         activityModel.delegate = mainViewController
 
         let settingsViewController = self.viewControllers?[1] as? SettingsViewController
         settingsViewController?.activityModel = activityModel
+        settingsViewController?.tabBarItem.image = UIImage(asset: Asset.gear)
     }
 }
