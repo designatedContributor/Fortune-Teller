@@ -8,24 +8,21 @@
 
 import Foundation
 
-protocol ActivityModelProtocol: class {
-    func setAnswer(withAnswer answer: String, forType type: AnswerType)
-}
-
-class ActivityModel {
+class ActiveModel {
 
     let networkService: NetwotkingService?
     let userDefaultAnswer: UserDefaultAnswer?
-    weak var delegate: ActivityModelProtocol?
 
-    func giveAnswer() {
-        networkService?.getAnswer { answer in
-            if let networkAnswer = answer {
-                self.delegate?.setAnswer(withAnswer: networkAnswer.singleResponse.answer, forType: networkAnswer.singleResponse.type)
-            } else {
-                guard let defaultAnswer = self.userDefaultAnswer?.getRandomAnswer() else { return }
-                self.delegate?.setAnswer(withAnswer: defaultAnswer.answer, forType: defaultAnswer.type)
-            }
+    var response: ((String, AnswerType) -> Void)? {
+        didSet {
+            networkService?.getAnswer(withCompletion: { answer in
+                if let networkAnswer = answer {
+                    self.response?(networkAnswer.singleResponse.answer, networkAnswer.singleResponse.type)
+                } else {
+                    guard let defaultAnswer = self.userDefaultAnswer?.getRandomAnswer() else { return }
+                    self.response?(defaultAnswer.answer, defaultAnswer.type)
+                }
+            })
         }
     }
 

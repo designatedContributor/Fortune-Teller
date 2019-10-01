@@ -17,14 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var closeButton: UIButton!
 
-    var activityModel: ActivityModel!
-    private var timer = Timer()
-    private var isFlipped = false
-    private var spectator = "" {
-        didSet {
-            flip()
-        }
-    }
+    var mainViewModel: MainViewModel! //required to be implicit by contract
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,39 +26,28 @@ class MainViewController: UIViewController {
 
     // MARK: Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if isFlipped == false && motion == .motionShake {
-            activityModel?.giveAnswer()
+        if motion == .motionShake {
+            mainViewModel?.response = { [weak self] (answer, type) in
+                self?.setAnswer(answer: answer, type: type)
+                self?.flip()
+            }
         }
+    }
+
+    private func flip() {
+        mainViewModel.isFlipped = !mainViewModel.isFlipped
+        let fromView = mainViewModel.isFlipped ? questionView : answerView
+        let toView = mainViewModel.isFlipped ? answerView : questionView
+        UIView.transition(from: fromView!, to: toView!, duration: 1, options: [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews])
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {
         flip()
     }
 
-    private func flip() {
-        isFlipped = !isFlipped
-        let fromView = isFlipped ? questionView : answerView
-        let toView = isFlipped ? answerView : questionView
-        UIView.transition(from: fromView!, to: toView!, duration: 1, options: [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews])
-    }
-
-    private func configureViews() {
-        questionView.layer.cornerRadius = 20
-        answerView.layer.cornerRadius = 20
-        containerView.layer.cornerRadius = 20
-        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
-        answerView.clipsToBounds = true
-    }
-}
-
-// MARK: Implementing ActivityModelProtocol
-extension MainViewController: ActivityModelProtocol {
-
-    func setAnswer(withAnswer answer: String, forType type: AnswerType) {
+    private func setAnswer(answer: String, type: AnswerType) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
-            self.spectator = answer
-
             switch type {
             case .affirmative:
                 self.answerView.backgroundColor = UIColor(named: ColorName.affirmative)
@@ -78,5 +60,13 @@ extension MainViewController: ActivityModelProtocol {
                 self.answerLabel.textColor = UIColor.red
             }
         }
+    }
+
+    private func configureViews() {
+        questionView.layer.cornerRadius = 20
+        answerView.layer.cornerRadius = 20
+        containerView.layer.cornerRadius = 20
+        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
+        answerView.clipsToBounds = true
     }
 }

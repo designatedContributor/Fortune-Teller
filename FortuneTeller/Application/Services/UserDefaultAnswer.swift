@@ -14,10 +14,9 @@ final class UserDefaultAnswer {
                        Response(answer: "Don't mind", type: .neutral),
                        Response(answer: "Bad idea", type: .contrary)]
 
-    func getRandomAnswer() -> (answer: String, type: AnswerType) {
-        let answer = userAnswers.randomElement()
-        let element = (answer!.answer, answer!.type)
-        return element
+    func getRandomAnswer() -> Response {
+        guard let answer = userAnswers.randomElement() else { return Response(answer: "Oops", type: .contrary) }
+        return answer
     }
 
     func isAnswerSaved(answer: String) -> Bool {

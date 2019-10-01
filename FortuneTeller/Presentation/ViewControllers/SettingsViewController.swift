@@ -16,14 +16,16 @@ class SettingsViewController: UIViewController {
     @IBOutlet private weak var saveAnswerButton: UIButton!
     @IBOutlet private weak var warningLabel: UILabel!
 
-    var activityModel: ActivityModel!
+    var settingsViewModel: SettingsViewModel! //required to be implicit by contract
 
-    let types: [AnswerType] = [.affirmative, .neutral, .contrary]
-
+    // MARK: Viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         warningLabel.isHidden = true
         saveAnswerButton.layer.cornerRadius = 15
+
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
+        view.addGestureRecognizer(gesture)
         createPickerView()
         createToolBar()
     }
@@ -33,17 +35,26 @@ class SettingsViewController: UIViewController {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
         typePicker.delegate = self
-        typeTextField.text = types[0].toString()
+        typeTextField.text = settingsViewModel.types[0].toString()
         typeTextField.inputView = typePicker
     }
 
     private func createToolBar() {
         let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 50)
         let toolBar = UIToolbar(frame: frame)
-        let toolBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(toolBarButtonTapped))
+        let toolBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(hideKeyBoard))
         let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         toolBar.setItems([flexButton, toolBarButton], animated: true)
         typeTextField.inputAccessoryView = toolBar
+    }
+
+    @objc func hideKeyBoard() {
+        typeTextField.resignFirstResponder()
+        view.endEditing(true)
+    }
+
+    private func updateTextFields() {
+        answerInputTextField.text = ""
     }
 
     // MARK: ACTIONS
@@ -51,28 +62,19 @@ class SettingsViewController: UIViewController {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
 
+        guard let type = AnswerType(rawValue: typeTextField.text!) else { return }
         guard let text = answerInputTextField.text else { return }
-        let isAnswerSaved = activityModel.isSaved(answer: text)
-        guard let isSaved = isAnswerSaved else { return }
 
-        if isSaved {
-            errorAlert()
-        } else if text.count != 0 {
-            if let type = AnswerType(rawValue: typeTextField.text!) {
-                activityModel?.saveAnswer(answer: text, type: type)
-                didSaveAlert()
-            }
-        } else {
-          warningLabel.isHidden = false
-        }
+        settingsViewModel.saveAnswer(answer: text, type: type)
+    }
+}
+
+extension SettingsViewController: SettingsViewModelProtocol {
+    func displayWarning() {
+        warningLabel.isHidden = false
     }
 
-    @objc func toolBarButtonTapped() {
-        typeTextField.resignFirstResponder()
-    }
-
-    // MARK: ALERTS
-    private func didSaveAlert() {
+    func didSaveAlert() {
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
         let alertController = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
@@ -80,30 +82,24 @@ class SettingsViewController: UIViewController {
         present(alertController, animated: true, completion: updateTextFields)
     }
 
-    private func errorAlert() {
+    func errorAlert() {
         let alertController = UIAlertController(title: "Sorry", message: L10n.theAnswerAlreadyExists, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(action)
         present(alertController, animated: true, completion: updateTextFields)
     }
-
-    private func updateTextFields() {
-        answerInputTextField.text = ""
-    }
 }
 
 // MARK: UITextFieldDelegate
 extension SettingsViewController: UITextFieldDelegate {
-
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
         if textField == answerInputTextField {
 
             let currentText = textField.text ?? ""
             guard let stringRange = Range(range, in: currentText) else { return false }
             let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-            if updatedText.count == 0 {
+            if updatedText.isEmpty {
                 warningLabel.isHidden = false
             } else {
                 warningLabel.isHidden = true
@@ -113,7 +109,6 @@ extension SettingsViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
         if textField == answerInputTextField {
             typeTextField.becomeFirstResponder()
         } else {
@@ -125,22 +120,21 @@ extension SettingsViewController: UITextFieldDelegate {
 
 // MARK: UIPickerViewDelegate & DataSource
 extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let item = types[row]
-        return item.toString()
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let item = types[row]
-        typeTextField.text = item.toString()
-    }
-
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let item = settingsViewModel.types[row]
+        return item.toString()
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let item = settingsViewModel.types[row]
+        typeTextField.text = item.toString()
+    }
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return types.count
+        return settingsViewModel.types.count
     }
 }
