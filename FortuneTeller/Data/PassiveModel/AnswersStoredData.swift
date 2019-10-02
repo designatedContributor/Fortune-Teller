@@ -19,10 +19,3 @@ struct AnswersStoredData: Codable {
         self.type = type
     }
 }
-
-extension AnswersStoredData {
-    func toAnswersData(_ response: AnswersStoredData) -> AnswersData {
-        let result = AnswersData(answer: response.answer, type: response.type)
-        return result
-    }
-}

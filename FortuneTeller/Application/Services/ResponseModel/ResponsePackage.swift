@@ -15,10 +15,3 @@ struct ResponsePackage: Codable {
         case singleResponse = "magic"
     }
 }
-
-extension ResponsePackage {
-    func toAnswersData(response: ResponsePackage) -> AnswersData {
-        let result = AnswersData(answer: response.singleResponse.answer, type: response.singleResponse.type)
-        return result
-    }
-}

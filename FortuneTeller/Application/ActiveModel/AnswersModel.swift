@@ -16,11 +16,11 @@ class AnswersModel {
     func load(responseWith completion: @escaping (AnswersData) -> Void) {
         networkService.getAnswer(withCompletion: { networkAnswer in
             if let networkAnswer = networkAnswer {
-                let answer = networkAnswer.toAnswersData(response: networkAnswer)
+                let answer = AnswersData(withNetworkResponse: networkAnswer)
                 completion(answer)
             } else {
                 let dbAnswer = self.userDefaultAnswer.getRandomAnswer()
-                completion(dbAnswer.toAnswersData(dbAnswer))
+                completion(AnswersData(withStoredAnswer: dbAnswer))
             }
         })
     }
