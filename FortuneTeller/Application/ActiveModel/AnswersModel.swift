@@ -24,7 +24,7 @@ class AnswersModel {
         })
     }
 
-    func saveAnswer(answer: String, type: AnswerType) {
+    func saveAnswer(answer: String, type: String) {
         userDefaultAnswer.save(answer: answer, type: type)
     }
 

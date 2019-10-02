@@ -25,7 +25,7 @@ protocol NetworkingServiceDelegate: class {
 
 protocol UserDefaultAnswerDelegate: class {
     func isAnswerSaved(answer: String) -> Bool
-    func save(answer: String, type: AnswerType)
+    func save(answer: String, type: String)
     func loadAnswers()
-    func getRandomAnswer() -> UserDefaultsResponse
+    func getRandomAnswer() -> AnswersStoredModel
 }

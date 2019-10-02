@@ -13,10 +13,16 @@ class MainViewModel {
     private let activityModel: AnswersModel
     weak var delegate: MainViewModelDelegate!
 
+    var response = PresentableResponse(answer: "", type: .affirmative) {
+        willSet {
+            self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
+            self.delegate.flip()
+        }
+    }
+
     func shakeDetected() {
         loadNewAnswer { presentableResponse in
-            self.delegate.setAnswer(answer: presentableResponse.answer, type: presentableResponse.type)
-            self.delegate.flip()
+            self.response = presentableResponse
         }
     }
 

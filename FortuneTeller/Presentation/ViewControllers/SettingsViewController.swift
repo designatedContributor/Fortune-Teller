@@ -64,7 +64,7 @@ class SettingsViewController: UIViewController {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
 
-        guard let type = AnswerType(rawValue: typeTextField.text!) else { return }
+        guard let type = typeTextField.text else { return }
         guard let text = answerInputTextField.text else { return }
 
         settingsViewModel.saveAnswer(answer: text, type: type)
