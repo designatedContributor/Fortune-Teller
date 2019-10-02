@@ -12,7 +12,10 @@ class SettingsViewModel {
 
     private let activityModel: AnswersModel
     weak var delegate: SettingsViewModelDelegate!
-    lazy var formatted = toString()
+
+    lazy var formatted: [String] = {
+        return toString()
+    }()
 
     func saveAnswer(answer: String, type: String) {
         let isAnswerSaved = activityModel.isSaved(answer: answer)

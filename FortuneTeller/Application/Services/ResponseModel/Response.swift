@@ -11,16 +11,10 @@ import Foundation
 struct Response: Codable {
     var answer: String = ""
     var question: String = ""
-    var type: AnswerType = .affirmative
+    var type: String = ""
 
-    init(answer: String, type: AnswerType) {
+    init(answer: String, type: String) {
         self.answer = answer
         self.type = type
     }
-}
-
-enum AnswerType: String, Codable, CaseIterable {
-    case affirmative = "Affirmative"
-    case neutral = "Neutral"
-    case contrary = "Contrary"
 }

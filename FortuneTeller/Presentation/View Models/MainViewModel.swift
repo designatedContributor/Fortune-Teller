@@ -28,8 +28,8 @@ class MainViewModel {
 
     private func loadNewAnswer(completion: @escaping (PresentableResponse) -> Void) {
         activityModel.load { response in
-            let presentable = response.toPresentable(response: response)
-            completion(presentable)
+            guard let answer = PresentableResponse(data: response) else { return }
+            completion(answer)
         }
     }
 

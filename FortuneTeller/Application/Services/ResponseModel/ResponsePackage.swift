@@ -17,8 +17,8 @@ struct ResponsePackage: Codable {
 }
 
 extension ResponsePackage {
-    func toPresentable(response: ResponsePackage) -> PresentableResponse {
-        let result = PresentableResponse(answer: response.singleResponse.answer, type: response.singleResponse.type)
+    func toAnswersData(response: ResponsePackage) -> AnswersData {
+        let result = AnswersData(answer: response.singleResponse.answer, type: response.singleResponse.type)
         return result
     }
 }
