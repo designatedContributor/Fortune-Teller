@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!
 
     var mainViewModel: MainViewModel! //required to be implicit by contract
+    var isFlipped = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,25 +28,33 @@ class MainViewController: UIViewController {
     // MARK: Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            mainViewModel?.response = { [weak self] (answer, type) in
-                self?.setAnswer(answer: answer, type: type)
-                self?.flip()
-            }
+            mainViewModel.shakeDetected()
         }
-    }
-
-    private func flip() {
-        mainViewModel.isFlipped = !mainViewModel.isFlipped
-        let fromView = mainViewModel.isFlipped ? questionView : answerView
-        let toView = mainViewModel.isFlipped ? answerView : questionView
-        UIView.transition(from: fromView!, to: toView!, duration: 1, options: [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews])
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {
         flip()
     }
 
-    private func setAnswer(answer: String, type: AnswerType) {
+    private func configureViews() {
+        questionView.layer.cornerRadius = 20
+        answerView.layer.cornerRadius = 20
+        containerView.layer.cornerRadius = 20
+        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
+        answerView.clipsToBounds = true
+    }
+}
+
+extension MainViewController: MainViewModelDelegate {
+    func flip() {
+        isFlipped = !isFlipped
+        let fromView = isFlipped ? questionView : answerView
+        let toView = isFlipped ? answerView : questionView
+        let options: UIView.AnimationOptions = [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews]
+        UIView.transition(from: fromView!, to: toView!, duration: 1, options: options)
+    }
+
+    func setAnswer(answer: String, type: AnswerType) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
             switch type {
@@ -60,13 +69,5 @@ class MainViewController: UIViewController {
                 self.answerLabel.textColor = UIColor.red
             }
         }
-    }
-
-    private func configureViews() {
-        questionView.layer.cornerRadius = 20
-        answerView.layer.cornerRadius = 20
-        containerView.layer.cornerRadius = 20
-        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
-        answerView.clipsToBounds = true
     }
 }

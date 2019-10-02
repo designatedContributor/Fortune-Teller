@@ -19,12 +19,8 @@ struct Response: Codable {
     }
 }
 
-enum AnswerType: String, Codable {
+enum AnswerType: String, Codable, CaseIterable {
     case affirmative = "Affirmative"
     case neutral = "Neutral"
     case contrary = "Contrary"
-
-    func toString() -> String {
-        return self.rawValue
-    }
 }

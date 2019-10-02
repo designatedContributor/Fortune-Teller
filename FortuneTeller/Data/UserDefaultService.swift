@@ -8,20 +8,20 @@
 
 import Foundation
 
-final class UserDefaultAnswer {
+final class UserDefaultService: UserDefaultAnswerDelegate {
 
-    var userAnswers = [Response(answer: "I believe in you", type: .affirmative),
-                       Response(answer: "Don't mind", type: .neutral),
-                       Response(answer: "Bad idea", type: .contrary)]
-
-    func getRandomAnswer() -> Response {
-        guard let answer = userAnswers.randomElement() else { return Response(answer: "Oops", type: .contrary) }
-        return answer
-    }
+    var userAnswers = [UserDefaultsResponse(answer: "I believe in you", type: .affirmative),
+                       UserDefaultsResponse(answer: "Don't mind", type: .neutral),
+                       UserDefaultsResponse(answer: "Bad idea", type: .contrary)]
 
     func isAnswerSaved(answer: String) -> Bool {
         let isAnswerSaved = userAnswers.contains { $0.answer == answer }
         return isAnswerSaved
+    }
+
+    func getRandomAnswer() -> UserDefaultsResponse {
+        let answer = userAnswers.randomElement()
+        return answer ?? UserDefaultsResponse(answer: "Failed", type: .contrary)
     }
 
     // MARK: Helper functions to get FilePath
@@ -37,7 +37,7 @@ final class UserDefaultAnswer {
     // MARK: Saving data
     func save(answer: String, type: AnswerType) {
 
-        let savingItem = Response(answer: answer, type: type)
+        let savingItem = UserDefaultsResponse(answer: answer, type: type)
         userAnswers.append(savingItem)
 
         let encoder = PropertyListEncoder()
@@ -55,7 +55,7 @@ final class UserDefaultAnswer {
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()
             do {
-                userAnswers = try decoder.decode([Response].self, from: data)
+                userAnswers = try decoder.decode([UserDefaultsResponse].self, from: data)
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }

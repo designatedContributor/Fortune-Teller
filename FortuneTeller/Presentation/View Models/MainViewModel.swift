@@ -10,16 +10,24 @@ import Foundation
 
 class MainViewModel {
 
-    private let activityModel: ActiveModel
-    var isFlipped = false
+    private let activityModel: AnswersModel
+    weak var delegate: MainViewModelDelegate!
 
-    var response: ((String, AnswerType) -> Void)? {
-        didSet {
-            activityModel.response = self.response
-            }
+    func shakeDetected() {
+        loadNewAnswer { presentableResponse in
+            self.delegate.setAnswer(answer: presentableResponse.answer, type: presentableResponse.type)
+            self.delegate.flip()
         }
+    }
 
-init(activityModel: ActiveModel) {
-    self.activityModel = activityModel
+    private func loadNewAnswer(completion: @escaping (PresentableResponse) -> Void) {
+        activityModel.load { response in
+            let presentable = response.toPresentable(response: response)
+            completion(presentable)
+        }
+    }
+
+    init(activityModel: AnswersModel) {
+        self.activityModel = activityModel
     }
 }

@@ -35,7 +35,7 @@ class SettingsViewController: UIViewController {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
         typePicker.delegate = self
-        typeTextField.text = settingsViewModel.types[0].toString()
+        typeTextField.text = settingsViewModel.formatted[0]
         typeTextField.inputView = typePicker
     }
 
@@ -43,7 +43,9 @@ class SettingsViewController: UIViewController {
         let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 50)
         let toolBar = UIToolbar(frame: frame)
         let toolBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(hideKeyBoard))
-        let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let systemItem = UIBarButtonItem.SystemItem.flexibleSpace
+        let flexButton = UIBarButtonItem(barButtonSystemItem: systemItem, target: nil, action: nil)
+
         toolBar.setItems([flexButton, toolBarButton], animated: true)
         typeTextField.inputAccessoryView = toolBar
     }
@@ -69,7 +71,7 @@ class SettingsViewController: UIViewController {
     }
 }
 
-extension SettingsViewController: SettingsViewModelProtocol {
+extension SettingsViewController: SettingsViewModelDelegate {
     func displayWarning() {
         warningLabel.isHidden = false
     }
@@ -83,10 +85,10 @@ extension SettingsViewController: SettingsViewModelProtocol {
     }
 
     func errorAlert() {
-        let alertController = UIAlertController(title: "Sorry", message: L10n.theAnswerAlreadyExists, preferredStyle: .alert)
+        let controller = UIAlertController(title: "Sorry", message: L10n.theAnswerAlreadyExists, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(action)
-        present(alertController, animated: true, completion: updateTextFields)
+        controller.addAction(action)
+        present(controller, animated: true, completion: updateTextFields)
     }
 }
 
@@ -125,16 +127,16 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let item = settingsViewModel.types[row]
-        return item.toString()
+        let item = settingsViewModel.formatted[row]
+        return item
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let item = settingsViewModel.types[row]
-        typeTextField.text = item.toString()
+        let item = settingsViewModel.formatted[row]
+        typeTextField.text = item
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return settingsViewModel.types.count
+        return settingsViewModel.formatted.count
     }
 }
