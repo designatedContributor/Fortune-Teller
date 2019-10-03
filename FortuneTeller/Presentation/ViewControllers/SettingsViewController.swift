@@ -94,6 +94,7 @@ extension SettingsViewController: SettingsViewModelDelegate {
 
 // MARK: UITextFieldDelegate
 extension SettingsViewController: UITextFieldDelegate {
+    // swiftlint:disable line_length
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == answerInputTextField {
 
@@ -109,7 +110,7 @@ extension SettingsViewController: UITextFieldDelegate {
             }
             return true
     }
-
+    //swiftlint:enable line_length
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == answerInputTextField {
             typeTextField.becomeFirstResponder()
