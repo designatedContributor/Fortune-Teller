@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AnswersStoredData: Codable {
+struct AnswersStoredData: Codable, Equatable {
 
     var answer: String = ""
     var question: String = ""

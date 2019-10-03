@@ -11,8 +11,14 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name
 internal enum L10n {
+  /// title
+  internal static let dismiss = L10n.tr("Localizable", "Dismiss")
+  /// title
+  internal static let sorry = L10n.tr("Localizable", "Sorry")
   /// message
   internal static let theAnswerAlreadyExists = L10n.tr("Localizable", "The answer already exists")
+  /// title
+  internal static let youSavedAnswer = L10n.tr("Localizable", "You saved answer")
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name

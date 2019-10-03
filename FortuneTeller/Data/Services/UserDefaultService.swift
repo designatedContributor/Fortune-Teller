@@ -8,20 +8,22 @@
 
 import Foundation
 
-final class UserDefaultService: UserDefaultAnswerDelegate {
+final class UserDefaultService: UserDefault {
 
     var userAnswers = [AnswersStoredData(answer: "I believe in you", type: "Affirmative"),
                        AnswersStoredData(answer: "Don't mind", type: "Neutral"),
                        AnswersStoredData(answer: "Bad idea", type: "Contrary")]
 
-    func isAnswerSaved(answer: String) -> Bool {
-        let isAnswerSaved = userAnswers.contains { $0.answer == answer }
+    func isAnswerSaved(answer: AnswersData) -> Bool {
+        let toAnswersStoredData = AnswersStoredData(answer: answer.answer, type: answer.type)
+        let isAnswerSaved = userAnswers.contains { $0 == toAnswersStoredData }
         return isAnswerSaved
     }
 
-    func getRandomAnswer() -> AnswersStoredData {
-        let answer = userAnswers.randomElement()
-        return answer ?? AnswersStoredData(answer: "Failed", type: "Contrary")
+    func getRandomAnswer() -> AnswersData {
+        guard let answer = userAnswers.randomElement() else { return AnswersData(answer: "", type: "Affirmative")}
+        let result = AnswersData(withStoredAnswer: answer)
+        return result
     }
 
     // MARK: Helper functions to get FilePath
@@ -35,9 +37,9 @@ final class UserDefaultService: UserDefaultAnswerDelegate {
     }
 
     // MARK: Saving data
-    func save(answer: String, type: String) {
+    func save(answer: AnswersData) {
 
-        let savingItem = AnswersStoredData(answer: answer, type: type)
+        let savingItem = AnswersStoredData(answer: answer.answer, type: answer.type)
         userAnswers.append(savingItem)
 
         let encoder = PropertyListEncoder()

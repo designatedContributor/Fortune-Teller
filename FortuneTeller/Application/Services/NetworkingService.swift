@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-final class NetwotkingService: NetworkingServiceDelegate {
+final class NetwotkingService: Networking {
 
     func getAnswer(withCompletion completion: @escaping (ResponsePackage?) -> Void) {
 

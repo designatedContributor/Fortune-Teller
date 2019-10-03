@@ -17,13 +17,13 @@ class SettingsViewModel {
         return toString()
     }()
 
-    func saveAnswer(answer: String, type: String) {
-        let isAnswerSaved = activityModel.isSaved(answer: answer)
+    func saveAnswer(input: AnswersData) {
+        let isAnswerSaved = activityModel.isSaved(answer: input)
 
         if isAnswerSaved {
             delegate.errorAlert()
-        } else if !answer.isEmpty {
-            activityModel.saveAnswer(answer: answer, type: type)
+        } else if !input.answer.isEmpty {
+            activityModel.saveAnswer(answer: input)
             delegate.didSaveAlert()
         } else {
             delegate.displayWarning()

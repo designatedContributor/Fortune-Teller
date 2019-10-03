@@ -10,8 +10,8 @@ import Foundation
 
 class AnswersModel {
 
-    let networkService: NetworkingServiceDelegate
-    let userDefaultAnswer: UserDefaultAnswerDelegate
+    private let networkService: Networking
+    private let userDefaultAnswer: UserDefault
 
     func load(responseWith completion: @escaping (AnswersData) -> Void) {
         networkService.getAnswer(withCompletion: { networkAnswer in
@@ -20,21 +20,25 @@ class AnswersModel {
                 completion(answer)
             } else {
                 let dbAnswer = self.userDefaultAnswer.getRandomAnswer()
-                completion(AnswersData(withStoredAnswer: dbAnswer))
+                completion(dbAnswer)
             }
         })
     }
 
-    func saveAnswer(answer: String, type: String) {
-        userDefaultAnswer.save(answer: answer, type: type)
+    func saveAnswer(answer: AnswersData) {
+        userDefaultAnswer.save(answer: answer)
     }
 
-    func isSaved(answer: String) -> Bool {
+    func isSaved(answer: AnswersData) -> Bool {
         let result = userDefaultAnswer.isAnswerSaved(answer: answer)
         return result
     }
 
-    init(_ networkService: NetworkingServiceDelegate, _ userDefaultAnswer: UserDefaultAnswerDelegate) {
+    func loadSavedAnswers() {
+        userDefaultAnswer.loadAnswers()
+    }
+
+    init(_ networkService: Networking, _ userDefaultAnswer: UserDefault) {
         self.networkService = networkService
         self.userDefaultAnswer = userDefaultAnswer
     }

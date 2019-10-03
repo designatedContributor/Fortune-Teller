@@ -14,7 +14,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
 
         let activityModel = AnswersModel(NetwotkingService(), UserDefaultService())
-        activityModel.userDefaultAnswer.loadAnswers()
+        activityModel.loadSavedAnswers()
 
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)

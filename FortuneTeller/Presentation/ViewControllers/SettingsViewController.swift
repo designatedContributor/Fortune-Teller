@@ -67,7 +67,7 @@ class SettingsViewController: UIViewController {
         guard let type = typeTextField.text else { return }
         guard let text = answerInputTextField.text else { return }
 
-        settingsViewModel.saveAnswer(answer: text, type: type)
+        settingsViewModel.saveAnswer(input: AnswersData(answer: text, type: type))
     }
 }
 
@@ -78,14 +78,16 @@ extension SettingsViewController: SettingsViewModelDelegate {
 
     func didSaveAlert() {
         let message = "Answer: \(answerInputTextField.text!), with type: \(typeTextField.text!)"
-        let alertController = UIAlertController(title: "You saved answer", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        let alertController = UIAlertController(title: L10n.youSavedAnswer, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: L10n.dismiss, style: .default, handler: nil)
         alertController.addAction(action)
         present(alertController, animated: true, completion: updateTextFields)
     }
 
     func errorAlert() {
-        let controller = UIAlertController(title: "Sorry", message: L10n.theAnswerAlreadyExists, preferredStyle: .alert)
+        let message = L10n.theAnswerAlreadyExists
+        let title = L10n.sorry
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         controller.addAction(action)
         present(controller, animated: true, completion: updateTextFields)

@@ -19,13 +19,13 @@ protocol SettingsViewModelDelegate: class {
     func displayWarning()
 }
 
-protocol NetworkingServiceDelegate: class {
+protocol Networking: class {
     func getAnswer(withCompletion completion: @escaping (ResponsePackage?) -> Void)
 }
 
-protocol UserDefaultAnswerDelegate: class {
-    func isAnswerSaved(answer: String) -> Bool
-    func save(answer: String, type: String)
+protocol UserDefault: class {
+    func isAnswerSaved(answer: AnswersData) -> Bool
+    func save(answer: AnswersData)
     func loadAnswers()
-    func getRandomAnswer() -> AnswersStoredData
+    func getRandomAnswer() -> AnswersData
 }
