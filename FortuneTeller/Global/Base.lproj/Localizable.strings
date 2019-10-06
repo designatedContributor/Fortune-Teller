@@ -6,3 +6,6 @@
   
 */
 "The answer already exists" = "message";
+"Sorry" = "title";
+"Dismiss" = "title";
+"You saved answer" = "title";

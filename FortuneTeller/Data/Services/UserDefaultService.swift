@@ -8,21 +8,22 @@
 
 import Foundation
 
-final class UserDefaultAnswer {
+final class UserDefaultService: UserDefault {
 
-    var userAnswers = [Response(answer: "I believe in you", type: .affirmative),
-                       Response(answer: "Don't mind", type: .neutral),
-                       Response(answer: "Bad idea", type: .contrary)]
+    var userAnswers = [AnswersStoredData(answer: "I believe in you", type: "Affirmative"),
+                       AnswersStoredData(answer: "Don't mind", type: "Neutral"),
+                       AnswersStoredData(answer: "Bad idea", type: "Contrary")]
 
-    func getRandomAnswer() -> (answer: String, type: AnswerType) {
-        let answer = userAnswers.randomElement()
-        let element = (answer!.answer, answer!.type)
-        return element
+    func isAnswerSaved(answer: AnswersData) -> Bool {
+        let toAnswersStoredData = AnswersStoredData(answer: answer.answer, type: answer.type)
+        let isAnswerSaved = userAnswers.contains { $0 == toAnswersStoredData }
+        return isAnswerSaved
     }
 
-    func isAnswerSaved(answer: String) -> Bool {
-        let isAnswerSaved = userAnswers.contains { $0.answer == answer }
-        return isAnswerSaved
+    func getRandomAnswer() -> AnswersData {
+        guard let answer = userAnswers.randomElement() else { return AnswersData(answer: "", type: "Affirmative")}
+        let result = AnswersData(withStoredAnswer: answer)
+        return result
     }
 
     // MARK: Helper functions to get FilePath
@@ -36,9 +37,9 @@ final class UserDefaultAnswer {
     }
 
     // MARK: Saving data
-    func save(answer: String, type: AnswerType) {
+    func save(answer: AnswersData) {
 
-        let savingItem = Response(answer: answer, type: type)
+        let savingItem = AnswersStoredData(answer: answer.answer, type: answer.type)
         userAnswers.append(savingItem)
 
         let encoder = PropertyListEncoder()
@@ -56,7 +57,7 @@ final class UserDefaultAnswer {
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()
             do {
-                userAnswers = try decoder.decode([Response].self, from: data)
+                userAnswers = try decoder.decode([AnswersStoredData].self, from: data)
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }

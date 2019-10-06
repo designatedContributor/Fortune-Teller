@@ -13,16 +13,21 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let activityModel = ActivityModel(networkService: NetwotkingService(), userDefaultAnswer: UserDefaultAnswer())
-        activityModel.userDefaultAnswer?.loadAnswers()
+        let activityModel = AnswersModel(NetwotkingService(), UserDefaultService())
+        activityModel.loadSavedAnswers()
+
+        let mainViewModel = MainViewModel(activityModel: activityModel)
+        let settingsViewModel = SettingsViewModel(activityModel: activityModel)
 
         let mainViewController = self.viewControllers?[0] as? MainViewController
-        mainViewController?.activityModel = activityModel
+        mainViewModel.delegate = mainViewController
+        mainViewController?.mainViewModel = mainViewModel
         mainViewController?.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
-        activityModel.delegate = mainViewController
 
         let settingsViewController = self.viewControllers?[1] as? SettingsViewController
-        settingsViewController?.activityModel = activityModel
+        settingsViewController?.settingsViewModel = settingsViewModel
+        settingsViewModel.delegate = settingsViewController
         settingsViewController?.tabBarItem.image = UIImage(asset: Asset.gear)
+
     }
 }
