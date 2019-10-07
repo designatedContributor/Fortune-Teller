@@ -18,16 +18,20 @@ class TabBarViewController: UITabBarController {
 
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
+        let mainViewController = MainViewController()
+        mainViewController.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
+        mainViewController.mainViewModel = mainViewModel
+         mainViewModel.delegate = mainViewController
 
-        let mainViewController = self.viewControllers?[0] as? MainViewController
-        mainViewModel.delegate = mainViewController
-        mainViewController?.mainViewModel = mainViewModel
-        mainViewController?.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
-
-        let settingsViewController = self.viewControllers?[1] as? SettingsViewController
-        settingsViewController?.settingsViewModel = settingsViewModel
+        let settingsViewController = SettingsViewController()
+        settingsViewController.settingsViewModel = settingsViewModel
         settingsViewModel.delegate = settingsViewController
-        settingsViewController?.tabBarItem.image = UIImage(asset: Asset.gear)
+        settingsViewController.tabBarItem.image = UIImage(asset: Asset.gear)
 
+        let tabBarList = [mainViewController, settingsViewController]
+        viewControllers = tabBarList
+//        viewControllers = tabBarList.map {
+//            UINavigationController(rootViewController: $0)
+//        }
     }
 }

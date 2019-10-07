@@ -11,28 +11,50 @@ import UIKit
 class MainViewController: UIViewController {
 
     // MARK: Outlets
-    @IBOutlet private weak var questionView: UIView!
-    @IBOutlet private weak var answerView: UIView!
-    @IBOutlet private weak var answerLabel: UILabel!
-    @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var closeButton: UIButton!
+    private var questionView: UIView!
+    private var answerView: UIView!
+    private var answerLabel: UILabel!
+    private var containerView: UIView!
+    private var closeButton: UIButton!
 
     var mainViewModel: MainViewModel! //required to be implicit by contract
     var isFlipped = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Main"
+        containerView = UIView(frame: CGRect(x: view.center.x - 100, y: view.center.y - 100, width: 200, height: 200))
+        questionView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        questionView.backgroundColor = .black
+
+        answerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        answerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        
+        answerLabel.font = UIFont(name: "DigitalStripBB-BoldItalic", size: 20)
+        answerLabel.numberOfLines = 0
+        answerLabel.textAlignment = .center
+        
+        closeButton = UIButton(frame: CGRect(x: 0, y: 200 - 30, width: 200, height: 30))
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for:.touchUpInside)
+        closeButton.setTitle("Close", for: .normal)
+        closeButton.setTitleColor(.black, for: .normal)
+        closeButton.backgroundColor = .groupTableViewBackground
+        view.addSubview(containerView)
+        containerView.addSubview(answerView)
+        containerView.addSubview(questionView)
+        answerView.addSubview(answerLabel)
+        answerView.addSubview(closeButton)
         configureViews()
     }
 
     // MARK: Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
+        if motion == .motionShake && isFlipped == false {
             mainViewModel.shakeDetected()
         }
     }
 
-    @IBAction private func closeButtonTapped(_ sender: Any) {
+    @objc private func closeButtonTapped(_ sender: Any) {
         flip()
     }
 
