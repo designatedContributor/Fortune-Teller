@@ -10,19 +10,24 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    // MARK: Outlets
-    @IBOutlet private weak var answerInputTextField: UITextField!
-    @IBOutlet private weak var typeTextField: UITextField!
-    @IBOutlet private weak var saveAnswerButton: UIButton!
-    @IBOutlet private weak var warningLabel: UILabel!
+    private let answerInputTextField = UITextField()
+    private let typeTextField = UITextField()
+    private let saveAnswerButton = UIButton()
+    private let warningLabel = UILabel()
+    private let counterLabel = UILabel()
+    private let stackView = UIStackView()
 
     var settingsViewModel: SettingsViewModel! //required to be implicit by contract
 
     // MARK: Viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        warningLabel.isHidden = true
-        saveAnswerButton.layer.cornerRadius = 15
+        title = "Settings"
+        answerInputTextField.delegate = self
+        setupStackView()
+        setupLabels()
+        additionalConfigure()
+        setupConstraints()
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
         view.addGestureRecognizer(gesture)
@@ -30,7 +35,78 @@ class SettingsViewController: UIViewController {
         createToolBar()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        settingsViewModel.getAttempts()
+    }
+
     // MARK: Helper functions for UI
+    private func additionalConfigure() {
+        answerInputTextField.placeholder = L10n.enterYourAnswer
+        answerInputTextField.backgroundColor = .white
+        typeTextField.backgroundColor = .white
+        answerInputTextField.tintColor = .clear
+        typeTextField.tintColor = .clear
+        answerInputTextField.borderStyle = .roundedRect
+        typeTextField.borderStyle = .roundedRect
+        saveAnswerButton.layer.cornerRadius = 7
+        saveAnswerButton.backgroundColor = UIColor(named: ColorName.neutralText)
+        saveAnswerButton.setTitle(L10n.saveAnswer, for: .normal)
+        saveAnswerButton.setTitleColor(.white, for: .normal)
+        saveAnswerButton.addTarget(self, action: #selector(saveAnswerTapped), for: .touchUpInside)
+    }
+
+    private func setupLabels() {
+        warningLabel.isHidden = true
+        warningLabel.text = L10n.emptyField
+        warningLabel.textColor = .red
+        counterLabel.text = L10n.lifetimeApplicationPredictions
+        counterLabel.textColor = .cyan
+        counterLabel.numberOfLines = 0
+        counterLabel.textAlignment = .right
+        counterLabel.font = UIFont(font: FontFamily.DigitalStripBB.boldItalic, size: 16)
+        view.addSubview(warningLabel)
+        view.addSubview(counterLabel)
+    }
+    private func setupStackView() {
+        stackView.addArrangedSubview(answerInputTextField)
+        stackView.addArrangedSubview(typeTextField)
+        stackView.addArrangedSubview(saveAnswerButton)
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 37
+        view.addSubview(stackView)
+    }
+
+    private func setupConstraints() {
+        let elements = [answerInputTextField, typeTextField, saveAnswerButton]
+        elements.forEach {
+            $0.snp.makeConstraints({ make in
+                make.height.equalTo(35)
+            })
+        }
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(120)
+            make.centerX.equalToSuperview()
+            make.leadingMargin.equalTo(50)
+            make.trailingMargin.equalTo(50)
+        }
+
+        warningLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(35)
+            make.leadingMargin.equalTo(50)
+            make.top.equalTo(115)
+        }
+
+        counterLabel.snp.makeConstraints { make in
+            make.width.equalTo(200)
+            make.height.equalTo(60)
+            make.top.equalTo(50)
+            make.rightMargin.equalTo(-80)
+        }
+    }
+
     private func createPickerView() {
         let typePicker = UIPickerView()
         typePicker.dataSource = self
@@ -60,7 +136,7 @@ class SettingsViewController: UIViewController {
     }
 
     // MARK: ACTIONS
-    @IBAction private func saveAnswerTapped(_ sender: Any) {
+    @objc private func saveAnswerTapped() {
         answerInputTextField.resignFirstResponder()
         typeTextField.resignFirstResponder()
 
@@ -72,6 +148,10 @@ class SettingsViewController: UIViewController {
 }
 
 extension SettingsViewController: SettingsViewModelDelegate {
+    func updateAttemts(attemts: String) {
+        counterLabel.text = L10n.lifetimeApplicationPredictions + " " + attemts
+    }
+
     func displayWarning() {
         warningLabel.isHidden = false
     }

@@ -7,44 +7,37 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainViewController: UIViewController {
 
-    // MARK: Outlets
-    private var questionView: UIView!
-    private var answerView: UIView!
-    private var answerLabel: UILabel!
-    private var containerView: UIView!
-    private var closeButton: UIButton!
-
     var mainViewModel: MainViewModel! //required to be implicit by contract
+
     var isFlipped = false
+
+    private let containerView = UIView()
+    private let questionView = UIView()
+    private let answerView = UIView()
+    private let questionLabel = UILabel()
+    private let answerLabel = UILabel()
+    private let closeButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        button.setTitle(L10n.close, for: .normal)
+        button.setTitleColor(UIColor(named: ColorName.neutralText), for: .normal)
+        button.backgroundColor = .groupTableViewBackground
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        button.roundCorners(corners: [.bottomLeft, .bottomRight])
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Main"
-        containerView = UIView(frame: CGRect(x: view.center.x - 100, y: view.center.y - 100, width: 200, height: 200))
-        questionView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        questionView.backgroundColor = .black
-
-        answerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        answerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        
-        answerLabel.font = UIFont(name: "DigitalStripBB-BoldItalic", size: 20)
-        answerLabel.numberOfLines = 0
-        answerLabel.textAlignment = .center
-        
-        closeButton = UIButton(frame: CGRect(x: 0, y: 200 - 30, width: 200, height: 30))
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for:.touchUpInside)
-        closeButton.setTitle("Close", for: .normal)
-        closeButton.setTitleColor(.black, for: .normal)
-        closeButton.backgroundColor = .groupTableViewBackground
-        view.addSubview(containerView)
-        containerView.addSubview(answerView)
-        containerView.addSubview(questionView)
-        answerView.addSubview(answerLabel)
-        answerView.addSubview(closeButton)
-        configureViews()
+        title = L10n.main
+        setupSubviews()
+        setupViews()
+        setupLabels()
+        setupConstraints()
     }
 
     // MARK: Shake gesture
@@ -58,12 +51,50 @@ class MainViewController: UIViewController {
         flip()
     }
 
-    private func configureViews() {
-        questionView.layer.cornerRadius = 20
-        answerView.layer.cornerRadius = 20
-        containerView.layer.cornerRadius = 20
-        closeButton.roundCorners(corners: [.bottomLeft, .bottomRight])
-        answerView.clipsToBounds = true
+    private func setupConstraints() {
+        let views = [containerView, answerView, questionView, answerLabel, questionLabel]
+        views.forEach { $0.snp.makeConstraints({ make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+        })
+    }
+        closeButton.snp.makeConstraints { make in
+            make.width.equalTo(200)
+            make.height.equalTo(30)
+            make.top.equalTo(170)
+        }
+    }
+
+    private func setupSubviews() {
+        containerView.addSubview(answerView)
+        containerView.addSubview(questionView)
+        questionView.addSubview(questionLabel)
+        answerView.addSubview(answerLabel)
+        answerView.addSubview(closeButton)
+        view.addSubview(containerView)
+    }
+
+    private func setupViews() {
+        let items = [containerView, questionView, answerView]
+        questionView.backgroundColor = .black
+        items.forEach {
+            $0.layer.cornerRadius = 20
+            $0.clipsToBounds = true
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+
+    private func setupLabels() {
+        let items = [answerLabel, questionLabel]
+        questionLabel.text = L10n.shakeDeviceToGetTheAnswer
+        questionLabel.textColor = .white
+        items.forEach {
+            $0.font = UIFont(font: FontFamily.DigitalStripBB.boldItalic, size: 20)
+            $0.numberOfLines = 0
+            $0.textAlignment = .center
+        }
     }
 }
 
@@ -73,7 +104,7 @@ extension MainViewController: MainViewModelDelegate {
         let fromView = isFlipped ? questionView : answerView
         let toView = isFlipped ? answerView : questionView
         let options: UIView.AnimationOptions = [.curveEaseOut, .transitionFlipFromLeft, .showHideTransitionViews]
-        UIView.transition(from: fromView!, to: toView!, duration: 1, options: options)
+        UIView.transition(from: fromView, to: toView, duration: 1, options: options)
     }
 
     func setAnswer(answer: String, type: AnswerType) {

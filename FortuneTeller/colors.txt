@@ -5,3 +5,5 @@ neutral           : #71E1FF
 contrary          : #FFCCCB
 neutralText       : #2780FF
 affirmativeText   : #0EA200
+tabbar            : #323E4C
+background        : #202F40

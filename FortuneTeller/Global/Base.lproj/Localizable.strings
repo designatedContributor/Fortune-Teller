@@ -9,3 +9,10 @@
 "Sorry" = "title";
 "Dismiss" = "title";
 "You saved answer" = "title";
+"Close" = "title";
+"Main" = "title";
+"Shake device to get the answer" = "questionLabel";
+"Empty field" = "warningLabel";
+"Enter your answer" = "placeholder";
+"Save answer" = "placeholder";
+"Lifetime application predictions:" = "counterLabel";

@@ -17,6 +17,12 @@ class SettingsViewModel {
         return toString()
     }()
 
+    private func toString() -> [String] {
+        let input = AnswerType.allCases
+        let output = input.map { $0.rawValue }
+        return output
+    }
+
     func saveAnswer(input: AnswersData) {
         let isAnswerSaved = activityModel.isSaved(answer: input)
 
@@ -30,13 +36,12 @@ class SettingsViewModel {
         }
     }
 
-    init(activityModel: AnswersModel) {
-        self.activityModel = activityModel
+    func getAttempts() {
+        let attemts = activityModel.retrieveAttemts()
+        delegate.updateAttemts(attemts: attemts)
     }
 
-    private func toString() -> [String] {
-        let input = AnswerType.allCases
-        let output = input.map { $0.rawValue }
-        return output
+    init(activityModel: AnswersModel) {
+        self.activityModel = activityModel
     }
 }

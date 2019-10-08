@@ -13,15 +13,16 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let activityModel = AnswersModel(NetwotkingService(), UserDefaultService())
+        let activityModel = AnswersModel(NetwotkingService(), UserDefaultService(), KeychainService())
         activityModel.loadSavedAnswers()
 
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
         let mainViewController = MainViewController()
         mainViewController.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
+
         mainViewController.mainViewModel = mainViewModel
-         mainViewModel.delegate = mainViewController
+        mainViewModel.delegate = mainViewController
 
         let settingsViewController = SettingsViewController()
         settingsViewController.settingsViewModel = settingsViewModel
@@ -30,8 +31,6 @@ class TabBarViewController: UITabBarController {
 
         let tabBarList = [mainViewController, settingsViewController]
         viewControllers = tabBarList
-//        viewControllers = tabBarList.map {
-//            UINavigationController(rootViewController: $0)
-//        }
+        tabBar.barTintColor = UIColor(named: ColorName.tabbar)
     }
 }

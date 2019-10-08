@@ -25,6 +25,9 @@ internal struct ColorName {
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#0ea200"></span>
   /// Alpha: 100% <br/> (0x0ea200ff)
   internal static let affirmativeText = ColorName(rgbaValue: 0x0ea200ff)
+  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#202f40"></span>
+  /// Alpha: 100% <br/> (0x202f40ff)
+  internal static let background = ColorName(rgbaValue: 0x202f40ff)
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#ffcccb"></span>
   /// Alpha: 100% <br/> (0xffcccbff)
   internal static let contrary = ColorName(rgbaValue: 0xffcccbff)
@@ -34,6 +37,9 @@ internal struct ColorName {
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#2780ff"></span>
   /// Alpha: 100% <br/> (0x2780ffff)
   internal static let neutralText = ColorName(rgbaValue: 0x2780ffff)
+  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#323e4c"></span>
+  /// Alpha: 100% <br/> (0x323e4cff)
+  internal static let tabbar = ColorName(rgbaValue: 0x323e4cff)
 }
 // swiftlint:enable identifier_name line_length type_body_length
 

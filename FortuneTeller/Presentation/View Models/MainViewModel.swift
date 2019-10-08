@@ -13,6 +13,8 @@ class MainViewModel {
     private let activityModel: AnswersModel
     weak var delegate: MainViewModelDelegate!
 
+    var predictionCounter = 0
+
     var response = PresentableResponse(answer: "", type: .affirmative) {
         willSet {
             self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
@@ -24,6 +26,9 @@ class MainViewModel {
         loadNewAnswer { presentableResponse in
             self.response = presentableResponse
         }
+        predictionCounter += 1
+        let attemt = String(predictionCounter)
+        activityModel.saveAttemt(attemt: attemt)
     }
 
     private func loadNewAnswer(completion: @escaping (PresentableResponse) -> Void) {

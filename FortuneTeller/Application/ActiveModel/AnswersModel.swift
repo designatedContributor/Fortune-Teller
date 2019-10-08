@@ -12,6 +12,7 @@ class AnswersModel {
 
     private let networkService: Networking
     private let userDefaultAnswer: UserDefault
+    private let keychainService: KeychainFunctional
 
     func load(responseWith completion: @escaping (AnswersData) -> Void) {
         networkService.getAnswer(withCompletion: { networkAnswer in
@@ -38,8 +39,18 @@ class AnswersModel {
         userDefaultAnswer.loadAnswers()
     }
 
-    init(_ networkService: Networking, _ userDefaultAnswer: UserDefault) {
+    func saveAttemt(attemt: String) {
+        keychainService.save(attemt: attemt)
+    }
+
+    func retrieveAttemts() -> String {
+        let attemts = keychainService.retrieve()
+        return attemts
+    }
+
+    init(_ networkService: Networking, _ userDefaultAnswer: UserDefault, _ keychainService: KeychainFunctional) {
         self.networkService = networkService
         self.userDefaultAnswer = userDefaultAnswer
+        self.keychainService = keychainService
     }
 }
