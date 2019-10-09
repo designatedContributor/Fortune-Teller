@@ -11,6 +11,8 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name
 internal enum L10n {
+  /// key
+  internal static let attemts = L10n.tr("Localizable", "Attemts")
   /// title
   internal static let close = L10n.tr("Localizable", "Close")
   /// title
@@ -25,6 +27,8 @@ internal enum L10n {
   internal static let main = L10n.tr("Localizable", "Main")
   /// placeholder
   internal static let saveAnswer = L10n.tr("Localizable", "Save answer")
+  /// title
+  internal static let settings = L10n.tr("Localizable", "Settings")
   /// questionLabel
   internal static let shakeDeviceToGetTheAnswer = L10n.tr("Localizable", "Shake device to get the answer")
   /// title

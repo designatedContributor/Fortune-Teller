@@ -7,3 +7,8 @@ neutralText       : #2780FF
 affirmativeText   : #0EA200
 tabbar            : #323E4C
 background        : #202F40
+white             : #FFFFFF
+black		  : #000000
+red		  : #FF0000
+cyan		  : #2BEDBB
+groupTableView    : #EFEFF4         

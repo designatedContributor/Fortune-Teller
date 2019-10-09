@@ -23,8 +23,8 @@ class MainViewController: UIViewController {
     private let closeButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
         button.setTitle(L10n.close, for: .normal)
-        button.setTitleColor(UIColor(named: ColorName.neutralText), for: .normal)
-        button.backgroundColor = .groupTableViewBackground
+        button.setTitleColor(ColorName.neutralText.color, for: .normal)
+        button.backgroundColor = ColorName.groupTableView.color
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         button.roundCorners(corners: [.bottomLeft, .bottomRight])
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,7 @@ class MainViewController: UIViewController {
 
     private func setupViews() {
         let items = [containerView, questionView, answerView]
-        questionView.backgroundColor = .black
+        questionView.backgroundColor = ColorName.black.color
         items.forEach {
             $0.layer.cornerRadius = 20
             $0.clipsToBounds = true
@@ -89,7 +89,7 @@ class MainViewController: UIViewController {
     private func setupLabels() {
         let items = [answerLabel, questionLabel]
         questionLabel.text = L10n.shakeDeviceToGetTheAnswer
-        questionLabel.textColor = .white
+        questionLabel.textColor = ColorName.white.color
         items.forEach {
             $0.font = UIFont(font: FontFamily.DigitalStripBB.boldItalic, size: 20)
             $0.numberOfLines = 0
@@ -112,14 +112,14 @@ extension MainViewController: MainViewModelDelegate {
             self.answerLabel.text = answer
             switch type {
             case .affirmative:
-                self.answerView.backgroundColor = UIColor(named: ColorName.affirmative)
-                self.answerLabel.textColor = UIColor(named: ColorName.affirmativeText)
+                self.answerView.backgroundColor = ColorName.affirmative.color
+                self.answerLabel.textColor = ColorName.affirmativeText.color
             case .neutral:
-                self.answerView.backgroundColor = UIColor(named: ColorName.neutral)
-                self.answerLabel.textColor = UIColor(named: ColorName.neutralText)
+                self.answerView.backgroundColor = ColorName.neutral.color
+                self.answerLabel.textColor = ColorName.neutralText.color
             case .contrary:
-                self.answerView.backgroundColor = UIColor(named: ColorName.contrary)
-                self.answerLabel.textColor = UIColor.red
+                self.answerView.backgroundColor = ColorName.contrary.color
+                self.answerLabel.textColor = ColorName.red.color
             }
         }
     }

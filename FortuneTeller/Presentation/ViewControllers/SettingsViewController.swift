@@ -22,7 +22,7 @@ class SettingsViewController: UIViewController {
     // MARK: Viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Settings"
+        title = L10n.settings
         answerInputTextField.delegate = self
         setupStackView()
         setupLabels()
@@ -43,25 +43,25 @@ class SettingsViewController: UIViewController {
     // MARK: Helper functions for UI
     private func additionalConfigure() {
         answerInputTextField.placeholder = L10n.enterYourAnswer
-        answerInputTextField.backgroundColor = .white
-        typeTextField.backgroundColor = .white
+        answerInputTextField.backgroundColor = ColorName.white.color
+        typeTextField.backgroundColor = ColorName.white.color
         answerInputTextField.tintColor = .clear
         typeTextField.tintColor = .clear
         answerInputTextField.borderStyle = .roundedRect
         typeTextField.borderStyle = .roundedRect
         saveAnswerButton.layer.cornerRadius = 7
-        saveAnswerButton.backgroundColor = UIColor(named: ColorName.neutralText)
+        saveAnswerButton.backgroundColor = ColorName.neutralText.color
         saveAnswerButton.setTitle(L10n.saveAnswer, for: .normal)
-        saveAnswerButton.setTitleColor(.white, for: .normal)
+        saveAnswerButton.setTitleColor(ColorName.white.color, for: .normal)
         saveAnswerButton.addTarget(self, action: #selector(saveAnswerTapped), for: .touchUpInside)
     }
 
     private func setupLabels() {
         warningLabel.isHidden = true
         warningLabel.text = L10n.emptyField
-        warningLabel.textColor = .red
+        warningLabel.textColor = ColorName.red.color
         counterLabel.text = L10n.lifetimeApplicationPredictions
-        counterLabel.textColor = .cyan
+        counterLabel.textColor = ColorName.cyan.color
         counterLabel.numberOfLines = 0
         counterLabel.textAlignment = .right
         counterLabel.font = UIFont(font: FontFamily.DigitalStripBB.boldItalic, size: 16)

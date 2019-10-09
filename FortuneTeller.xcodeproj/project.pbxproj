@@ -32,8 +32,8 @@
 		AAD33C912344829F0025E072 /* AnswersStoredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C902344829F0025E072 /* AnswersStoredData.swift */; };
 		AAD33C93234493270025E072 /* PresentableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C92234493270025E072 /* PresentableResponse.swift */; };
 		AAD33C952344AE480025E072 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C942344AE480025E072 /* Protocols.swift */; };
-		AAE636B1233B4F3A004B6868 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE636B0233B4F3A004B6868 /* strings.swift */; };
-		AAE636B3233B4FA4004B6868 /* assets-images.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE636B2233B4FA4004B6868 /* assets-images.swift */; };
+		AAE636B1233B4F3A004B6868 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE636B0233B4F3A004B6868 /* Strings.swift */; };
+		AAE636B3233B4FA4004B6868 /* Assets-images.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE636B2233B4FA4004B6868 /* Assets-images.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,8 +65,8 @@
 		AAD33C902344829F0025E072 /* AnswersStoredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersStoredData.swift; sourceTree = "<group>"; };
 		AAD33C92234493270025E072 /* PresentableResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableResponse.swift; sourceTree = "<group>"; };
 		AAD33C942344AE480025E072 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		AAE636B0233B4F3A004B6868 /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
-		AAE636B2233B4FA4004B6868 /* assets-images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "assets-images.swift"; sourceTree = "<group>"; };
+		AAE636B0233B4F3A004B6868 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		AAE636B2233B4FA4004B6868 /* Assets-images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assets-images.swift"; sourceTree = "<group>"; };
 		CAFC13C6B76309D51D0E210A /* Pods-FortuneTeller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FortuneTeller.debug.xcconfig"; path = "Target Support Files/Pods-FortuneTeller/Pods-FortuneTeller.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,8 +226,8 @@
 			children = (
 				AA0E8549234C7CD1005EEB84 /* Fonts.swift */,
 				AAA856122338ADC80044434B /* Colors.swift */,
-				AAE636B0233B4F3A004B6868 /* strings.swift */,
-				AAE636B2233B4FA4004B6868 /* assets-images.swift */,
+				AAE636B0233B4F3A004B6868 /* Strings.swift */,
+				AAE636B2233B4FA4004B6868 /* Assets-images.swift */,
 			);
 			path = Swiftgen;
 			sourceTree = "<group>";
@@ -422,7 +422,7 @@
 				AA3664D2230E763F00784E9F /* Response.swift in Sources */,
 				AAD33C952344AE480025E072 /* Protocols.swift in Sources */,
 				AA0E852423454148005EEB84 /* AnswersData.swift in Sources */,
-				AAE636B3233B4FA4004B6868 /* assets-images.swift in Sources */,
+				AAE636B3233B4FA4004B6868 /* Assets-images.swift in Sources */,
 				AA3664D3230E763F00784E9F /* AnswersModel.swift in Sources */,
 				AAD33C83234105F90025E072 /* SettingsViewModel.swift in Sources */,
 				AA3664D4230E763F00784E9F /* NetworkingService.swift in Sources */,
@@ -433,7 +433,7 @@
 				AA68B76B23098A3400226290 /* AppDelegate.swift in Sources */,
 				AAD33C93234493270025E072 /* PresentableResponse.swift in Sources */,
 				AA68B76D23098A3400226290 /* MainViewController.swift in Sources */,
-				AAE636B1233B4F3A004B6868 /* strings.swift in Sources */,
+				AAE636B1233B4F3A004B6868 /* Strings.swift in Sources */,
 				AA0E854A234C7CD2005EEB84 /* Fonts.swift in Sources */,
 				AA18C63F230DCC6A00DED0FA /* TabBarViewController.swift in Sources */,
 				AA69DB17230D42790072805E /* MyButton.swift in Sources */,

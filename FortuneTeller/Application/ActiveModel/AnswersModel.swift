@@ -12,12 +12,22 @@ class AnswersModel {
 
     private let networkService: Networking
     private let userDefaultAnswer: UserDefault
-    private let keychainService: KeychainFunctional
+    private let keychainService: SecureKeyValueStorage
+
+    init(networkService: Networking, userDefaultAnswer: UserDefault, keychainService: SecureKeyValueStorage) {
+        self.networkService = networkService
+        self.userDefaultAnswer = userDefaultAnswer
+        self.keychainService = keychainService
+    }
 
     func load(responseWith completion: @escaping (AnswersData) -> Void) {
-        networkService.getAnswer(withCompletion: { networkAnswer in
+        networkService.getAnswer(withCompletion: { [weak self] networkAnswer in
+            guard let self = self else { return }
+
             if let networkAnswer = networkAnswer {
                 let answer = AnswersData(withNetworkResponse: networkAnswer)
+                self.keychainService.attemtCounter += 1
+                self.keychainService.save()
                 completion(answer)
             } else {
                 let dbAnswer = self.userDefaultAnswer.getRandomAnswer()
@@ -39,18 +49,12 @@ class AnswersModel {
         userDefaultAnswer.loadAnswers()
     }
 
-    func saveAttemt(attemt: String) {
-        keychainService.save(attemt: attemt)
+    func saveAttemt() {
+        keychainService.save()
     }
 
-    func retrieveAttemts() -> String {
+    func retrieveAttemts() -> Int {
         let attemts = keychainService.retrieve()
         return attemts
-    }
-
-    init(_ networkService: Networking, _ userDefaultAnswer: UserDefault, _ keychainService: KeychainFunctional) {
-        self.networkService = networkService
-        self.userDefaultAnswer = userDefaultAnswer
-        self.keychainService = keychainService
     }
 }

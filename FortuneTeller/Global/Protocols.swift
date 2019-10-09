@@ -31,7 +31,8 @@ protocol UserDefault: class {
     func getRandomAnswer() -> AnswersData
 }
 
-protocol KeychainFunctional: class {
-    func save(attemt: String)
-    func retrieve() -> String
+protocol SecureKeyValueStorage: class {
+    var attemtCounter: Int { get set }
+    func save()
+    func retrieve() -> Int
 }

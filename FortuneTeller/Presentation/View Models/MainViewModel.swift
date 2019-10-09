@@ -10,11 +10,7 @@ import Foundation
 
 class MainViewModel {
 
-    private let activityModel: AnswersModel
     weak var delegate: MainViewModelDelegate!
-
-    var predictionCounter = 0
-
     var response = PresentableResponse(answer: "", type: .affirmative) {
         willSet {
             self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
@@ -22,13 +18,16 @@ class MainViewModel {
         }
     }
 
+    private let activityModel: AnswersModel
+    init(activityModel: AnswersModel) {
+        self.activityModel = activityModel
+    }
+
     func shakeDetected() {
-        loadNewAnswer { presentableResponse in
+        loadNewAnswer { [weak self] presentableResponse in
+            guard let self = self else { return }
             self.response = presentableResponse
         }
-        predictionCounter += 1
-        let attemt = String(predictionCounter)
-        activityModel.saveAttemt(attemt: attemt)
     }
 
     private func loadNewAnswer(completion: @escaping (PresentableResponse) -> Void) {
@@ -36,9 +35,5 @@ class MainViewModel {
             guard let answer = PresentableResponse(data: response) else { return }
             completion(answer)
         }
-    }
-
-    init(activityModel: AnswersModel) {
-        self.activityModel = activityModel
     }
 }

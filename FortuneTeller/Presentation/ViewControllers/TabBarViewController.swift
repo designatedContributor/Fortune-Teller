@@ -12,8 +12,9 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let activityModel = AnswersModel(NetwotkingService(), UserDefaultService(), KeychainService())
+// swiftlint:disable line_length
+        let activityModel = AnswersModel(networkService: NetwotkingService(), userDefaultAnswer: UserDefaultService(), keychainService: KeychainService())
+//swiftlint:enable line_length
         activityModel.loadSavedAnswers()
 
         let mainViewModel = MainViewModel(activityModel: activityModel)

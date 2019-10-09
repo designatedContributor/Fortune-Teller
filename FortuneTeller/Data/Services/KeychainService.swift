@@ -9,14 +9,20 @@
 import Foundation
 import SwiftKeychainWrapper
 
-class KeychainService: KeychainFunctional {
+class KeychainService: SecureKeyValueStorage {
 
-    func save(attemt: String) {
-        KeychainWrapper.standard.set(attemt, forKey: "Attemts")
+    var attemtCounter: Int
+
+    init() {
+        self.attemtCounter = KeychainWrapper.standard.integer(forKey: L10n.attemts) ?? 0
     }
 
-    func retrieve() -> String {
-        guard let value = KeychainWrapper.standard.string(forKey: "Attemts") else { return "0" }
+    func save() {
+        KeychainWrapper.standard.set(attemtCounter, forKey: L10n.attemts)
+    }
+
+    func retrieve() -> Int {
+        guard let value = KeychainWrapper.standard.integer(forKey: L10n.attemts) else { return 0 }
         return value
     }
 }

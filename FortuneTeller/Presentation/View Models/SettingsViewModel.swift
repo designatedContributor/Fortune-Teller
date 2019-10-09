@@ -10,17 +10,15 @@ import Foundation
 
 class SettingsViewModel {
 
-    private let activityModel: AnswersModel
     weak var delegate: SettingsViewModelDelegate!
-
     lazy var formatted: [String] = {
         return toString()
     }()
 
-    private func toString() -> [String] {
-        let input = AnswerType.allCases
-        let output = input.map { $0.rawValue }
-        return output
+    private let activityModel: AnswersModel
+
+    init(activityModel: AnswersModel) {
+        self.activityModel = activityModel
     }
 
     func saveAnswer(input: AnswersData) {
@@ -37,11 +35,14 @@ class SettingsViewModel {
     }
 
     func getAttempts() {
-        let attemts = activityModel.retrieveAttemts()
-        delegate.updateAttemts(attemts: attemts)
+        let number = activityModel.retrieveAttemts()
+        let attemt = String(number)
+        delegate.updateAttemts(attemts: attemt)
     }
 
-    init(activityModel: AnswersModel) {
-        self.activityModel = activityModel
+    private func toString() -> [String] {
+        let input = AnswerType.allCases
+        let output = input.map { $0.rawValue }
+        return output
     }
 }
