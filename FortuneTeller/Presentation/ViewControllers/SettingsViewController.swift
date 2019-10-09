@@ -10,12 +10,12 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    private let answerInputTextField = UITextField()
-    private let typeTextField = UITextField()
-    private let saveAnswerButton = UIButton()
-    private let warningLabel = UILabel()
-    private let counterLabel = UILabel()
-    private let stackView = UIStackView()
+    private lazy var answerInputTextField = UITextField()
+    private lazy var typeTextField = UITextField()
+    private lazy var saveAnswerButton = UIButton()
+    private lazy var warningLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 35))
+    private lazy var counterLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 60))
+    private lazy var stackView = UIStackView()
 
     var settingsViewModel: SettingsViewModel! //required to be implicit by contract
 
@@ -85,25 +85,22 @@ class SettingsViewController: UIViewController {
                 make.height.equalTo(35)
             })
         }
+
         stackView.snp.makeConstraints { make in
             make.top.equalTo(120)
             make.centerX.equalToSuperview()
-            make.leadingMargin.equalTo(50)
-            make.trailingMargin.equalTo(50)
+            make.leadingMargin.lessThanOrEqualTo(50)
+            make.trailingMargin.lessThanOrEqualTo(50)
         }
 
         warningLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
-            make.height.equalTo(35)
             make.leadingMargin.equalTo(50)
             make.top.equalTo(115)
         }
 
         counterLabel.snp.makeConstraints { make in
-            make.width.equalTo(200)
-            make.height.equalTo(60)
             make.top.equalTo(50)
-            make.rightMargin.equalTo(-80)
+            make.centerX.equalToSuperview()
         }
     }
 

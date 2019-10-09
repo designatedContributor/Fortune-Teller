@@ -15,12 +15,12 @@ class MainViewController: UIViewController {
 
     var isFlipped = false
 
-    private let containerView = UIView()
-    private let questionView = UIView()
-    private let answerView = UIView()
-    private let questionLabel = UILabel()
-    private let answerLabel = UILabel()
-    private let closeButton: UIButton = {
+    private lazy var containerView = UIView()
+    private lazy var questionView = UIView()
+    private lazy var answerView = UIView()
+    private lazy var questionLabel = UILabel()
+    private lazy var answerLabel = UILabel()
+    private lazy var closeButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
         button.setTitle(L10n.close, for: .normal)
         button.setTitleColor(ColorName.neutralText.color, for: .normal)
