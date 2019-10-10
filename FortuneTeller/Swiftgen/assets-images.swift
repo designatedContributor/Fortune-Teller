@@ -24,6 +24,8 @@ internal enum Asset {
   internal static let contrary = ColorAsset(name: "Contrary")
   internal static let neutral = ColorAsset(name: "Neutral")
   internal static let neutralText = ColorAsset(name: "NeutralText")
+  internal static let background = ColorAsset(name: "background")
+  internal static let tabbar = ColorAsset(name: "tabbar")
   internal static let gear = ImageAsset(name: "gear")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

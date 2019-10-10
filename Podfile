@@ -10,4 +10,11 @@ target 'FortuneTeller' do
 
  #A tool to auto-generate Swift code for resources of your projects
  pod 'SwiftGen', '~> 6.0'
+ 
+ #SnapKit is a DSL to make Auto Layout easy on both iOS and OS X.
+ pod 'SnapKit', '~> 5.0.0'
+ 
+ #A simple wrapper for the iOS Keychain.
+ pod 'SwiftKeychainWrapper', '~> 3.4'
+
 end

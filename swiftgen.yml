@@ -14,3 +14,8 @@ xcassets:
   outputs:
     - templateName: swift4
       output: FortuneTeller/Swiftgen/assets-images.swift
+fonts:
+  inputs: FortuneTeller/Global/Fonts
+  outputs:
+    - templateName: swift4
+      output: FortuneTeller/Swiftgen/Fonts.swift

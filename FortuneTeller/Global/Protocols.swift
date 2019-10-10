@@ -17,6 +17,7 @@ protocol SettingsViewModelDelegate: class {
     func didSaveAlert()
     func errorAlert()
     func displayWarning()
+    func updateAttemts(attemts: String)
 }
 
 protocol Networking: class {
@@ -28,4 +29,10 @@ protocol UserDefault: class {
     func save(answer: AnswersData)
     func loadAnswers()
     func getRandomAnswer() -> AnswersData
+}
+
+protocol SecureKeyValueStorage: class {
+    var attemtCounter: Int { get set }
+    func save()
+    func retrieve() -> Int
 }

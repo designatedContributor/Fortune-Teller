@@ -12,22 +12,26 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let activityModel = AnswersModel(NetwotkingService(), UserDefaultService())
+// swiftlint:disable line_length
+        let activityModel = AnswersModel(networkService: NetwotkingService(), userDefaultAnswer: UserDefaultService(), keychainService: KeychainService())
+//swiftlint:enable line_length
         activityModel.loadSavedAnswers()
 
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
+        let mainViewController = MainViewController()
+        mainViewController.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
 
-        let mainViewController = self.viewControllers?[0] as? MainViewController
+        mainViewController.mainViewModel = mainViewModel
         mainViewModel.delegate = mainViewController
-        mainViewController?.mainViewModel = mainViewModel
-        mainViewController?.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
 
-        let settingsViewController = self.viewControllers?[1] as? SettingsViewController
-        settingsViewController?.settingsViewModel = settingsViewModel
+        let settingsViewController = SettingsViewController()
+        settingsViewController.settingsViewModel = settingsViewModel
         settingsViewModel.delegate = settingsViewController
-        settingsViewController?.tabBarItem.image = UIImage(asset: Asset.gear)
+        settingsViewController.tabBarItem.image = UIImage(asset: Asset.gear)
 
+        let tabBarList = [mainViewController, settingsViewController]
+        viewControllers = tabBarList
+        tabBar.barTintColor = UIColor(named: ColorName.tabbar)
     }
 }
