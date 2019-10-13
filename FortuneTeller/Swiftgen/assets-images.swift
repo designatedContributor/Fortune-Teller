@@ -19,6 +19,7 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
   internal static let _8BallInsideACircle2 = ImageAsset(name: "8-ball-inside-a-circle-2")
+  internal static let checkmark = ImageAsset(name: "Checkmark")
   internal static let affirmative = ColorAsset(name: "Affirmative")
   internal static let affirmativeText = ColorAsset(name: "AffirmativeText")
   internal static let contrary = ColorAsset(name: "Contrary")

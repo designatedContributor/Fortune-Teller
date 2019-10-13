@@ -8,6 +8,13 @@
 
 import Foundation
 
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter
+}()
+
 class SettingsViewModel {
 
     weak var delegate: SettingsViewModelDelegate!
@@ -23,23 +30,34 @@ class SettingsViewModel {
 
     func saveAnswer(input: AnswersData) {
         let isAnswerSaved = activityModel.isSaved(answer: input)
-
         if isAnswerSaved {
             delegate.errorAlert()
         } else if !input.answer.isEmpty {
             activityModel.saveAnswer(answer: input)
             delegate.didSaveAlert()
-        } else {
-            delegate.displayWarning()
         }
     }
 
-    func getAttempts() {
-        let number = activityModel.retrieveAttemts()
-        let attemt = String(number)
-        delegate.updateAttemts(attemts: attemt)
+    func getAnswers() -> [PresentableResponse] {
+        let answers = activityModel.getSavedAnswers()
+        let result = answers.map {
+            PresentableResponse(data: $0)
+        }
+        return result
     }
 
+    func loadAnswers() {
+        activityModel.loadSavedAnswers()
+    }
+
+    func format(date: Date) -> String {
+        return dateFormatter.string(from: date)
+    }
+
+    func getAttemts() -> String {
+        let result = String(activityModel.retrieveAttemts())
+        return result
+    }
     private func toString() -> [String] {
         let input = AnswerType.allCases
         let output = input.map { $0.rawValue }

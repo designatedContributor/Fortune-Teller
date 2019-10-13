@@ -11,12 +11,12 @@ import Foundation
 class AnswersModel {
 
     private let networkService: Networking
-    private let userDefaultAnswer: UserDefault
+    private let savedAnswerService: DBClient
     private let keychainService: SecureKeyValueStorage
 
-    init(networkService: Networking, userDefaultAnswer: UserDefault, keychainService: SecureKeyValueStorage) {
+    init(networkService: Networking, savedAnswerService: DBClient, keychainService: SecureKeyValueStorage) {
         self.networkService = networkService
-        self.userDefaultAnswer = userDefaultAnswer
+        self.savedAnswerService = savedAnswerService
         self.keychainService = keychainService
     }
 
@@ -25,32 +25,42 @@ class AnswersModel {
             guard let self = self else { return }
 
             if let networkAnswer = networkAnswer {
-                let answer = AnswersData(withNetworkResponse: networkAnswer)
+                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
                 self.keychainService.attemtCounter += 1
                 self.keychainService.save()
+                self.savedAnswerService.save(answer: answer)
                 completion(answer)
             } else {
-                let dbAnswer = self.userDefaultAnswer.getRandomAnswer()
+                let dbAnswer = self.savedAnswerService.getRandomAnswer()
                 completion(dbAnswer)
             }
         })
     }
 
     func saveAnswer(answer: AnswersData) {
-        userDefaultAnswer.save(answer: answer)
+        savedAnswerService.save(answer: answer)
     }
 
     func isSaved(answer: AnswersData) -> Bool {
-        let result = userDefaultAnswer.isAnswerSaved(answer: answer)
+        let result = savedAnswerService.isAnswerSaved(answer: answer)
+        print(result)
         return result
     }
 
     func loadSavedAnswers() {
-        userDefaultAnswer.loadAnswers()
+        savedAnswerService.loadAnswers()
     }
 
     func saveAttemt() {
         keychainService.save()
+    }
+
+    func getSavedAnswers() -> [AnswersData] {
+        let answers = savedAnswerService.fetchResults
+        let result = answers.map {
+            AnswersData(withStoredAnswer: $0)
+        }
+        return result
     }
 
     func retrieveAttemts() -> Int {

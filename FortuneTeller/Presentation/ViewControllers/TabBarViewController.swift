@@ -12,26 +12,40 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-// swiftlint:disable line_length
-        let activityModel = AnswersModel(networkService: NetwotkingService(), userDefaultAnswer: UserDefaultService(), keychainService: KeychainService())
-//swiftlint:enable line_length
+        // swiftlint:disable line_length
+
+        //Initializing Active Model
+        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: SavedAnswerService(), keychainService: KeychainService())
         activityModel.loadSavedAnswers()
 
+        //swiftlint:enable line_length
+
+        //Initializing ViewModels
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
-        let mainViewController = MainViewController()
-        mainViewController.tabBarItem.image = UIImage(asset: Asset._8BallInsideACircle2)
 
+        //Initilizing and setting up View Controllers
+        let mainViewController = MainViewController()
+        mainViewController.tabBarItem.image = Asset._8BallInsideACircle2.image
+        mainViewController.navigationItem.title = L10n.main
         mainViewController.mainViewModel = mainViewModel
         mainViewModel.delegate = mainViewController
 
         let settingsViewController = SettingsViewController()
         settingsViewController.settingsViewModel = settingsViewModel
-        settingsViewModel.delegate = settingsViewController
-        settingsViewController.tabBarItem.image = UIImage(asset: Asset.gear)
+        settingsViewController.tabBarItem.image = Asset.gear.image
+        settingsViewController.navigationItem.title = L10n.settings
 
-        let tabBarList = [mainViewController, settingsViewController]
-        viewControllers = tabBarList
+        let tabBarControllers = [mainViewController, settingsViewController]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
+        //Embedding navigation controller
+        viewControllers = tabBarControllers.map {
+            UINavigationController(rootViewController: $0)
+        }
+        tabBarControllers.forEach {
+            $0.navigationController?.navigationBar.barTintColor = ColorName.tabbar.color
+            $0.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        }
         tabBar.barTintColor = UIColor(named: ColorName.tabbar)
     }
 }

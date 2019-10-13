@@ -11,7 +11,7 @@ import Foundation
 class MainViewModel {
 
     weak var delegate: MainViewModelDelegate!
-    var response = PresentableResponse(answer: "", type: .affirmative) {
+    var response = PresentableResponse(answer: "", type: .affirmative, date: Date()) {
         willSet {
             self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
             self.delegate.flip()
@@ -32,7 +32,7 @@ class MainViewModel {
 
     private func loadNewAnswer(completion: @escaping (PresentableResponse) -> Void) {
         activityModel.load { response in
-            guard let answer = PresentableResponse(data: response) else { return }
+            let answer = PresentableResponse(data: response)
             completion(answer)
         }
     }

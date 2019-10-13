@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class UserDefaultService: UserDefault {
+final class UserDefaultService {
 
     var userAnswers = [AnswersStoredData(answer: "I believe in you", type: "Affirmative"),
                        AnswersStoredData(answer: "Don't mind", type: "Neutral"),
@@ -20,11 +20,11 @@ final class UserDefaultService: UserDefault {
         return isAnswerSaved
     }
 
-    func getRandomAnswer() -> AnswersData {
-        guard let answer = userAnswers.randomElement() else { return AnswersData(answer: "", type: "Affirmative")}
-        let result = AnswersData(withStoredAnswer: answer)
-        return result
-    }
+//    func getRandomAnswer() -> AnswersData {
+//        guard let answer = userAnswers.randomElement() else { return AnswersData(answer: "", type: "Affirmative", date: Date())}
+//        let result = AnswersData(withStoredAnswer: answer)
+//        return result
+//    }
 
     // MARK: Helper functions to get FilePath
     private func documentsDirectory() -> URL {
