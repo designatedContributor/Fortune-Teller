@@ -74,14 +74,9 @@ class StoredAnswerService: DBClient {
     }
 
     func isAnswerSaved(answer: AnswersData) -> Bool {
-        var result = false
         let element = answer.answer
-        fetchResults.forEach {
-           if $0.answer == element {
-                result = true
-            } else {
-                result = false
-            }
+        let result = fetchResults.contains {
+            $0.answer == element
         }
         return result
     }
