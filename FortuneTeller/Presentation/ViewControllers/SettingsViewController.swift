@@ -53,7 +53,7 @@ class SettingsViewController: UIViewController {
     }
 
     private func changeTitle() {
-        if tableView.isEditing {
+        if tableView.isEditing && !settingsViewModel.getAnswers().isEmpty {
             editButton.title = L10n.done
         } else {
             editButton.title = L10n.edit

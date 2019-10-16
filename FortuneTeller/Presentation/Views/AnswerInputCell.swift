@@ -20,6 +20,7 @@ class AnswerInputCell: UITableViewCell {
         textfield.borderStyle = .roundedRect
         textfield.textColor = ColorName.white.color
         textfield.backgroundColor = Asset.background.color
+        textfield.keyboardAppearance = UIKeyboardAppearance.dark
         return textfield
     }()
 
