@@ -12,28 +12,26 @@ import SnapKit
 class SaveAnswerViewController: UIViewController {
 
     lazy var tableView = UITableView(frame: .zero, style: .grouped)
-
     lazy var barButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveTapped))
+        let button = UIBarButtonItem(title: L10n.saveAnswer, style: .plain, target: self, action: #selector(saveTapped))
         button.isEnabled = false
         return button
     }()
 
     var settingsViewModel: SettingsViewModel!
-
     private var typePickerIsVisible = false
 
-    
+    // MARK: ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.frame = view.frame
-        tableView.register(AnswerInputCell.self, forCellReuseIdentifier: "CellWithTextField")
-        tableView.register(TypeDisplayCell.self, forCellReuseIdentifier: "Cell")
-        tableView.register(TypePickerCell.self, forCellReuseIdentifier: "CellWithTypePicker")
+        tableView.backgroundColor = Asset.background.color
+        tableView.register(AnswerInputCell.self, forCellReuseIdentifier: AnswerInputCell.cellID)
+        tableView.register(TypeDisplayCell.self, forCellReuseIdentifier: TypeDisplayCell.cellID)
+        tableView.register(TypePickerCell.self, forCellReuseIdentifier: TypePickerCell.cellID)
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-
         navigationItem.setRightBarButton(barButton, animated: true)
     }
 
@@ -76,8 +74,8 @@ class SaveAnswerViewController: UIViewController {
     }
 }
 
-extension SaveAnswerViewController: UITableViewDataSource, UITableViewDelegate {
-
+// MARK: UITableViewDataSource
+extension SaveAnswerViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -86,36 +84,47 @@ extension SaveAnswerViewController: UITableViewDataSource, UITableViewDelegate {
         if section == 1 && typePickerIsVisible {
             return 2
         } else {
-           return 1
+            return 1
         }
     }
-
+//swiftlint:disable line_length
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellWithTextField", for: indexPath) as? AnswerInputCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerInputCell.cellID, for: indexPath) as? AnswerInputCell else { return UITableViewCell() }
             cell.isThereAnyText = { value in
                 self.isSaveButtonActive(value: value)
             }
             return cell
         }
         if indexPath.section == 1 && indexPath.row == 1 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellWithTypePicker", for: indexPath) as?  TypePickerCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TypePickerCell.cellID, for: indexPath) as?  TypePickerCell else { return UITableViewCell() }
 
             cell.whatType = { sender in
                 let index = IndexPath(row: 0, section: 1)
                 guard let typeDisplayCell = tableView.cellForRow(at: index) as? TypeDisplayCell else { return }
                 switch sender.tag {
-                case 1000: typeDisplayCell.typeLabel.text = "Affirmative"
-                case 1001: typeDisplayCell.typeLabel.text = "Neutral"
-                case 1002: typeDisplayCell.typeLabel.text = "Contrary"
+                case 1000: typeDisplayCell.typeLabel.text = L10n.affirmative
+                case 1001: typeDisplayCell.typeLabel.text = L10n.neutral
+                case 1002: typeDisplayCell.typeLabel.text = L10n.contrary
                 default: break
                 }
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Pick type"
+            let cell = tableView.dequeueReusableCell(withIdentifier: TypeDisplayCell.cellID, for: indexPath)
             return cell
+        }
+    }
+}
+
+// MARK: UITableViewDelegate
+extension SaveAnswerViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 && indexPath.row == 1 {
+            return 100
+        } else {
+            return 50
         }
     }
 
@@ -129,22 +138,15 @@ extension SaveAnswerViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 && indexPath.row == 1 {
-            return 100
-        } else {
-            return 50
-        }
-    }
 }
 
+// MARK: SettingsViewModelDelegate
 extension SaveAnswerViewController: SettingsViewModelDelegate {
 
     func didSaveAlert() {
         guard let view = navigationController?.view else { return }
         let hudView = HudView.hud(inView: view, animated: true)
-        hudView.text = "Saved"
+        hudView.text = L10n.saved
         afterDelay(0.6) {
             hudView.hide()
             self.navigationController?.popViewController(animated: true)

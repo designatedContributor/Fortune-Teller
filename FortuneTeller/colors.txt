@@ -5,8 +5,8 @@ neutral           : #71E1FF
 contrary          : #FFCCCB
 neutralText       : #2780FF
 affirmativeText   : #0EA200
-tabbar            : #323E4C
-background        : #202F40
+tabbar            : #1C549E
+background        : #003367
 white             : #FFFFFF
 black		  : #000000
 red		  : #FF0000

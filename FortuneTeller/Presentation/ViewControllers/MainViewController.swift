@@ -100,7 +100,7 @@ class MainViewController: UIViewController {
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
         navBar.backgroundColor = ColorName.background.color
         self.view.addSubview(navBar)
-        let navItem = UINavigationItem(title: "Camera")
+        let navItem = UINavigationItem()
         navBar.setItems([navItem], animated: true)
     }
 }

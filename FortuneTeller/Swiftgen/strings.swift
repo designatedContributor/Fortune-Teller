@@ -11,22 +11,46 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name
 internal enum L10n {
+  /// type
+  internal static let affirmative = L10n.tr("Localizable", "Affirmative")
+  /// section title
+  internal static let answerHistory = L10n.tr("Localizable", "Answer history")
+  /// alert title
+  internal static let answerHistoryIsMissing = L10n.tr("Localizable", "Answer history is missing")
   /// key
   internal static let attemts = L10n.tr("Localizable", "Attemts")
   /// title
   internal static let close = L10n.tr("Localizable", "Close")
+  /// type
+  internal static let contrary = L10n.tr("Localizable", "Contrary")
+  /// cell text
+  internal static let createCustomAnswer = L10n.tr("Localizable", "Create custom answer")
+  /// key
+  internal static let date = L10n.tr("Localizable", "date")
   /// title
   internal static let dismiss = L10n.tr("Localizable", "Dismiss")
+  /// title
+  internal static let done = L10n.tr("Localizable", "Done")
+  /// title
+  internal static let edit = L10n.tr("Localizable", "Edit")
   /// warningLabel
   internal static let emptyField = L10n.tr("Localizable", "Empty field")
   /// placeholder
   internal static let enterYourAnswer = L10n.tr("Localizable", "Enter your answer")
   /// counterLabel
-  internal static let lifetimeApplicationPredictions = L10n.tr("Localizable", "Lifetime application predictions:")
+  internal static let lifetimeApplicationPredictions = L10n.tr("Localizable", "Lifetime application predictions: ")
   /// title
   internal static let main = L10n.tr("Localizable", "Main")
+  /// type
+  internal static let neutral = L10n.tr("Localizable", "Neutral")
+  /// label
+  internal static let pickType = L10n.tr("Localizable", "Pick type")
   /// placeholder
   internal static let saveAnswer = L10n.tr("Localizable", "Save answer")
+  /// HUDView titile
+  internal static let saved = L10n.tr("Localizable", "Saved")
+  /// xcdatamodel
+  internal static let savedAnswerModel = L10n.tr("Localizable", "SavedAnswerModel")
   /// title
   internal static let settings = L10n.tr("Localizable", "Settings")
   /// questionLabel
@@ -35,6 +59,8 @@ internal enum L10n {
   internal static let sorry = L10n.tr("Localizable", "Sorry")
   /// message
   internal static let theAnswerAlreadyExists = L10n.tr("Localizable", "The answer already exists")
+  /// alert message
+  internal static let thereIsNothingToEdit = L10n.tr("Localizable", "There is nothing to edit")
   /// title
   internal static let youSavedAnswer = L10n.tr("Localizable", "You saved answer")
 }

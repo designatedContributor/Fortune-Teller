@@ -10,28 +10,31 @@ import UIKit
 
 class AnswerInputCell: UITableViewCell {
 
-    var isThereAnyText : ((Bool) -> Void)?
+    static let cellID = String(describing: AnswerInputCell.self)
+    var isThereAnyText: ((Bool) -> Void)?
 
     let answerTextField: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your answer"
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        textfield.attributedPlaceholder = NSAttributedString(string: L10n.enterYourAnswer, attributes: attributes)
         textfield.borderStyle = .roundedRect
-        textfield.backgroundColor = .white
+        textfield.textColor = ColorName.white.color
+        textfield.backgroundColor = Asset.background.color
         return textfield
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+        selectionStyle = .none
+        backgroundColor = Asset.tabbar.color
         answerTextField.delegate = self
 
         addSubview(answerTextField)
         answerTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.leadingMargin.equalTo(10)
-            make.trailingMargin.equalTo(10)
             make.height.equalTo(30)
+            make.leadingMargin.equalTo(20)
+            make.trailingMargin.equalTo(-20)
         }
     }
 
@@ -41,7 +44,7 @@ class AnswerInputCell: UITableViewCell {
 }
 
 extension AnswerInputCell: UITextFieldDelegate {
-
+    //swiftlint:disable line_length
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         let oldText = answerTextField.text!

@@ -11,6 +11,8 @@ import SnapKit
 
 class AnswerHistoryCell: UITableViewCell {
 
+    static let cellID = String(describing: AnswerHistoryCell.self)
+
     let typeView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorName.black.color
@@ -18,9 +20,26 @@ class AnswerHistoryCell: UITableViewCell {
         return view
     }()
 
+    var item: PresentableResponse? {
+        didSet {
+            guard let item = item else { return }
+            textLabel?.text = item.answer
+            detailTextLabel?.text = item.date
+            switch item.type {
+            case .affirmative: typeView.backgroundColor = ColorName.affirmative.color
+            case .neutral: typeView.backgroundColor = ColorName.neutral.color
+            case .contrary: typeView.backgroundColor = ColorName.contrary.color
+            }
+        }
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        self.accessoryType = .none
+        accessoryType = .none
+        selectionStyle = .none
+        backgroundColor = Asset.tabbar.color
+        textLabel?.textColor = ColorName.white.color
+        detailTextLabel?.textColor = UIColor.gray
         addSubview(typeView)
         typeView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

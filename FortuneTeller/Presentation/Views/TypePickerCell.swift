@@ -10,15 +10,13 @@ import UIKit
 
 class TypePickerCell: UITableViewCell {
 
+    static let cellID = String(describing: TypePickerCell.self)
     var whatType: ((UIButton) -> Void)?
 
     private let affirmativeButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let button = UIButton()
         button.backgroundColor = ColorName.affirmative.color
-        button.layer.cornerRadius = button.bounds.width / 2
         button.tag = 1000
-        button.clipsToBounds = true
-        button.layer.masksToBounds = true
         return button
     }()
 
@@ -38,14 +36,15 @@ class TypePickerCell: UITableViewCell {
 
     private var isActive: UIButton? {
         willSet {
-            newValue?.layer.borderWidth = 1
-            newValue?.layer.borderColor = UIColor.black.cgColor
+            newValue?.layer.borderWidth = 2
+            newValue?.layer.borderColor = UIColor.gray.cgColor
         }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+        selectionStyle = .none
+        backgroundColor = Asset.tabbar.color
         let stackView = UIStackView(arrangedSubviews: [affirmativeButton, neutralButton, contraryButton])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
@@ -78,8 +77,8 @@ class TypePickerCell: UITableViewCell {
         let buttons = [affirmativeButton, neutralButton, contraryButton]
         for button in buttons {
             if button.tag == sender.tag {
-                sender.layer.borderColor = UIColor.black.cgColor
-                sender.layer.borderWidth = 1
+                sender.layer.borderColor = ColorName.white.color.cgColor
+                sender.layer.borderWidth = 3
             } else {
                 button.layer.borderWidth = 0
             }

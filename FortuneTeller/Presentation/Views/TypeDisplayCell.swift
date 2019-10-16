@@ -9,16 +9,25 @@ import UIKit
 
 class TypeDisplayCell: UITableViewCell {
 
+    static let cellID = String(describing: TypeDisplayCell.self)
+
     lazy var typeLabel: UILabel = {
         let  label = UILabel()
-        label.text = "Affirmative"
-        label.textColor = .black
+        label.text = L10n.affirmative
+        label.textColor = Asset.buttonColor.color
         label.textAlignment = .right
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        let selectionView = UIView()
+        selectionView.backgroundColor = Asset.selected.color
+        selectedBackgroundView = selectionView
+        backgroundColor = Asset.tabbar.color
+        accessoryType = .disclosureIndicator
+        textLabel?.text = L10n.pickType
+        textLabel?.textColor = Asset.buttonColor.color
         addSubview(typeLabel)
         typeLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

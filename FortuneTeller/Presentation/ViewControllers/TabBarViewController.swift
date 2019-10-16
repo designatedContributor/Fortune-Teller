@@ -15,7 +15,7 @@ class TabBarViewController: UITabBarController {
         // swiftlint:disable line_length
 
         //Initializing Active Model
-        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: SavedAnswerService(), keychainService: KeychainService())
+        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: StoredAnswerService(), keychainService: KeychainService())
         activityModel.loadSavedAnswers()
 
         //swiftlint:enable line_length
@@ -43,9 +43,9 @@ class TabBarViewController: UITabBarController {
             UINavigationController(rootViewController: $0)
         }
         tabBarControllers.forEach {
-            $0.navigationController?.navigationBar.barTintColor = ColorName.tabbar.color
+            $0.navigationController?.navigationBar.barTintColor = Asset.tabbar.color
             $0.navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
-        tabBar.barTintColor = UIColor(named: ColorName.tabbar)
+        tabBar.barTintColor = Asset.tabbar.color
     }
 }

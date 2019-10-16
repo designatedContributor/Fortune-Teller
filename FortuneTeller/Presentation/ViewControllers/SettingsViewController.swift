@@ -11,16 +11,23 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     private lazy var tableView = UITableView(frame: .zero, style: .grouped)
+    private lazy var editButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: L10n.edit, style: .plain, target: self, action: #selector(editButtonTapped))
+        navigationItem.setRightBarButton(button, animated: true)
+        return button
+    }()
 
     var settingsViewModel: SettingsViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.frame = view.frame
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.register(AnswerHistoryCell.self, forCellReuseIdentifier: "AnswerHistoryCell")
-        tableView.dataSource = self
+        tableView.backgroundColor = Asset.background.color
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
+        tableView.register(AnswerHistoryCell.self, forCellReuseIdentifier: AnswerHistoryCell.cellID)
+        tableView.dataSource = settingsViewModel
         tableView.delegate = self
+        navigationItem.setRightBarButton(editButton, animated: true)
         view.addSubview(tableView)
     }
 
@@ -29,63 +36,32 @@ class SettingsViewController: UIViewController {
         settingsViewModel.loadAnswers()
         tableView.reloadData()
     }
+
+    @objc private func editButtonTapped() {
+        if settingsViewModel.getAnswers().isEmpty {
+            showAlert()
+        }
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        changeTitle()
+    }
+//swiftlint:disable line_length
+    private func showAlert() {
+        let alert = UIAlertController(title: L10n.answerHistoryIsMissing, message: L10n.thereIsNothingToEdit, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+
+    private func changeTitle() {
+        if tableView.isEditing {
+            editButton.title = L10n.done
+        } else {
+            editButton.title = L10n.edit
+        }
+    }
 }
 
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            let attemts = settingsViewModel.getAttemts()
-            cell.textLabel?.text = "Lifetime application predictions: \(attemts)"
-            cell.selectionStyle = .none
-            cell.isUserInteractionEnabled = false
-            return cell
-        }
-
-        if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.accessoryType = .disclosureIndicator
-            cell.textLabel?.text = "Create custom answer"
-            return cell
-        }
-
-        if indexPath.section == 2 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AnswerHistoryCell", for: indexPath) as? AnswerHistoryCell else { return UITableViewCell() }
-
-            let answers = settingsViewModel.getAnswers()
-            cell.textLabel?.text = answers[indexPath.row].answer
-            cell.detailTextLabel?.text = settingsViewModel.format(date: answers[indexPath.row].date)
-            switch answers[indexPath.row].type {
-            case .affirmative: cell.typeView.backgroundColor = ColorName.affirmative.color
-            case .neutral: cell.typeView.backgroundColor = ColorName.neutral.color
-            case .contrary: cell.typeView.backgroundColor = ColorName.contrary.color
-            }
-            return cell
-        }
-        return UITableViewCell()
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 2 {
-            return "Answer history"
-        } else {
-            return nil
-        }
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
-            return settingsViewModel.getAnswers().count
-        } else {
-            return 1
-        }
-    }
-
+extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 {
             let controller = SaveAnswerViewController()

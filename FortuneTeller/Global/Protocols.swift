@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 protocol MainViewModelDelegate: class {
     func setAnswer(answer: String, type: AnswerType)
@@ -30,10 +29,9 @@ protocol SecureKeyValueStorage: class {
 }
 
 protocol DBClient: class {
-    var persistentContainer: NSPersistentContainer { get }
-    var managedObjectContext: NSManagedObjectContext { get }
     var fetchResults: [Answer] { get set }
     func save(answer: AnswersData)
+    func delete(atIndex index: Int)
     func isAnswerSaved(answer: AnswersData) -> Bool
     func getRandomAnswer() -> AnswersData
     func loadAnswers()

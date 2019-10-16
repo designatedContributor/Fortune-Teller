@@ -12,9 +12,9 @@ import UIKit
 struct PresentableResponse {
     var answer: String
     var type: AnswerType
-    var date: Date
+    var date: String
 
-    init(answer: String, type: AnswerType, date: Date) {
+    init(answer: String, type: AnswerType, date: String) {
         self.answer = answer
         self.type = type
         self.date = date
@@ -24,7 +24,7 @@ struct PresentableResponse {
         let type = AnswerType(rawValue: data.type)
         self.type = type ?? AnswerType.affirmative
         self.answer = data.answer.uppercased()
-        self.date = data.date
+        self.date = format(date: data.date)
     }
 }
 
@@ -40,4 +40,15 @@ enum AnswerType: String, CaseIterable {
         case .contrary: return ColorName.contrary.color
         }
     }
+}
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter
+}()
+
+private func format(date: Date) -> String {
+    return dateFormatter.string(from: date)
 }
