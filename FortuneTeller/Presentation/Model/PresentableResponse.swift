@@ -13,11 +13,13 @@ struct PresentableResponse {
     var answer: String
     var type: AnswerType
     var date: String
+    var identifier: String
 
-    init(answer: String, type: AnswerType, date: String) {
+    init(answer: String, type: AnswerType, date: String, identifier: String) {
         self.answer = answer
         self.type = type
         self.date = date
+        self.identifier = identifier
     }
 
     init(data: AnswersData) {
@@ -25,6 +27,7 @@ struct PresentableResponse {
         self.type = type ?? AnswerType.affirmative
         self.answer = data.answer.uppercased()
         self.date = format(date: data.date)
+        self.identifier = data.identifier
     }
 }
 

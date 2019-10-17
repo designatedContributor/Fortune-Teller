@@ -2,7 +2,7 @@
 //  Answer+CoreDataProperties.swift
 //  
 //
-//  Created by Dmitry Grin on 10/13/19.
+//  Created by Dmitry Grin on 10/17/19.
 //
 //
 
@@ -16,7 +16,7 @@ extension Answer {
     }
 
     @NSManaged public var answer: String
-    @NSManaged public var type: String
     @NSManaged public var date: Date
-
+    @NSManaged public var type: String
+    @NSManaged public var identifier: String
 }

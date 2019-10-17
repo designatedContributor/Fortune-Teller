@@ -9,6 +9,12 @@
 import UIKit
 import SnapKit
 
+struct MagicConstants {
+    static let heightForCell: CGFloat = 100
+    static let heightForRegularCell: CGFloat = 50
+    static let delay: Double = 0.7
+}
+
 class SaveAnswerViewController: UIViewController {
 
     lazy var tableView = UITableView(frame: .zero, style: .grouped)
@@ -42,7 +48,8 @@ class SaveAnswerViewController: UIViewController {
         guard let typeDisplayCell = tableView.cellForRow(at: typeDisplayIndex) as? TypeDisplayCell else { return }
         guard let text = textFieldCell.answerTextField.text else { return }
         guard let type = typeDisplayCell.typeLabel.text else { return }
-        settingsViewModel.saveAnswer(input: AnswersData(answer: text, type: type, date: Date()))
+        let identifier = UUID()
+        settingsViewModel.saveAnswer(input: AnswersData(answer: text, type: type, date: Date(), identifier: identifier.uuidString))
     }
 
     private func showTypePicker() {
@@ -91,8 +98,8 @@ extension SaveAnswerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerInputCell.cellID, for: indexPath) as? AnswerInputCell else { return UITableViewCell() }
-            cell.isThereAnyText = { value in
-                self.isSaveButtonActive(value: value)
+            cell.isThereAnyText = { [weak self] value in
+                self?.isSaveButtonActive(value: value)
             }
             return cell
         }
@@ -122,9 +129,9 @@ extension SaveAnswerViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 && indexPath.row == 1 {
-            return 100
+            return MagicConstants.heightForCell
         } else {
-            return 50
+            return MagicConstants.heightForRegularCell
         }
     }
 
@@ -147,7 +154,7 @@ extension SaveAnswerViewController: SettingsViewModelDelegate {
         guard let view = navigationController?.view else { return }
         let hudView = HudView.hud(inView: view, animated: true)
         hudView.text = L10n.saved
-        afterDelay(0.6) {
+        afterDelay(MagicConstants.delay) {
             hudView.hide()
             self.navigationController?.popViewController(animated: true)
         }

@@ -36,7 +36,7 @@ class StoredAnswerService: DBClient {
             storedAnswer.answer = answer.answer
             storedAnswer.type = answer.type
             storedAnswer.date = answer.date
-
+            storedAnswer.identifier = answer.identifier
             do {
                 try backgroundMOC.save()
             } catch {
@@ -45,26 +45,37 @@ class StoredAnswerService: DBClient {
         }
     }
 
-    func delete(atIndex index: Int) {
-        let object = fetchResults[index]
-        backgroundMOC.delete(object)
+    func delete(withID identifier: String) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Answer")
+        request.predicate = NSPredicate(format: "identifier = %@", identifier)
         do {
-            try backgroundMOC.save()
+            let object = try backgroundMOC.fetch(request)
+            guard let objectToDelete =  object.first as? NSManagedObject else { return }
+            backgroundMOC.delete(objectToDelete)
+            do {
+                try backgroundMOC.save()
+            } catch {
+                print(error)
+            }
+
         } catch {
-            fatalError("Error: \(error)")
+            print(error)
         }
     }
 
     func getRandomAnswer() -> AnswersData {
-        let badResponse = AnswersData(answer: "", type: L10n.contrary, date: Date())
-        guard let random = fetchResults.randomElement() else { return badResponse }
-        let randomAnswer = AnswersData(answer: random.answer, type: random.type, date: random.date)
-        return randomAnswer
+        if let random = fetchResults.randomElement() {
+            let randomAnswer = AnswersData(answer: random.answer, type: random.type, date: random.date, identifier: random.identifier)
+            return randomAnswer
+        } else {
+            let badResponse = AnswersData(answer: "", type: L10n.contrary, date: Date(), identifier: "")
+            return badResponse
+        }
     }
 
     func loadAnswers() {
         let fetchRequest = Answer.createFetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: L10n.date, ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: #keyPath(Answer.date), ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             fetchResults = try backgroundMOC.fetch(fetchRequest)
@@ -74,9 +85,15 @@ class StoredAnswerService: DBClient {
     }
 
     func isAnswerSaved(answer: AnswersData) -> Bool {
-        let element = answer.answer
-        let result = fetchResults.contains {
-            $0.answer == element
+        var result = true
+        let elementID = answer.identifier
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Answer")
+        request.predicate = NSPredicate(format: "identifier = %@", elementID)
+        do {
+            let objects = try backgroundMOC.fetch(request)
+            result = objects.isEmpty
+        } catch {
+
         }
         return result
     }

@@ -31,7 +31,7 @@ protocol SecureKeyValueStorage: class {
 protocol DBClient: class {
     var fetchResults: [Answer] { get set }
     func save(answer: AnswersData)
-    func delete(atIndex index: Int)
+    func delete(withID identifier: String)
     func isAnswerSaved(answer: AnswersData) -> Bool
     func getRandomAnswer() -> AnswersData
     func loadAnswers()

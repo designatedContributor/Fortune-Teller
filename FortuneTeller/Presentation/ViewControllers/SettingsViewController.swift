@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class SettingsViewController: UIViewController {
 
@@ -21,14 +22,21 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.frame = view.frame
         tableView.backgroundColor = Asset.background.color
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
         tableView.register(AnswerHistoryCell.self, forCellReuseIdentifier: AnswerHistoryCell.cellID)
         tableView.dataSource = settingsViewModel
         tableView.delegate = self
         navigationItem.setRightBarButton(editButton, animated: true)
+
         view.addSubview(tableView)
+
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +75,7 @@ extension SettingsViewController: UITableViewDelegate {
             let controller = SaveAnswerViewController()
             controller.settingsViewModel = self.settingsViewModel
             settingsViewModel.delegate = controller
-            self.navigationController?.pushViewController(controller, animated: true)
+            navigationController?.pushViewController(controller, animated: true)
         }
     }
 }

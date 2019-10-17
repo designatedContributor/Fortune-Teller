@@ -11,7 +11,7 @@ import Foundation
 class MainViewModel {
 
     weak var delegate: MainViewModelDelegate!
-    var response = PresentableResponse(answer: "", type: .affirmative, date: "") {
+    var response = PresentableResponse(answer: "", type: .affirmative, date: "", identifier: UUID().uuidString) {
         willSet {
             self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
             self.delegate.flip()

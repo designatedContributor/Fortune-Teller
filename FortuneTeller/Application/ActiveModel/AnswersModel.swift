@@ -25,7 +25,7 @@ class AnswersModel {
             guard let self = self else { return }
 
             if let networkAnswer = networkAnswer {
-                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
+                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date(), identifier: UUID().uuidString)
                 self.keychainService.attemtCounter += 1
                 self.keychainService.save()
                 self.storedAnswerService.save(answer: answer)
@@ -41,8 +41,8 @@ class AnswersModel {
         storedAnswerService.save(answer: answer)
     }
 
-    func deleteItem(atIndex index: Int) {
-        storedAnswerService.delete(atIndex: index)
+    func deleteItem(withID identifier: String) {
+        storedAnswerService.delete(withID: identifier)
     }
 
     func isSaved(answer: AnswersData) -> Bool {

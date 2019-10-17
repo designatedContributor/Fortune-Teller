@@ -87,7 +87,7 @@ extension SettingsViewModel: UITableViewDataSource {
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerHistoryCell.cellID, for: indexPath) as? AnswerHistoryCell else { return UITableViewCell() }
-            var answers = getAnswers()
+            let answers = getAnswers()
             cell.item = answers[indexPath.row]
             return cell
         default:
@@ -120,7 +120,9 @@ extension SettingsViewModel: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            activityModel.deleteItem(atIndex: indexPath.row)
+            let answers = getAnswers()
+            let answerToRemove = answers[indexPath.row].identifier
+            activityModel.deleteItem(withID: answerToRemove)
             activityModel.loadSavedAnswers()
         }
         tableView.beginUpdates()

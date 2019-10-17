@@ -48,10 +48,10 @@ extension AnswerInputCell: UITextFieldDelegate {
     //swiftlint:disable line_length
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        let oldText = answerTextField.text!
-        let stringRange = Range(range, in: oldText)!
-        let newText = oldText.replacingCharacters(in: stringRange, with: string)
-        isThereAnyText?(newText.isEmpty)
+        if let oldText = answerTextField.text, let stringRange = Range(range, in: oldText) {
+            let newText = oldText.replacingCharacters(in: stringRange, with: string)
+            isThereAnyText?(newText.isEmpty)
+        }
         return true
     }
 }

@@ -8,31 +8,33 @@
 
 import UIKit
 
+enum ButtonType: Int {
+    case affirmative = 1000
+    case contrary = 1001
+    case neutral = 1002
+
+}
+
+private func createButton(withType type: ButtonType) -> UIButton {
+    let button = UIButton()
+    switch type {
+    case .affirmative:
+        button.backgroundColor = ColorName.affirmative.color
+        button.tag = 1000
+    case .contrary:
+        button.backgroundColor = ColorName.neutral.color
+        button.tag = 1001
+    case .neutral:
+        button.backgroundColor = ColorName.contrary.color
+        button.tag = 1002
+    }
+    return button
+}
+
 class TypePickerCell: UITableViewCell {
 
     static let cellID = String(describing: TypePickerCell.self)
     var whatType: ((UIButton) -> Void)?
-
-    private let affirmativeButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = ColorName.affirmative.color
-        button.tag = 1000
-        return button
-    }()
-
-    private let neutralButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = ColorName.neutral.color
-        button.tag = 1001
-        return button
-    }()
-
-    private let contraryButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = ColorName.contrary.color
-        button.tag = 1002
-        return button
-    }()
 
     private var isActive: UIButton? {
         willSet {
@@ -41,15 +43,20 @@ class TypePickerCell: UITableViewCell {
         }
     }
 
+    let affirmativeButton = createButton(withType: .affirmative)
+    let neutralButton = createButton(withType: .neutral)
+    let contraryButtton = createButton(withType: .contrary)
+
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = Asset.tabbar.color
-        let stackView = UIStackView(arrangedSubviews: [affirmativeButton, neutralButton, contraryButton])
+        let stackView = UIStackView(arrangedSubviews: [affirmativeButton, neutralButton, contraryButtton])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
 
-        let elements = [affirmativeButton, neutralButton, contraryButton]
+        let elements = [affirmativeButton, neutralButton, contraryButtton]
 
         elements.forEach {
             $0.snp.makeConstraints { make in
@@ -74,7 +81,7 @@ class TypePickerCell: UITableViewCell {
     }
 
     @objc private func buttonTapped(sender: UIButton) {
-        let buttons = [affirmativeButton, neutralButton, contraryButton]
+        let buttons = [affirmativeButton, neutralButton, contraryButtton]
         for button in buttons {
             if button.tag == sender.tag {
                 sender.layer.borderColor = ColorName.white.color.cgColor
