@@ -48,8 +48,8 @@ class SaveAnswerViewController: UIViewController {
         guard let typeDisplayCell = tableView.cellForRow(at: typeDisplayIndex) as? TypeDisplayCell else { return }
         guard let text = textFieldCell.answerTextField.text else { return }
         guard let type = typeDisplayCell.typeLabel.text else { return }
-        let identifier = UUID()
-        settingsViewModel.saveAnswer(input: AnswersData(answer: text, type: type, date: Date(), identifier: identifier.uuidString))
+        guard let answertype = AnswerType(rawValue: type) else { return }
+        settingsViewModel.saveAnswer(input: PresentableResponse(answer: text, type: answertype, date: "", identifier: ""))
     }
 
     private func showTypePicker() {
@@ -106,14 +106,13 @@ extension SaveAnswerViewController: UITableViewDataSource {
         if indexPath.section == 1 && indexPath.row == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TypePickerCell.cellID, for: indexPath) as?  TypePickerCell else { return UITableViewCell() }
 
-            cell.whatType = { sender in
+            cell.whatType = { buttonType in
                 let index = IndexPath(row: 0, section: 1)
                 guard let typeDisplayCell = tableView.cellForRow(at: index) as? TypeDisplayCell else { return }
-                switch sender.tag {
-                case 1000: typeDisplayCell.typeLabel.text = L10n.affirmative
-                case 1001: typeDisplayCell.typeLabel.text = L10n.neutral
-                case 1002: typeDisplayCell.typeLabel.text = L10n.contrary
-                default: break
+                switch buttonType {
+                case .affirmative: typeDisplayCell.typeLabel.text = L10n.affirmative
+                case .neutral: typeDisplayCell.typeLabel.text = L10n.neutral
+                case .contrary: typeDisplayCell.typeLabel.text = L10n.contrary
                 }
             }
             return cell

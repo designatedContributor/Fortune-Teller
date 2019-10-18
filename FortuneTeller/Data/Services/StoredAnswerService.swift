@@ -36,12 +36,13 @@ class StoredAnswerService: DBClient {
             storedAnswer.answer = answer.answer
             storedAnswer.type = answer.type
             storedAnswer.date = answer.date
-            storedAnswer.identifier = answer.identifier
+            storedAnswer.identifier = UUID().uuidString
             do {
                 try backgroundMOC.save()
             } catch {
                 fatalError("Error: \(error.localizedDescription)")
             }
+            loadAnswers()
         }
     }
 
@@ -65,10 +66,10 @@ class StoredAnswerService: DBClient {
 
     func getRandomAnswer() -> AnswersData {
         if let random = fetchResults.randomElement() {
-            let randomAnswer = AnswersData(answer: random.answer, type: random.type, date: random.date, identifier: random.identifier)
+            let randomAnswer = AnswersData(answer: random.answer, type: random.type, date: random.date)
             return randomAnswer
         } else {
-            let badResponse = AnswersData(answer: "", type: L10n.contrary, date: Date(), identifier: "")
+            let badResponse = AnswersData(answer: "", type: L10n.contrary, date: Date())
             return badResponse
         }
     }
@@ -85,15 +86,17 @@ class StoredAnswerService: DBClient {
     }
 
     func isAnswerSaved(answer: AnswersData) -> Bool {
-        var result = true
-        let elementID = answer.identifier
+        var result = false
+        let element = answer.answer
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Answer")
-        request.predicate = NSPredicate(format: "identifier = %@", elementID)
+        request.predicate = NSPredicate(format: "answer = %@", element)
         do {
             let objects = try backgroundMOC.fetch(request)
-            result = objects.isEmpty
+            if (objects.first as? Answer) != nil {
+                result = true
+            }
         } catch {
-
+            print(error.localizedDescription)
         }
         return result
     }

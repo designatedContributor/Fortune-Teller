@@ -42,6 +42,7 @@ class TabBarViewController: UITabBarController {
         viewControllers = tabBarControllers.map {
             UINavigationController(rootViewController: $0)
         }
+
         tabBarControllers.forEach {
             $0.navigationController?.navigationBar.barTintColor = Asset.tabbar.color
             $0.navigationController?.navigationBar.titleTextAttributes = textAttributes

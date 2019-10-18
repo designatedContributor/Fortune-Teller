@@ -8,11 +8,10 @@
 
 import UIKit
 
-enum ButtonType: Int {
+enum ButtonType: Int, CaseIterable {
     case affirmative = 1000
     case contrary = 1001
     case neutral = 1002
-
 }
 
 private func createButton(withType type: ButtonType) -> UIButton {
@@ -34,7 +33,7 @@ private func createButton(withType type: ButtonType) -> UIButton {
 class TypePickerCell: UITableViewCell {
 
     static let cellID = String(describing: TypePickerCell.self)
-    var whatType: ((UIButton) -> Void)?
+    var whatType: ((ButtonType) -> Void)?
 
     private var isActive: UIButton? {
         willSet {
@@ -45,18 +44,17 @@ class TypePickerCell: UITableViewCell {
 
     let affirmativeButton = createButton(withType: .affirmative)
     let neutralButton = createButton(withType: .neutral)
-    let contraryButtton = createButton(withType: .contrary)
-
+    let contraryButton = createButton(withType: .contrary)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = Asset.tabbar.color
-        let stackView = UIStackView(arrangedSubviews: [affirmativeButton, neutralButton, contraryButtton])
+        let stackView = UIStackView(arrangedSubviews: [affirmativeButton, neutralButton, contraryButton])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
 
-        let elements = [affirmativeButton, neutralButton, contraryButtton]
+        let elements = [affirmativeButton, neutralButton, contraryButton]
 
         elements.forEach {
             $0.snp.makeConstraints { make in
@@ -81,7 +79,7 @@ class TypePickerCell: UITableViewCell {
     }
 
     @objc private func buttonTapped(sender: UIButton) {
-        let buttons = [affirmativeButton, neutralButton, contraryButtton]
+        let buttons = [affirmativeButton, neutralButton, contraryButton]
         for button in buttons {
             if button.tag == sender.tag {
                 sender.layer.borderColor = ColorName.white.color.cgColor
@@ -90,7 +88,13 @@ class TypePickerCell: UITableViewCell {
                 button.layer.borderWidth = 0
             }
         }
-        whatType?(sender)
+
+        let types = ButtonType.allCases
+        types.forEach {
+            if $0.rawValue == sender.tag {
+                whatType?($0)
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

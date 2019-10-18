@@ -25,7 +25,7 @@ class AnswersModel {
             guard let self = self else { return }
 
             if let networkAnswer = networkAnswer {
-                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date(), identifier: UUID().uuidString)
+                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
                 self.keychainService.attemtCounter += 1
                 self.keychainService.save()
                 self.storedAnswerService.save(answer: answer)

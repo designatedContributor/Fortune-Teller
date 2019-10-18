@@ -12,20 +12,18 @@ struct AnswersData {
     var answer: String
     var type: String
     var date: Date
-    var identifier: String
+    var identifier = ""
 
-    init(answer: String, type: String, date: Date, identifier: String) {
+    init(answer: String, type: String, date: Date) {
         self.answer = answer
         self.type = type
         self.date = date
-        self.identifier = UUID().uuidString
     }
 
-    init(withNetworkResponse response: ResponsePackage, date: Date, identifier: String) {
+    init(withNetworkResponse response: ResponsePackage, date: Date) {
         self.answer = response.singleResponse.answer
         self.type = response.singleResponse.type
         self.date = date
-        self.identifier = UUID().uuidString
     }
 
     init(withStoredAnswer answer: Answer) {

@@ -23,13 +23,14 @@ class SettingsViewModel: NSObject {
         self.activityModel = activityModel
     }
 
-    func saveAnswer(input: AnswersData) {
-        let isAnswerSaved = activityModel.isSaved(answer: input)
-        if isAnswerSaved {
-            delegate.errorAlert()
-        } else if !input.answer.isEmpty {
-            activityModel.saveAnswer(answer: input)
+    func saveAnswer(input: PresentableResponse) {
+        let item = AnswersData(answer: input.answer, type: input.type.rawValue, date: Date())
+        let isAnswerSaved = activityModel.isSaved(answer: item)
+        if isAnswerSaved == false && !input.answer.isEmpty {
+            activityModel.saveAnswer(answer: item)
             delegate.didSaveAlert()
+        } else {
+            delegate.errorAlert()
         }
     }
 
