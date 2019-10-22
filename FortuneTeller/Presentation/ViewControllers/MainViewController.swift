@@ -33,7 +33,6 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = L10n.main
         setupSubviews()
         setupViews()
         setupLabels()
@@ -95,6 +94,14 @@ class MainViewController: UIViewController {
             $0.numberOfLines = 0
             $0.textAlignment = .center
         }
+    }
+
+    func setNavBarToTheView() {
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        navBar.backgroundColor = ColorName.background.color
+        self.view.addSubview(navBar)
+        let navItem = UINavigationItem()
+        navBar.setItems([navItem], animated: true)
     }
 }
 

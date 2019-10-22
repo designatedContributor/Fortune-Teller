@@ -6,7 +6,7 @@
 //  Copyright © 2019 Dmitry Grin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MainViewModelDelegate: class {
     func setAnswer(answer: String, type: AnswerType)
@@ -16,23 +16,23 @@ protocol MainViewModelDelegate: class {
 protocol SettingsViewModelDelegate: class {
     func didSaveAlert()
     func errorAlert()
-    func displayWarning()
-    func updateAttemts(attemts: String)
 }
 
 protocol Networking: class {
     func getAnswer(withCompletion completion: @escaping (ResponsePackage?) -> Void)
 }
 
-protocol UserDefault: class {
-    func isAnswerSaved(answer: AnswersData) -> Bool
-    func save(answer: AnswersData)
-    func loadAnswers()
-    func getRandomAnswer() -> AnswersData
-}
-
 protocol SecureKeyValueStorage: class {
     var attemtCounter: Int { get set }
     func save()
     func retrieve() -> Int
+}
+
+protocol DBClient: class {
+    var fetchResults: [Answer] { get set }
+    func save(answer: AnswersData)
+    func delete(withID identifier: String)
+    func isAnswerSaved(answer: AnswersData) -> Bool
+    func getRandomAnswer() -> AnswersData
+    func loadAnswers()
 }

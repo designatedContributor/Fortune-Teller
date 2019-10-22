@@ -25,9 +25,9 @@ internal struct ColorName {
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#0ea200"></span>
   /// Alpha: 100% <br/> (0x0ea200ff)
   internal static let affirmativeText = ColorName(rgbaValue: 0x0ea200ff)
-  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#202f40"></span>
-  /// Alpha: 100% <br/> (0x202f40ff)
-  internal static let background = ColorName(rgbaValue: 0x202f40ff)
+  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#003367"></span>
+  /// Alpha: 100% <br/> (0x003367ff)
+  internal static let background = ColorName(rgbaValue: 0x003367ff)
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#000000"></span>
   /// Alpha: 100% <br/> (0x000000ff)
   internal static let black = ColorName(rgbaValue: 0x000000ff)
@@ -49,9 +49,9 @@ internal struct ColorName {
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#ff0000"></span>
   /// Alpha: 100% <br/> (0xff0000ff)
   internal static let red = ColorName(rgbaValue: 0xff0000ff)
-  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#323e4c"></span>
-  /// Alpha: 100% <br/> (0x323e4cff)
-  internal static let tabbar = ColorName(rgbaValue: 0x323e4cff)
+  /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#1c549e"></span>
+  /// Alpha: 100% <br/> (0x1c549eff)
+  internal static let tabbar = ColorName(rgbaValue: 0x1c549eff)
   /// <span style="display:block;width:3em;height:2em;border:1px solid black;background:#ffffff"></span>
   /// Alpha: 100% <br/> (0xffffffff)
   internal static let white = ColorName(rgbaValue: 0xffffffff)
