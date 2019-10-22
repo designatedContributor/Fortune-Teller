@@ -18,8 +18,26 @@ class MainViewController: UIViewController {
     private lazy var containerView = UIView()
     private lazy var questionView = UIView()
     private lazy var answerView = UIView()
-    private lazy var questionLabel = UILabel()
     private lazy var answerLabel = UILabel()
+    private lazy var questionLabel = UILabel()
+    private lazy var glowingLabel = UILabel()
+
+    private lazy var gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor, UIColor.clear.cgColor]
+        layer.locations = [0, 0.5, 1]
+        return layer
+    }()
+
+    private lazy var animation: CABasicAnimation = {
+        let instance = CABasicAnimation(keyPath: "transform.translation.x")
+        instance.duration = 2
+        instance.fromValue = -gradientLayer.frame.width
+        instance.toValue = gradientLayer.frame.width
+        instance.repeatCount = Float.infinity
+        return instance
+    }()
+
     private lazy var closeButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
         button.setTitle(L10n.close, for: .normal)
@@ -37,21 +55,39 @@ class MainViewController: UIViewController {
         setupViews()
         setupLabels()
         setupConstraints()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+
+        let angle = 45 * CGFloat.pi / 180
+        gradientLayer.transform = CATransform3DMakeRotation(angle, 0, 0, 1)
     }
 
     // MARK: Shake gesture
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake && isFlipped == false {
-            mainViewModel.shakeDetected()
+            animate(condition: isFlipped)
+            afterDelay(2.0) { [weak self] in
+                self?.mainViewModel.shakeDetected()
+            }
         }
     }
 
     @objc private func closeButtonTapped(_ sender: Any) {
+        animate(condition: true)
         flip()
     }
 
+    private func animate(condition: Bool) {
+        if !condition {
+            glowingLabel.layer.mask = gradientLayer
+            gradientLayer.add(animation, forKey: "Somekey")
+        } else {
+            glowingLabel.layer.mask = nil
+            gradientLayer.removeAllAnimations()
+        }
+    }
+
     private func setupConstraints() {
-        let views = [containerView, answerView, questionView, answerLabel, questionLabel]
+        let views = [containerView, answerView, questionView, answerLabel, questionLabel, glowingLabel]
         views.forEach { $0.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
@@ -70,6 +106,7 @@ class MainViewController: UIViewController {
         containerView.addSubview(answerView)
         containerView.addSubview(questionView)
         questionView.addSubview(questionLabel)
+        questionView.addSubview(glowingLabel)
         answerView.addSubview(answerLabel)
         answerView.addSubview(closeButton)
         view.addSubview(containerView)
@@ -86,9 +123,12 @@ class MainViewController: UIViewController {
     }
 
     private func setupLabels() {
-        let items = [answerLabel, questionLabel]
+        let items = [answerLabel, questionLabel, glowingLabel]
+        glowingLabel.text = L10n.shakeDeviceToGetTheAnswer
+        glowingLabel.textColor = ColorName.white.color
         questionLabel.text = L10n.shakeDeviceToGetTheAnswer
-        questionLabel.textColor = ColorName.white.color
+        questionLabel.textColor = UIColor(white: 1, alpha: 0.2)
+
         items.forEach {
             $0.font = UIFont(font: FontFamily.DigitalStripBB.boldItalic, size: 20)
             $0.numberOfLines = 0

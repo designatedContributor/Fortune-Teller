@@ -15,7 +15,7 @@ final class NetwotkingService: Networking {
 
         guard let url = URL(string: "https://8ball.delegator.com/magic/JSON/tell_me_smth") else { return }
         var requestSetup = URLRequest(url: url)
-        requestSetup.timeoutInterval = 4.0
+        requestSetup.timeoutInterval = 17.0
 
         AF.request(requestSetup).responseJSON { response in
             guard let json = response.data else { return completion(nil) }

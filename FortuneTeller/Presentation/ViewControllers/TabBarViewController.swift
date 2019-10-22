@@ -15,14 +15,14 @@ class TabBarViewController: UITabBarController {
         // swiftlint:disable line_length
 
         //Initializing Active Model
-        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: StoredAnswerService(), keychainService: KeychainService())
-        activityModel.loadSavedAnswers()
-
-        //swiftlint:enable line_length
+        let storedAnswerService = StoredAnswerService()
+        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: storedAnswerService, keychainService: KeychainService())
+        let fetchResultController = FetchResultController(storedAnswerService: storedAnswerService)
 
         //Initializing ViewModels
         let mainViewModel = MainViewModel(activityModel: activityModel)
-        let settingsViewModel = SettingsViewModel(activityModel: activityModel)
+        let settingsViewModel = SettingsViewModel(activityModel: activityModel, fetchResultController: fetchResultController)
+        //swiftlint:enable line_length
 
         //Initilizing and setting up View Controllers
         let mainViewController = MainViewController()
@@ -36,7 +36,13 @@ class TabBarViewController: UITabBarController {
         settingsViewController.tabBarItem.image = Asset.gear.image
         settingsViewController.navigationItem.title = L10n.settings
 
-        let tabBarControllers = [mainViewController, settingsViewController]
+        settingsViewModel.settingsDelegate = settingsViewController
+
+        let answerHistoryViewController = AnswerHistoryViewController()
+        let item = UITabBarItem(tabBarSystemItem: .mostRecent, tag: 1)
+        answerHistoryViewController.tabBarItem = item
+
+        let tabBarControllers = [mainViewController, settingsViewController, answerHistoryViewController]
         let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
         //Embedding navigation controller
         viewControllers = tabBarControllers.map {

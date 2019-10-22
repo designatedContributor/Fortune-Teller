@@ -50,18 +50,6 @@ class AnswersModel {
         return result
     }
 
-    func loadSavedAnswers() {
-        storedAnswerService.loadAnswers()
-    }
-
-    func getSavedAnswers() -> [AnswersData] {
-        let answers = storedAnswerService.fetchResults
-        let result = answers.map {
-            AnswersData(withStoredAnswer: $0)
-        }
-        return result
-    }
-
     func saveAttemt() {
         keychainService.save()
     }

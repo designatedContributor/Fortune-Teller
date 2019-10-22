@@ -29,6 +29,14 @@ struct PresentableResponse {
         self.date = format(date: data.date)
         self.identifier = data.identifier
     }
+
+    init(storedAnswer: Answer) {
+        let type = AnswerType(rawValue: storedAnswer.type)
+        self.type = type ?? AnswerType.affirmative
+        self.answer = storedAnswer.answer.uppercased()
+        self.date = format(date: storedAnswer.date)
+        self.identifier = storedAnswer.identifier
+    }
 }
 
 enum AnswerType: String, CaseIterable {

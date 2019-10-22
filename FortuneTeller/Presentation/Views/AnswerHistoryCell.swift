@@ -2,51 +2,51 @@
 //  AnswerHistoryCell.swift
 //  FortuneTeller
 //
-//  Created by Dmitry Grin on 10/13/19.
+//  Created by Dmitry Grin on 10/19/19.
 //  Copyright © 2019 Dmitry Grin. All rights reserved.
 //
 
 import UIKit
 import SnapKit
-
-class AnswerHistoryCell: UITableViewCell {
+class AnswerHistoryCell: UICollectionViewCell {
 
     static let cellID = String(describing: AnswerHistoryCell.self)
 
-    let typeView: UIView = {
+    let answerView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorName.black.color
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 15
         return view
     }()
 
-    var item: PresentableResponse? {
-        didSet {
-            guard let item = item else { return }
-            textLabel?.text = item.answer
-            detailTextLabel?.text = item.date
-            switch item.type {
-            case .affirmative: typeView.backgroundColor = ColorName.affirmative.color
-            case .neutral: typeView.backgroundColor = ColorName.neutral.color
-            case .contrary: typeView.backgroundColor = ColorName.contrary.color
-            }
-        }
-    }
+    let answerLabel: UILabel = {
+        let label = UILabel()
+        label.text = L10n.shakeDeviceToGetTheAnswer
+        label.textColor = ColorName.white.color
+        return label
+    }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        accessoryType = .none
-        selectionStyle = .none
-        backgroundColor = Asset.tabbar.color
-        textLabel?.textColor = ColorName.white.color
-        detailTextLabel?.textColor = UIColor.gray
-        addSubview(typeView)
-        typeView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailingMargin.equalTo(-20)
-            make.width.equalTo(16)
-            make.height.equalTo(16)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.backgroundColor = ColorName.white.color
+
+        answerView.addSubview(answerLabel)
+        contentView.addSubview(answerView)
+
+        answerView.snp.makeConstraints { make in
+            make.topMargin.equalTo(10)
+            make.leadingMargin.equalTo(10)
+            make.trailingMargin.equalTo(-10)
+            make.bottomMargin.equalTo(-10)
         }
+
+        answerLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+
     }
 
     required init?(coder aDecoder: NSCoder) {

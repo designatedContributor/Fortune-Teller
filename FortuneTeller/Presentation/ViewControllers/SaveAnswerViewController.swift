@@ -5,7 +5,7 @@
 //  Created by Dmitry Grin on 10/11/19.
 //  Copyright © 2019 Dmitry Grin. All rights reserved.
 //
-
+// swiftlint:disable line_length
 import UIKit
 import SnapKit
 
@@ -147,7 +147,7 @@ extension SaveAnswerViewController: UITableViewDelegate {
 }
 
 // MARK: SettingsViewModelDelegate
-extension SaveAnswerViewController: SettingsViewModelDelegate {
+extension SaveAnswerViewController: SaveAnswerViewModelDelegate {
 
     func didSaveAlert() {
         guard let view = navigationController?.view else { return }

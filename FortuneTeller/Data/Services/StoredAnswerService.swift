@@ -5,13 +5,11 @@
 //  Created by Dmitry Grin on 10/13/19.
 //  Copyright © 2019 Dmitry Grin. All rights reserved.
 //
-
+// swiftlint:disable line_length
 import Foundation
 import CoreData
 
 class StoredAnswerService: DBClient {
-
-    var fetchResults = [Answer]()
 
     lazy var persistentContainer: NSPersistentContainer = {
         let containter = NSPersistentContainer(name: L10n.savedAnswerModel)
@@ -21,6 +19,11 @@ class StoredAnswerService: DBClient {
             }
         })
         return containter
+    }()
+
+    lazy var mainMOC: NSManagedObjectContext = {
+        let context = persistentContainer.viewContext
+        return context
     }()
 
     lazy var backgroundMOC: NSManagedObjectContext = {
@@ -42,57 +45,45 @@ class StoredAnswerService: DBClient {
             } catch {
                 fatalError("Error: \(error.localizedDescription)")
             }
-            loadAnswers()
         }
     }
 
     func delete(withID identifier: String) {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Answer")
+        let request = Answer.createFetchRequest()
         request.predicate = NSPredicate(format: "identifier = %@", identifier)
         do {
-            let object = try backgroundMOC.fetch(request)
-            guard let objectToDelete =  object.first as? NSManagedObject else { return }
-            backgroundMOC.delete(objectToDelete)
+            let objects = try mainMOC.fetch(request)
+            guard let objectToDelete = objects.first else { return }
+            mainMOC.delete(objectToDelete)
             do {
-                try backgroundMOC.save()
-            } catch {
-                print(error)
+                try mainMOC.save()
             }
-
-        } catch {
-            print(error)
-        }
+        } catch {}
     }
 
     func getRandomAnswer() -> AnswersData {
-        if let random = fetchResults.randomElement() {
-            let randomAnswer = AnswersData(answer: random.answer, type: random.type, date: random.date)
-            return randomAnswer
+        var array = [Answer]()
+        let request = Answer.createFetchRequest()
+        request.fetchBatchSize = 5
+            do {
+                array = try mainMOC.fetch(request)
+            } catch {}
+        if let answer = array.randomElement() {
+            return AnswersData(withStoredAnswer: answer)
         } else {
-            let badResponse = AnswersData(answer: "", type: L10n.contrary, date: Date())
+            let badResponse = AnswersData(answer: "Seems like you offline – add custom answer", type: L10n.contrary, date: Date())
             return badResponse
-        }
-    }
-
-    func loadAnswers() {
-        let fetchRequest = Answer.createFetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: #keyPath(Answer.date), ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        do {
-            fetchResults = try backgroundMOC.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
         }
     }
 
     func isAnswerSaved(answer: AnswersData) -> Bool {
         var result = false
         let element = answer.answer
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Answer")
+        let request = Answer.createFetchRequest()
         request.predicate = NSPredicate(format: "answer = %@", element)
         do {
-            let objects = try backgroundMOC.fetch(request)
-            if (objects.first as? Answer) != nil {
+            let objects = try mainMOC.fetch(request)
+            if  objects.first != nil {
                 result = true
             }
         } catch {

@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 protocol MainViewModelDelegate: class {
     func setAnswer(answer: String, type: AnswerType)
     func flip()
 }
 
-protocol SettingsViewModelDelegate: class {
+protocol SaveAnswerViewModelDelegate: class {
     func didSaveAlert()
     func errorAlert()
+}
+
+protocol SettingsViewModelDelegate: class {
+    func deleteRow(atIndex indexPath: IndexPath)
+    func insertRow(atIndex indexPath: IndexPath)
 }
 
 protocol Networking: class {
@@ -29,10 +35,10 @@ protocol SecureKeyValueStorage: class {
 }
 
 protocol DBClient: class {
-    var fetchResults: [Answer] { get set }
+    var backgroundMOC: NSManagedObjectContext { get set }
+//    var anotherMOC: NSManagedObjectContext { get set }
     func save(answer: AnswersData)
     func delete(withID identifier: String)
     func isAnswerSaved(answer: AnswersData) -> Bool
     func getRandomAnswer() -> AnswersData
-    func loadAnswers()
 }
