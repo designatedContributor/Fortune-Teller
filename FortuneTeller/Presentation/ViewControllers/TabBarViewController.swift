@@ -12,16 +12,16 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // swiftlint:disable line_length
-
+        
         //Initializing Active Model
-        let storedAnswerService = StoredAnswerService()
-        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: storedAnswerService, keychainService: KeychainService())
-        let fetchResultController = FetchResultController(storedAnswerService: storedAnswerService)
-
+        let activityModel = AnswersModel(networkService: NetwotkingService(),
+                                         savedAnswerService: StoredAnswerService(),
+                                         keychainService: KeychainService(),
+                                         userDefaultsService: UserDefaultService())
         //Initializing ViewModels
         let mainViewModel = MainViewModel(activityModel: activityModel)
-        let settingsViewModel = SettingsViewModel(activityModel: activityModel, fetchResultController: fetchResultController)
+        let settingsViewModel = SettingsViewModel(activityModel: activityModel)
+        let recentAnswersViewModel = RecentAnswersViewModel(activityModel: activityModel)
         //swiftlint:enable line_length
 
         //Initilizing and setting up View Controllers
@@ -35,14 +35,14 @@ class TabBarViewController: UITabBarController {
         settingsViewController.settingsViewModel = settingsViewModel
         settingsViewController.tabBarItem.image = Asset.gear.image
         settingsViewController.navigationItem.title = L10n.settings
-
         settingsViewModel.settingsDelegate = settingsViewController
 
-        let answerHistoryViewController = AnswerHistoryViewController()
+        let recentAnswersViewController = RecentAnswersViewController()
+        recentAnswersViewController.recentViewModel = recentAnswersViewModel
         let item = UITabBarItem(tabBarSystemItem: .mostRecent, tag: 1)
-        answerHistoryViewController.tabBarItem = item
+        recentAnswersViewController.tabBarItem = item
 
-        let tabBarControllers = [mainViewController, settingsViewController, answerHistoryViewController]
+        let tabBarControllers = [mainViewController, settingsViewController, recentAnswersViewController]
         let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
         //Embedding navigation controller
         viewControllers = tabBarControllers.map {

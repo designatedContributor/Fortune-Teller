@@ -9,8 +9,9 @@
 import Foundation
 import CoreData
 
-class StoredAnswerService: DBClient {
+class StoredAnswerService: NSObject, DBClient {
 
+    // MARK: CoreData stack
     lazy var persistentContainer: NSPersistentContainer = {
         let containter = NSPersistentContainer(name: L10n.savedAnswerModel)
         containter.loadPersistentStores(completionHandler: { _, error in
@@ -21,11 +22,7 @@ class StoredAnswerService: DBClient {
         return containter
     }()
 
-    lazy var mainMOC: NSManagedObjectContext = {
-        let context = persistentContainer.viewContext
-        return context
-    }()
-
+    lazy var mainMOC = persistentContainer.viewContext
     lazy var backgroundMOC: NSManagedObjectContext = {
         let context = persistentContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -33,6 +30,35 @@ class StoredAnswerService: DBClient {
         return context
     }()
 
+    // MARK: FRC related stuff
+    var observerCallBack: ((IndexPath) -> Void)?
+
+    private lazy var frcController: NSFetchedResultsController<Answer> = {
+        let frcInstance = initializeFetchResultsController()
+        return frcInstance
+    }()
+
+    func numberOfRows() -> Int {
+        guard let sectionInfo = frcController.sections?[0] else { return 0 }
+        return sectionInfo.numberOfObjects
+    }
+
+    func objectAtIndex(at indexPath: IndexPath) -> Answer {
+        let object = frcController.object(at: indexPath)
+        return object
+    }
+
+    func performFetch() {
+        do {
+            try frcController.performFetch()
+        } catch {}
+    }
+
+    private func didDeleteRow(atIndexPath indexPath: IndexPath) {
+        observerCallBack?(indexPath)
+    }
+
+    // MARK: Answer related actions
     func save(answer: AnswersData) {
         backgroundMOC.performAndWait {
             let storedAnswer = Answer(context: backgroundMOC)
@@ -90,5 +116,30 @@ class StoredAnswerService: DBClient {
             print(error.localizedDescription)
         }
         return result
+    }
+
+    // MARK: Setting up FRC
+    private func initializeFetchResultsController() -> NSFetchedResultsController<Answer> {
+        let fetchRequest = Answer.createFetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: #keyPath(Answer.date), ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainMOC, sectionNameKeyPath: nil, cacheName: nil)
+        do {
+            try controller.performFetch()
+        } catch let error as NSError {
+            print("Fetching error: \(error), \(error.userInfo)")
+        }
+        controller.delegate = self
+        return controller
+    }
+}
+
+// MARK: NSFetchedResultsControllerDelegate
+extension StoredAnswerService: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard let indexPath = indexPath else { return }
+        if type == .delete {
+            didDeleteRow(atIndexPath: indexPath)
+        }
     }
 }

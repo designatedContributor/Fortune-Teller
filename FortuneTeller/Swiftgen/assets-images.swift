@@ -19,6 +19,7 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
   internal static let _8BallInsideACircle2 = ImageAsset(name: "8-ball-inside-a-circle-2")
+  internal static let checked = ImageAsset(name: "Checked")
   internal static let checkmark = ImageAsset(name: "Checkmark")
   internal static let affirmative = ColorAsset(name: "affirmative")
   internal static let affirmativeText = ColorAsset(name: "affirmativeText")
@@ -29,6 +30,7 @@ internal enum Asset {
   internal static let neutralText = ColorAsset(name: "neutralText")
   internal static let selected = ColorAsset(name: "selected")
   internal static let tabbar = ColorAsset(name: "tabbar")
+  internal static let unchecked = ImageAsset(name: "Unchecked")
   internal static let gear = ImageAsset(name: "gear")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

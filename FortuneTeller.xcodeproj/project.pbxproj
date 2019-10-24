@@ -23,9 +23,11 @@
 		AA1F6BD8235396DF00BD141B /* SavedAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6BD7235396DF00BD141B /* SavedAnswerCell.swift */; };
 		AA1F6BDD23586DD000BD141B /* Answer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6BDB23586DD000BD141B /* Answer+CoreDataClass.swift */; };
 		AA1F6BDE23586DD000BD141B /* Answer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6BDC23586DD000BD141B /* Answer+CoreDataProperties.swift */; };
-		AA1F6C0B235AF5ED00BD141B /* AnswerHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C0A235AF5ED00BD141B /* AnswerHistoryViewController.swift */; };
+		AA1F6C0B235AF5ED00BD141B /* RecentAnswersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C0A235AF5ED00BD141B /* RecentAnswersViewController.swift */; };
 		AA1F6C0D235B1E2500BD141B /* AnswerHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C0C235B1E2500BD141B /* AnswerHistoryCell.swift */; };
-		AA1F6C3E235C923200BD141B /* FetchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C3D235C923200BD141B /* FetchResultController.swift */; };
+		AA1F6C402360C85D00BD141B /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C3F2360C85D00BD141B /* UserDefaultService.swift */; };
+		AA1F6C422360C92D00BD141B /* UserDefaultsAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C412360C92D00BD141B /* UserDefaultsAnswer.swift */; };
+		AA1F6C442360D84E00BD141B /* RecentAnswersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F6C432360D84E00BD141B /* RecentAnswersViewModel.swift */; };
 		AA3664D2230E763F00784E9F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CD230E763F00784E9F /* Response.swift */; };
 		AA3664D3230E763F00784E9F /* AnswersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CE230E763F00784E9F /* AnswersModel.swift */; };
 		AA3664D4230E763F00784E9F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3664CF230E763F00784E9F /* NetworkingService.swift */; };
@@ -65,9 +67,11 @@
 		AA1F6BD7235396DF00BD141B /* SavedAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedAnswerCell.swift; sourceTree = "<group>"; };
 		AA1F6BDB23586DD000BD141B /* Answer+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Answer+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AA1F6BDC23586DD000BD141B /* Answer+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Answer+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		AA1F6C0A235AF5ED00BD141B /* AnswerHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerHistoryViewController.swift; sourceTree = "<group>"; };
+		AA1F6C0A235AF5ED00BD141B /* RecentAnswersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAnswersViewController.swift; sourceTree = "<group>"; };
 		AA1F6C0C235B1E2500BD141B /* AnswerHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerHistoryCell.swift; sourceTree = "<group>"; };
-		AA1F6C3D235C923200BD141B /* FetchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResultController.swift; sourceTree = "<group>"; };
+		AA1F6C3F2360C85D00BD141B /* UserDefaultService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		AA1F6C412360C92D00BD141B /* UserDefaultsAnswer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsAnswer.swift; sourceTree = "<group>"; };
+		AA1F6C432360D84E00BD141B /* RecentAnswersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAnswersViewModel.swift; sourceTree = "<group>"; };
 		AA3664CD230E763F00784E9F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		AA3664CE230E763F00784E9F /* AnswersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersModel.swift; sourceTree = "<group>"; };
 		AA3664CF230E763F00784E9F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 			children = (
 				AA1F6BDB23586DD000BD141B /* Answer+CoreDataClass.swift */,
 				AA1F6BDC23586DD000BD141B /* Answer+CoreDataProperties.swift */,
+				AA1F6C412360C92D00BD141B /* UserDefaultsAnswer.swift */,
 			);
 			path = PassiveModel;
 			sourceTree = "<group>";
@@ -166,8 +171,9 @@
 		AA0E852223451015005EEB84 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AA0E854B234C8C37005EEB84 /* KeychainService.swift */,
 				AA1F6BD5235310DE00BD141B /* StoredAnswerService.swift */,
+				AA0E854B234C8C37005EEB84 /* KeychainService.swift */,
+				AA1F6C3F2360C85D00BD141B /* UserDefaultService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -273,6 +279,7 @@
 			children = (
 				AAD33C80234100810025E072 /* MainViewModel.swift */,
 				AAD33C82234105F90025E072 /* SettingsViewModel.swift */,
+				AA1F6C432360D84E00BD141B /* RecentAnswersViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -305,7 +312,7 @@
 				AA68B76C23098A3400226290 /* MainViewController.swift */,
 				AA1F6BBD23508D7300BD141B /* SettingsViewController.swift */,
 				AA1F6BBF2350C3D200BD141B /* SaveAnswerViewController.swift */,
-				AA1F6C0A235AF5ED00BD141B /* AnswerHistoryViewController.swift */,
+				AA1F6C0A235AF5ED00BD141B /* RecentAnswersViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -316,7 +323,6 @@
 				AA1F6BCA235309F100BD141B /* SavedAnswerModel.xcdatamodeld */,
 				AA0E85212345100A005EEB84 /* PassiveModel */,
 				AA0E852223451015005EEB84 /* Services */,
-				AA1F6C3D235C923200BD141B /* FetchResultController.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -461,21 +467,23 @@
 				AA1F6BC523520A7000BD141B /* TypeDisplayCell.swift in Sources */,
 				AA1F6BDD23586DD000BD141B /* Answer+CoreDataClass.swift in Sources */,
 				AAA856132338ADC80044434B /* Colors.swift in Sources */,
-				AA1F6C3E235C923200BD141B /* FetchResultController.swift in Sources */,
 				AA3664D2230E763F00784E9F /* Response.swift in Sources */,
 				AAD33C952344AE480025E072 /* Protocols.swift in Sources */,
 				AA0E852423454148005EEB84 /* AnswersData.swift in Sources */,
 				AAE636B3233B4FA4004B6868 /* Assets-images.swift in Sources */,
 				AA3664D3230E763F00784E9F /* AnswersModel.swift in Sources */,
+				AA1F6C422360C92D00BD141B /* UserDefaultsAnswer.swift in Sources */,
 				AAD33C83234105F90025E072 /* SettingsViewModel.swift in Sources */,
 				AA3664D4230E763F00784E9F /* NetworkingService.swift in Sources */,
 				AA1F6BC02350C3D200BD141B /* SaveAnswerViewController.swift in Sources */,
 				AA3664D5230E763F00784E9F /* ResponsePackage.swift in Sources */,
+				AA1F6C402360C85D00BD141B /* UserDefaultService.swift in Sources */,
 				AAD33C81234100810025E072 /* MainViewModel.swift in Sources */,
 				AA1F6BC32351E58D00BD141B /* HUDView.swift in Sources */,
 				AA0E854C234C8C37005EEB84 /* KeychainService.swift in Sources */,
-				AA1F6C0B235AF5ED00BD141B /* AnswerHistoryViewController.swift in Sources */,
+				AA1F6C0B235AF5ED00BD141B /* RecentAnswersViewController.swift in Sources */,
 				AA1F6BBE23508D7300BD141B /* SettingsViewController.swift in Sources */,
+				AA1F6C442360D84E00BD141B /* RecentAnswersViewModel.swift in Sources */,
 				AA1F6BD6235310DE00BD141B /* StoredAnswerService.swift in Sources */,
 				AA1F6BDE23586DD000BD141B /* Answer+CoreDataProperties.swift in Sources */,
 				AA1F6BCC235309F100BD141B /* SavedAnswerModel.xcdatamodeld in Sources */,
