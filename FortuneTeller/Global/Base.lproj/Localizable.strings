@@ -31,3 +31,5 @@
 "date" = "key";
 "Edit" = "title";
 "Done" = "title";
+"Saved answers" = "section title";
+"Seems like you offline, add custom answer" = "warning";

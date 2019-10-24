@@ -45,8 +45,11 @@ final class UserDefaultService: NSObject, UserDefaultsClient {
     }
 
     func delete(atIndex indexPaths: [IndexPath]) {
-        
+        let sorted = indexPaths.sorted(by: >)
+        for item in sorted {
+            userAnswers.remove(at: item.row)
         }
+    }
 
     func numberOfRows() -> Int {
         return userAnswers.count

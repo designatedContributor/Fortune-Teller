@@ -69,7 +69,7 @@ class AnswersModel {
     func performFetch() {
         storedAnswerService.performFetch()
     }
-    
+
     func isSaved(answer: AnswersData) -> Bool {
         let result = storedAnswerService.isAnswerSaved(answer: answer)
         return result

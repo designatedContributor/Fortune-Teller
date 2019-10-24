@@ -82,6 +82,11 @@ class AnswerHistoryCell: UICollectionViewCell {
         return view
     }()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.isHidden = true
+        dateLabel.isHidden = false
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = Asset.background.color

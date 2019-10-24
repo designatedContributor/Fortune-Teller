@@ -76,12 +76,12 @@ class RecentAnswersViewController: UIViewController {
     }
 
     @objc func deleteSelectedItems() {
-//        guard let indexPaths = collectionView.indexPathsForSelectedItems else { return }
-//        self.collectionView.performBatchUpdates({
-//            recentViewModel.deleteItems(atIndexPaths: indexPaths)
-//            collectionView.deleteItems(at: indexPaths)
-//        })
-//        self.collectionView.reloadData()
+        guard let indexPaths = collectionView.indexPathsForSelectedItems else { return }
+        print(indexPaths)
+        self.collectionView.performBatchUpdates({
+            recentViewModel.deleteItems(atIndexPaths: indexPaths)
+            collectionView.deleteItems(at: indexPaths)
+        })
     }
 
     private func changeTitle() {
@@ -108,7 +108,7 @@ extension RecentAnswersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recentViewModel.numberOfRows()
     }
-
+// swiftlint:disable line_length
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = recentViewModel.recentAnswerAtIndex(indexPath: indexPath)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerHistoryCell.cellID, for: indexPath) as? AnswerHistoryCell else { return UICollectionViewCell() }

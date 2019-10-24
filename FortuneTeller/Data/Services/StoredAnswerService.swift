@@ -97,7 +97,9 @@ class StoredAnswerService: NSObject, DBClient {
         if let answer = array.randomElement() {
             return AnswersData(withStoredAnswer: answer)
         } else {
-            let badResponse = AnswersData(answer: "Seems like you offline – add custom answer", type: L10n.contrary, date: Date())
+            let badResponse = AnswersData(answer: L10n.seemsLikeYouOfflineAddCustomAnswer,
+                                          type: L10n.contrary,
+                                          date: Date())
             return badResponse
         }
     }
