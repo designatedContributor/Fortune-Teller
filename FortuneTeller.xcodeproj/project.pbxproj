@@ -41,6 +41,8 @@
 		AA93A5AE230C7158004CACD2 /* DigitalStripBB_BoldItal.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */; };
 		AA93A5AF230C7158004CACD2 /* DigitalStripBB_Ital.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */; };
 		AAA856132338ADC80044434B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA856122338ADC80044434B /* Colors.swift */; };
+		AABC5C2723647EB7001D16EA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C2623647EB7001D16EA /* ChatViewController.swift */; };
+		AABC5C292364837C001D16EA /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C282364837C001D16EA /* MessageCell.swift */; };
 		AAD33C81234100810025E072 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C80234100810025E072 /* MainViewModel.swift */; };
 		AAD33C83234105F90025E072 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C82234105F90025E072 /* SettingsViewModel.swift */; };
 		AAD33C93234493270025E072 /* PresentableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD33C92234493270025E072 /* PresentableResponse.swift */; };
@@ -87,6 +89,8 @@
 		AA93A5AC230C7158004CACD2 /* DigitalStripBB_BoldItal.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_BoldItal.otf; sourceTree = "<group>"; };
 		AA93A5AD230C7158004CACD2 /* DigitalStripBB_Ital.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DigitalStripBB_Ital.otf; sourceTree = "<group>"; };
 		AAA856122338ADC80044434B /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		AABC5C2623647EB7001D16EA /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = ../../../../../ChatViewController.swift; sourceTree = "<group>"; };
+		AABC5C282364837C001D16EA /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		AAD33C80234100810025E072 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		AAD33C82234105F90025E072 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		AAD33C92234493270025E072 /* PresentableResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableResponse.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 				AA1F6BC823520B3E00BD141B /* AnswerInputCell.swift */,
 				AA1F6BD7235396DF00BD141B /* SavedAnswerCell.swift */,
 				AA1F6C0C235B1E2500BD141B /* AnswerHistoryCell.swift */,
+				AABC5C282364837C001D16EA /* MessageCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				AA1F6BBD23508D7300BD141B /* SettingsViewController.swift */,
 				AA1F6BBF2350C3D200BD141B /* SaveAnswerViewController.swift */,
 				AA1F6C0A235AF5ED00BD141B /* RecentAnswersViewController.swift */,
+				AABC5C2623647EB7001D16EA /* ChatViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -470,6 +476,7 @@
 				AA3664D2230E763F00784E9F /* Response.swift in Sources */,
 				AAD33C952344AE480025E072 /* Protocols.swift in Sources */,
 				AA0E852423454148005EEB84 /* AnswersData.swift in Sources */,
+				AABC5C2723647EB7001D16EA /* ChatViewController.swift in Sources */,
 				AAE636B3233B4FA4004B6868 /* Assets-images.swift in Sources */,
 				AA3664D3230E763F00784E9F /* AnswersModel.swift in Sources */,
 				AA1F6C422360C92D00BD141B /* UserDefaultsAnswer.swift in Sources */,
@@ -480,6 +487,7 @@
 				AA1F6C402360C85D00BD141B /* UserDefaultService.swift in Sources */,
 				AAD33C81234100810025E072 /* MainViewModel.swift in Sources */,
 				AA1F6BC32351E58D00BD141B /* HUDView.swift in Sources */,
+				AABC5C292364837C001D16EA /* MessageCell.swift in Sources */,
 				AA0E854C234C8C37005EEB84 /* KeychainService.swift in Sources */,
 				AA1F6C0B235AF5ED00BD141B /* RecentAnswersViewController.swift in Sources */,
 				AA1F6BBE23508D7300BD141B /* SettingsViewController.swift in Sources */,

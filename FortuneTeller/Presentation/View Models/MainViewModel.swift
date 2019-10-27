@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import RxSwift
 
 class MainViewModel {
 
     weak var delegate: MainViewModelDelegate!
-    var response = PresentableResponse(answer: "", type: .affirmative, date: "", identifier: UUID().uuidString) {
-        willSet {
-            self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
-            self.delegate.flip()
-        }
-    }
+    
+    var response: Observable<PresentableResponse>
+
+
+//    {
+//
+//        willSet {
+//            self.delegate.setAnswer(answer: newValue.answer, type: newValue.type)
+//            self.delegate.flip()
+//        }
+//    }
 
     private let activityModel: AnswersModel
     init(activityModel: AnswersModel) {

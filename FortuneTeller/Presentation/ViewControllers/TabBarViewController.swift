@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
@@ -42,7 +41,9 @@ class TabBarViewController: UITabBarController {
         let item = UITabBarItem(tabBarSystemItem: .mostRecent, tag: 1)
         recentAnswersViewController.tabBarItem = item
 
-        let tabBarControllers = [mainViewController, recentAnswersViewController, settingsViewController]
+        let chatVC = ChatViewController()
+
+        let tabBarControllers = [mainViewController, recentAnswersViewController, settingsViewController, chatVC]
         let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
         //Embedding navigation controller
         viewControllers = tabBarControllers.map {
