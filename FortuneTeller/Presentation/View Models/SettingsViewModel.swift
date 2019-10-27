@@ -9,18 +9,34 @@
 import UIKit
 import CoreData
 
-class SettingsViewModel: NSObject {
+class SettingsViewModel {
 
-    weak var delegate: SettingsViewModelDelegate!
+    weak var saveAnswerDelegate: SaveAnswerViewModelDelegate!
+    weak var settingsDelegate: SettingsViewModelDelegate!
+    private let activityModel: AnswersModel
 
     lazy var formatted: [String] = {
         return toString()
     }()
 
-    private let activityModel: AnswersModel
-
     init(activityModel: AnswersModel) {
         self.activityModel = activityModel
+        subsribe()
+    }
+
+    //TableView Methods
+    func numberOfRows() -> Int {
+        let numberOfRows = activityModel.numberOfRows()
+        return numberOfRows
+    }
+
+    func objectAtIndex(at indexPath: IndexPath) -> PresentableResponse {
+        let answer = activityModel.objectAtIndex(at: indexPath)
+        let output = PresentableResponse(data: answer)
+        return output
+    }
+    func performFetch() {
+        activityModel.performFetch()
     }
 
     func saveAnswer(input: PresentableResponse) {
@@ -28,26 +44,23 @@ class SettingsViewModel: NSObject {
         let isAnswerSaved = activityModel.isSaved(answer: item)
         if isAnswerSaved == false && !input.answer.isEmpty {
             activityModel.saveAnswer(answer: item)
-            delegate.didSaveAlert()
+            saveAnswerDelegate.didSaveAlert()
         } else {
-            delegate.errorAlert()
+            saveAnswerDelegate.errorAlert()
         }
     }
 
-    func getAnswers() -> [PresentableResponse] {
-        let answers = activityModel.getSavedAnswers()
-        let result = answers.map {
-            PresentableResponse(data: $0)
-        }
-        return result
+    func addItem(item: PresentableResponse) {
+        let input = AnswersData(answer: item.answer, type: item.type.rawValue, date: Date())
+        activityModel.saveAnswer(answer: input)
     }
 
-    func loadAnswers() {
-        activityModel.loadSavedAnswers()
+    func removeItem(item: PresentableResponse) {
+        activityModel.deleteItem(withID: item.identifier)
     }
 
-    func getAttemts() -> String {
-        let result = String(activityModel.retrieveAttemts())
+    func getAttemts() -> Int {
+        let result = activityModel.retrieveAttemts()
         return result
     }
 
@@ -56,78 +69,14 @@ class SettingsViewModel: NSObject {
         let output = input.map { $0.rawValue }
         return output
     }
-}
 
-//swiftlint:disable line_length
-extension SettingsViewModel: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
-            let attemts = getAttemts()
-            cell.textLabel?.text = L10n.lifetimeApplicationPredictions + "\(attemts)"
-            cell.selectionStyle = .none
-            cell.backgroundColor = Asset.tabbar.color
-            cell.textLabel?.textColor = ColorName.white.color
-            cell.isUserInteractionEnabled = false
-            return cell
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
-            cell.accessoryType = .disclosureIndicator
-            cell.backgroundColor = Asset.tabbar.color
-            let selectionView = UIView()
-            selectionView.backgroundColor = Asset.selected.color
-            cell.selectedBackgroundView = selectionView
-            cell.textLabel?.textColor = Asset.buttonColor.color
-            cell.textLabel?.text = L10n.createCustomAnswer
-            return cell
-        case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerHistoryCell.cellID, for: indexPath) as? AnswerHistoryCell else { return UITableViewCell() }
-            let answers = getAnswers()
-            cell.item = answers[indexPath.row]
-            return cell
-        default:
-            return UITableViewCell()
+    private func subsribe() {
+        activityModel.observerCallBack = { [weak self] index in
+            guard let self = self else {
+                assertionFailure("self is nil")
+                return
+            }
+            self.settingsDelegate.deleteRow(atIndex: index)
         }
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 2 {
-            return L10n.answerHistory
-        } else {
-            return nil
-        }
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
-            return getAnswers().count
-        } else {
-            return 1
-        }
-    }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 2 {
-            return true
-        }
-        return false
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let answers = getAnswers()
-            let answerToRemove = answers[indexPath.row].identifier
-            activityModel.deleteItem(withID: answerToRemove)
-            activityModel.loadSavedAnswers()
-        }
-        tableView.beginUpdates()
-        tableView.deleteRows(at: [indexPath], with: .fade)
-        tableView.endUpdates()
     }
 }

@@ -10,14 +10,22 @@ import Foundation
 
 class AnswersModel {
 
-    private let networkService: Networking
+    private let networkService: NetworkingClient
     private let storedAnswerService: DBClient
     private let keychainService: SecureKeyValueStorage
+    private let userDefaultsService: UserDefaultsClient
 
-    init(networkService: Networking, savedAnswerService: DBClient, keychainService: SecureKeyValueStorage) {
+    var observerCallBack: ((IndexPath) -> Void)?
+
+    init(networkService: NetworkingClient,
+         savedAnswerService: DBClient,
+         keychainService: SecureKeyValueStorage,
+         userDefaultsService: UserDefaultsClient) {
         self.networkService = networkService
         self.storedAnswerService = savedAnswerService
         self.keychainService = keychainService
+        self.userDefaultsService = userDefaultsService
+        subsribe()
     }
 
     func load(responseWith completion: @escaping (AnswersData) -> Void) {
@@ -29,9 +37,11 @@ class AnswersModel {
                 self.keychainService.attemtCounter += 1
                 self.keychainService.save()
                 self.storedAnswerService.save(answer: answer)
+                self.userDefaultsService.save(answer: answer)
                 completion(answer)
             } else {
                 let dbAnswer = self.storedAnswerService.getRandomAnswer()
+                self.userDefaultsService.save(answer: dbAnswer)
                 completion(dbAnswer)
             }
         })
@@ -45,20 +55,23 @@ class AnswersModel {
         storedAnswerService.delete(withID: identifier)
     }
 
+    func numberOfRows() -> Int {
+        let numberOfRows = storedAnswerService.numberOfRows()
+        return numberOfRows
+    }
+
+    func objectAtIndex(at indexPath: IndexPath) -> AnswersData {
+        let answer = storedAnswerService.objectAtIndex(at: indexPath)
+        let output = AnswersData(withStoredAnswer: answer)
+        return output
+    }
+
+    func performFetch() {
+        storedAnswerService.performFetch()
+    }
+
     func isSaved(answer: AnswersData) -> Bool {
         let result = storedAnswerService.isAnswerSaved(answer: answer)
-        return result
-    }
-
-    func loadSavedAnswers() {
-        storedAnswerService.loadAnswers()
-    }
-
-    func getSavedAnswers() -> [AnswersData] {
-        let answers = storedAnswerService.fetchResults
-        let result = answers.map {
-            AnswersData(withStoredAnswer: $0)
-        }
         return result
     }
 
@@ -69,5 +82,30 @@ class AnswersModel {
     func retrieveAttemts() -> Int {
         let attemts = keychainService.retrieve()
         return attemts
+    }
+
+    func recentAnswerAtIndex(indexPath: IndexPath) -> AnswersData {
+        let answer = userDefaultsService.objectAtIndex(at: indexPath)
+        let output = AnswersData(withUserDefaults: answer)
+        return output
+    }
+
+    func numberOfRowsForRecentAnswers() -> Int {
+        let quantity = userDefaultsService.numberOfRows()
+        return quantity
+    }
+
+    func deleteRecentAnswers(atIndexPath: [IndexPath]) {
+        userDefaultsService.delete(atIndex: atIndexPath)
+    }
+
+    private func subsribe() {
+        storedAnswerService.observerCallBack = { [weak self] index in
+            guard let self = self else {
+                assertionFailure("self is nil")
+                return
+            }
+            self.observerCallBack?(index)
+        }
     }
 }

@@ -12,17 +12,17 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // swiftlint:disable line_length
 
         //Initializing Active Model
-        let activityModel = AnswersModel(networkService: NetwotkingService(), savedAnswerService: StoredAnswerService(), keychainService: KeychainService())
-        activityModel.loadSavedAnswers()
-
-        //swiftlint:enable line_length
-
+        let activityModel = AnswersModel(networkService: NetwotkingService(),
+                                         savedAnswerService: StoredAnswerService(),
+                                         keychainService: KeychainService(),
+                                         userDefaultsService: UserDefaultService())
         //Initializing ViewModels
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
+        let recentAnswersViewModel = RecentAnswersViewModel(activityModel: activityModel)
+        //swiftlint:enable line_length
 
         //Initilizing and setting up View Controllers
         let mainViewController = MainViewController()
@@ -35,8 +35,14 @@ class TabBarViewController: UITabBarController {
         settingsViewController.settingsViewModel = settingsViewModel
         settingsViewController.tabBarItem.image = Asset.gear.image
         settingsViewController.navigationItem.title = L10n.settings
+        settingsViewModel.settingsDelegate = settingsViewController
 
-        let tabBarControllers = [mainViewController, settingsViewController]
+        let recentAnswersViewController = RecentAnswersViewController()
+        recentAnswersViewController.recentViewModel = recentAnswersViewModel
+        let item = UITabBarItem(tabBarSystemItem: .mostRecent, tag: 1)
+        recentAnswersViewController.tabBarItem = item
+
+        let tabBarControllers = [mainViewController, recentAnswersViewController, settingsViewController]
         let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
         //Embedding navigation controller
         viewControllers = tabBarControllers.map {

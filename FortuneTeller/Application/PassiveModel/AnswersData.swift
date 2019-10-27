@@ -32,4 +32,10 @@ struct AnswersData {
         self.date = answer.date
         self.identifier = answer.identifier
     }
+
+    init(withUserDefaults answer: UserDefaultsAnswer) {
+        self.answer = answer.answer
+        self.type = answer.type
+        self.date = answer.date
+    }
 }

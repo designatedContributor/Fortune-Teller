@@ -49,8 +49,12 @@ internal enum L10n {
   internal static let saveAnswer = L10n.tr("Localizable", "Save answer")
   /// HUDView titile
   internal static let saved = L10n.tr("Localizable", "Saved")
+  /// section title
+  internal static let savedAnswers = L10n.tr("Localizable", "Saved answers")
   /// xcdatamodel
   internal static let savedAnswerModel = L10n.tr("Localizable", "SavedAnswerModel")
+  /// warning
+  internal static let seemsLikeYouOfflineAddCustomAnswer = L10n.tr("Localizable", "Seems like you offline, add custom answer")
   /// title
   internal static let settings = L10n.tr("Localizable", "Settings")
   /// questionLabel

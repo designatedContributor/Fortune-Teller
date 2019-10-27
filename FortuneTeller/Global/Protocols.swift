@@ -13,12 +13,16 @@ protocol MainViewModelDelegate: class {
     func flip()
 }
 
-protocol SettingsViewModelDelegate: class {
+protocol SaveAnswerViewModelDelegate: class {
     func didSaveAlert()
     func errorAlert()
 }
 
-protocol Networking: class {
+protocol SettingsViewModelDelegate: class {
+    func deleteRow(atIndex indexPath: IndexPath)
+}
+
+protocol NetworkingClient: class {
     func getAnswer(withCompletion completion: @escaping (ResponsePackage?) -> Void)
 }
 
@@ -29,10 +33,20 @@ protocol SecureKeyValueStorage: class {
 }
 
 protocol DBClient: class {
-    var fetchResults: [Answer] { get set }
+    var observerCallBack: ((IndexPath) -> Void)? { get set }
     func save(answer: AnswersData)
     func delete(withID identifier: String)
     func isAnswerSaved(answer: AnswersData) -> Bool
     func getRandomAnswer() -> AnswersData
+    func numberOfRows() -> Int
+    func objectAtIndex(at indexPath: IndexPath) -> Answer
+    func performFetch()
+}
+
+protocol UserDefaultsClient {
+    func save(answer: AnswersData)
+    func delete(atIndex indexPaths: [IndexPath])
+    func numberOfRows() -> Int
+    func objectAtIndex(at indexPath: IndexPath) -> UserDefaultsAnswer
     func loadAnswers()
 }

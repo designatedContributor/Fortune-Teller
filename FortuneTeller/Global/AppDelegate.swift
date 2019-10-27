@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = Asset.background.color
         window?.rootViewController = TabBarViewController()
         window?.makeKeyAndVisible()
+
         return true
     }
-    //swiftlint:enable line_length
 }
