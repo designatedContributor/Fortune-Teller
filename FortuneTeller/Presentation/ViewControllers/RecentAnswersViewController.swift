@@ -77,7 +77,6 @@ class RecentAnswersViewController: UIViewController {
 
     @objc func deleteSelectedItems() {
         guard let indexPaths = collectionView.indexPathsForSelectedItems else { return }
-        print(indexPaths)
         self.collectionView.performBatchUpdates({
             recentViewModel.deleteItems(atIndexPaths: indexPaths)
             collectionView.deleteItems(at: indexPaths)

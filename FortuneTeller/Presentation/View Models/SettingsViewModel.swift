@@ -35,6 +35,7 @@ class SettingsViewModel {
         let output = PresentableResponse(data: answer)
         return output
     }
+
     func performFetch() {
         activityModel.performFetch()
     }

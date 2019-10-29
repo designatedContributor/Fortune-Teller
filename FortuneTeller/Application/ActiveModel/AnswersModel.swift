@@ -7,46 +7,34 @@
 //
 
 import Foundation
+import RxSwift
 
 class AnswersModel {
 
     private let networkService: NetworkingClient
-    private let storedAnswerService: DBClient
-    private let keychainService: SecureKeyValueStorage
+    private let storedAnswerService: SavedAnswerClient
     private let userDefaultsService: UserDefaultsClient
+    private let keychainService: SecureKeyValueStorage
 
     var observerCallBack: ((IndexPath) -> Void)?
 
+    let performLoad = PublishSubject<Void>()
+    let deliverAnswer = PublishSubject<AnswersData>()
+    let disposableBag = DisposeBag()
+
     init(networkService: NetworkingClient,
-         savedAnswerService: DBClient,
+         savedAnswerService: SavedAnswerClient,
          keychainService: SecureKeyValueStorage,
          userDefaultsService: UserDefaultsClient) {
         self.networkService = networkService
         self.storedAnswerService = savedAnswerService
         self.keychainService = keychainService
         self.userDefaultsService = userDefaultsService
-        subsribe()
+        setupBinding()
+        storedServiceBinding()
     }
 
-    func load(responseWith completion: @escaping (AnswersData) -> Void) {
-        networkService.getAnswer(withCompletion: { [weak self] networkAnswer in
-            guard let self = self else { return }
-
-            if let networkAnswer = networkAnswer {
-                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
-                self.keychainService.attemtCounter += 1
-                self.keychainService.save()
-                self.storedAnswerService.save(answer: answer)
-                self.userDefaultsService.save(answer: answer)
-                completion(answer)
-            } else {
-                let dbAnswer = self.storedAnswerService.getRandomAnswer()
-                self.userDefaultsService.save(answer: dbAnswer)
-                completion(dbAnswer)
-            }
-        })
-    }
-
+    // MARK: Settings methods
     func saveAnswer(answer: AnswersData) {
         storedAnswerService.save(answer: answer)
     }
@@ -75,6 +63,7 @@ class AnswersModel {
         return result
     }
 
+    // MARK: Keychain Methods
     func saveAttemt() {
         keychainService.save()
     }
@@ -84,6 +73,7 @@ class AnswersModel {
         return attemts
     }
 
+    // MARK: Recent Answers Methods
     func recentAnswerAtIndex(indexPath: IndexPath) -> AnswersData {
         let answer = userDefaultsService.objectAtIndex(at: indexPath)
         let output = AnswersData(withUserDefaults: answer)
@@ -99,13 +89,31 @@ class AnswersModel {
         userDefaultsService.delete(atIndex: atIndexPath)
     }
 
-    private func subsribe() {
+    // MARK: Bindings
+    private func setupBinding() {
+        performLoad.subscribe(onNext: { [weak self] in
+            self?.networkService.getAnswer(withCompletion: { [weak self] networkAnswer in
+                guard let self = self else { return }
+                if let networkAnswer = networkAnswer {
+                    let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
+                    self.keychainService.attemtCounter += 1
+                    self.keychainService.save()
+                    self.storedAnswerService.save(answer: answer)
+                    self.userDefaultsService.save(answer: answer)
+                    self.deliverAnswer.onNext(answer)
+                } else {
+                    let dbAnswer = self.storedAnswerService.getRandomAnswer()
+                    self.userDefaultsService.save(answer: dbAnswer)
+                    self.deliverAnswer.onNext(dbAnswer)
+                }
+            })
+        }).disposed(by: disposableBag)
+    }
+
+    private func storedServiceBinding() {
         storedAnswerService.observerCallBack = { [weak self] index in
-            guard let self = self else {
-                assertionFailure("self is nil")
-                return
-            }
-            self.observerCallBack?(index)
+            self?.observerCallBack?(index)
         }
     }
+
 }

@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     var mainViewModel: MainViewModel! //required to be implicit by contract
 
     var isFlipped = false
+    private let disposeBag = DisposeBag()
 
     private lazy var containerView = UIView()
     private lazy var questionView = UIView()
@@ -57,9 +58,10 @@ class MainViewController: UIViewController {
         setupViews()
         setupLabels()
         setupConstraints()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-
+        setupBinding()
+        navigationController?.navigationBar.barTintColor = Asset.tabbar.color
         let angle = 45 * CGFloat.pi / 180
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
         gradientLayer.transform = CATransform3DMakeRotation(angle, 0, 0, 1)
     }
 
@@ -68,9 +70,16 @@ class MainViewController: UIViewController {
         if motion == .motionShake && isFlipped == false {
             animate(condition: isFlipped)
             afterDelay(2.0) { [weak self] in
-                self?.mainViewModel.shakeDetected()
+                self?.mainViewModel.triggerShakeEvent.onNext(())
             }
         }
+    }
+
+    private func setupBinding() {
+        mainViewModel.showAnswer.subscribe(onNext: { [weak self] in
+                self?.setAnswer(answer: $0.answer, type: $0.type)
+                self?.flip()
+        }).disposed(by: disposeBag)
     }
 
     @objc private func closeButtonTapped(_ sender: Any) {
@@ -138,17 +147,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    func setNavBarToTheView() {
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
-        navBar.backgroundColor = ColorName.background.color
-        self.view.addSubview(navBar)
-        let navItem = UINavigationItem()
-        navBar.setItems([navItem], animated: true)
-    }
-}
-
-extension MainViewController: MainViewModelDelegate {
-    func flip() {
+    private func flip() {
         isFlipped = !isFlipped
         let fromView = isFlipped ? questionView : answerView
         let toView = isFlipped ? answerView : questionView
@@ -156,7 +155,7 @@ extension MainViewController: MainViewModelDelegate {
         UIView.transition(from: fromView, to: toView, duration: 1, options: options)
     }
 
-    func setAnswer(answer: String, type: AnswerType) {
+    private func setAnswer(answer: String, type: AnswerType) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
             switch type {

@@ -9,7 +9,9 @@
 import Foundation
 import CoreData
 
-class StoredAnswerService: NSObject, DBClient {
+final class StoredAnswerService: NSObject, SavedAnswerClient {
+
+    var observerCallBack: ((IndexPath) -> Void)?
 
     // MARK: CoreData stack
     lazy var persistentContainer: NSPersistentContainer = {
@@ -31,8 +33,6 @@ class StoredAnswerService: NSObject, DBClient {
     }()
 
     // MARK: FRC related stuff
-    var observerCallBack: ((IndexPath) -> Void)?
-
     private lazy var frcController: NSFetchedResultsController<Answer> = {
         let frcInstance = initializeFetchResultsController()
         return frcInstance

@@ -10,10 +10,10 @@ import Foundation
 
 struct UserDefaultsAnswer: Codable {
 
-    var answer: String
-    var type: String
-    var date: Date
-    var identifier: String
+    let answer: String
+    let type: String
+    let date: Date
+    let identifier: String
 
     init(answer: String, type: String, date: Date, identifier: String) {
         self.answer = answer

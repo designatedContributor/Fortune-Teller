@@ -21,14 +21,12 @@ class TabBarViewController: UITabBarController {
         let mainViewModel = MainViewModel(activityModel: activityModel)
         let settingsViewModel = SettingsViewModel(activityModel: activityModel)
         let recentAnswersViewModel = RecentAnswersViewModel(activityModel: activityModel)
-        //swiftlint:enable line_length
 
         //Initilizing and setting up View Controllers
         let mainViewController = MainViewController()
         mainViewController.tabBarItem.image = Asset._8BallInsideACircle2.image
         mainViewController.navigationItem.title = L10n.main
         mainViewController.mainViewModel = mainViewModel
-        mainViewModel.delegate = mainViewController
 
         let settingsViewController = SettingsViewController()
         settingsViewController.settingsViewModel = settingsViewModel
@@ -41,9 +39,7 @@ class TabBarViewController: UITabBarController {
         let item = UITabBarItem(tabBarSystemItem: .mostRecent, tag: 1)
         recentAnswersViewController.tabBarItem = item
 
-        let chatVC = ChatViewController()
-
-        let tabBarControllers = [mainViewController, recentAnswersViewController, settingsViewController, chatVC]
+        let tabBarControllers = [mainViewController, recentAnswersViewController, settingsViewController]
         let textAttributes = [NSAttributedString.Key.foregroundColor: ColorName.white.color]
         //Embedding navigation controller
         viewControllers = tabBarControllers.map {
