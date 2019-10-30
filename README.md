@@ -12,7 +12,7 @@ FortuneTeller is a simple app that solves an eternal question:
 
 ### What is inside?
 
-The app has two flows depending on [API](http://https://8ball.delegator.com "API") response.
+The app has two flows depending on [API](http://8ball.delegator.com "API") response.
 
 ![UML](https://user-images.githubusercontent.com/48334347/67814440-bdf85c00-faac-11e9-9aeb-10ef152dd1af.png "UML")
 
