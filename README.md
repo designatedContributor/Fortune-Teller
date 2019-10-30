@@ -3,7 +3,7 @@
 Technical assignment for [Yalantis](http://yalantis.com "Yalantis") iOS School.
 
 FortuneTeller is a simple app that solves an eternal question:
-'How to make a desicion?'
+'How to make a decision?'
 
 ------------
 

@@ -18,7 +18,6 @@ class AnswersModel {
 
     var observerCallBack: ((IndexPath) -> Void)?
 
-    let performLoad = PublishSubject<Void>()
     let deliverAnswer = PublishSubject<AnswersData>()
     let disposableBag = DisposeBag()
 
@@ -30,11 +29,29 @@ class AnswersModel {
         self.storedAnswerService = savedAnswerService
         self.keychainService = keychainService
         self.userDefaultsService = userDefaultsService
-        setupBinding()
         storedServiceBinding()
     }
 
+    func load() {
+        networkService.getAnswer(withCompletion: { [weak self] networkAnswer in
+            guard let self = self else { return }
+            if let networkAnswer = networkAnswer {
+                let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
+                self.keychainService.attemtCounter += 1
+                self.keychainService.save()
+                self.storedAnswerService.save(answer: answer)
+                self.userDefaultsService.save(answer: answer)
+                self.deliverAnswer.onNext(answer)
+            } else {
+                let dbAnswer = self.storedAnswerService.getRandomAnswer()
+                self.userDefaultsService.save(answer: dbAnswer)
+                self.deliverAnswer.onNext(dbAnswer)
+            }
+        })
+    }
+
     // MARK: Settings methods
+
     func saveAnswer(answer: AnswersData) {
         storedAnswerService.save(answer: answer)
     }
@@ -64,6 +81,7 @@ class AnswersModel {
     }
 
     // MARK: Keychain Methods
+
     func saveAttemt() {
         keychainService.save()
     }
@@ -74,6 +92,7 @@ class AnswersModel {
     }
 
     // MARK: Recent Answers Methods
+
     func recentAnswerAtIndex(indexPath: IndexPath) -> AnswersData {
         let answer = userDefaultsService.objectAtIndex(at: indexPath)
         let output = AnswersData(withUserDefaults: answer)
@@ -90,25 +109,6 @@ class AnswersModel {
     }
 
     // MARK: Bindings
-    private func setupBinding() {
-        performLoad.subscribe(onNext: { [weak self] in
-            self?.networkService.getAnswer(withCompletion: { [weak self] networkAnswer in
-                guard let self = self else { return }
-                if let networkAnswer = networkAnswer {
-                    let answer = AnswersData(withNetworkResponse: networkAnswer, date: Date())
-                    self.keychainService.attemtCounter += 1
-                    self.keychainService.save()
-                    self.storedAnswerService.save(answer: answer)
-                    self.userDefaultsService.save(answer: answer)
-                    self.deliverAnswer.onNext(answer)
-                } else {
-                    let dbAnswer = self.storedAnswerService.getRandomAnswer()
-                    self.userDefaultsService.save(answer: dbAnswer)
-                    self.deliverAnswer.onNext(dbAnswer)
-                }
-            })
-        }).disposed(by: disposableBag)
-    }
 
     private func storedServiceBinding() {
         storedAnswerService.observerCallBack = { [weak self] index in

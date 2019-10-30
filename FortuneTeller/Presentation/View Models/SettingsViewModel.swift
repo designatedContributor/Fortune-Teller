@@ -73,11 +73,7 @@ class SettingsViewModel {
 
     private func subsribe() {
         activityModel.observerCallBack = { [weak self] index in
-            guard let self = self else {
-                assertionFailure("self is nil")
-                return
-            }
-            self.settingsDelegate.deleteRow(atIndex: index)
+            self?.settingsDelegate.deleteRow(atIndex: index)
         }
     }
 }

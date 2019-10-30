@@ -14,7 +14,6 @@ class MainViewModel {
     let triggerShakeEvent = PublishSubject<Void>()
     let showAnswer = PublishSubject<PresentableResponse>()
     private let disposeBag = DisposeBag()
-
     private let activityModel: AnswersModel
 
     init(activityModel: AnswersModel) {
@@ -23,9 +22,9 @@ class MainViewModel {
     }
 
     private func setupBinding() {
-        triggerShakeEvent
-            .bind(to: activityModel.performLoad)
-            .disposed(by: disposeBag)
+        triggerShakeEvent.subscribe(onNext: { [weak self] in
+            self?.activityModel.load()
+        }).disposed(by: disposeBag)
 
         activityModel.deliverAnswer.subscribe(onNext: { [weak self] response in
             let answer = PresentableResponse(data: response)
