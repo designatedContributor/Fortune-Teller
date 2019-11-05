@@ -32,7 +32,7 @@ protocol SecureKeyValueStorage: class {
     func retrieve() -> Int
 }
 
-protocol DBClient: class {
+protocol SavedAnswerClient: class {
     var observerCallBack: ((IndexPath) -> Void)? { get set }
     func save(answer: AnswersData)
     func delete(withID identifier: String)

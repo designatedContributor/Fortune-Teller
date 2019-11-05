@@ -17,4 +17,8 @@ target 'FortuneTeller' do
  #A simple wrapper for the iOS Keychain.
  pod 'SwiftKeychainWrapper', '~> 3.4'
 
+ #RxSwift
+  pod 'RxSwift', '~> 5'
+  pod 'RxCocoa', '~> 5'
+
 end
