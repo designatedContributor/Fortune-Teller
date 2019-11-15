@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Dmitry Grin on 9/25/19.
+  
+*/
+"The answer already exists" = "message";
+"Sorry" = "title";
+"Dismiss" = "title";
+"You saved answer" = "title";
+"Close" = "title";
+"Main" = "title";
+"Shake device to get the answer" = "questionLabel";
+"Empty field" = "warningLabel";
+"Enter your answer" = "placeholder";
+"Save answer" = "placeholder";
+"Lifetime application predictions: " = "counterLabel";
+"Settings" = "title";
+"Attemts" = "key";
+"Affirmative" = "type";
+"Neutral" = "type";
+"Contrary" = "type";
+"Pick type" = "label";
+"Answer history is missing" = "alert title";
+"There is nothing to edit" = "alert message";
+"Saved" = "HUDView titile";
+"Answer history" = "section title";
+"Create custom answer" = "cell text";
+"SavedAnswerModel" = "xcdatamodel";
+"date" = "key";
+"Edit" = "title";
+"Done" = "title";
+"Saved answers" = "section title";
+"Seems like you offline, add custom answer" = "warning";

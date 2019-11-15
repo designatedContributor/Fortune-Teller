@@ -1,0 +1,14 @@
+#Colors
+
+affirmative       : #78FE7E
+neutral           : #71E1FF
+contrary          : #FFCCCB
+neutralText       : #2780FF
+affirmativeText   : #0EA200
+tabbar            : #1C549E
+background        : #003367
+white             : #FFFFFF
+black		  : #000000
+red		  : #FF0000
+cyan		  : #2BEDBB
+groupTableView    : #EFEFF4         
